@@ -1,0 +1,21 @@
+# Based on https://play.pokemonshowdown.com/teambuilder export format
+
+Archaludon @ Assault Vest
+Ability: Stamina
+Tera Type: Steel
+EVs: 36 HP / 20 Atk / 236 Def / 168 SpA / 48 SpD
+- Aura Sphere
+- Body Slam
+- Dark Pulse
+- Draco Meteor
+
+Chi-Yu @ Heavy-Duty Boots
+Ability: Beads of Ruin
+Tera Type: Dark
+EVs: 92 Atk / 252 Def / 164 SpA
+IVs: 0 Atk
+- Fire Blast
+- Heat Wave
+- Nasty Plot
+- Lava Plume
+
