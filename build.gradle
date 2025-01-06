@@ -1,0 +1,97 @@
+
+import org.apache.tools.ant.taskdefs.condition.Os
+
+plugins {
+    id 'java'
+    id 'application'
+    id 'org.openjfx.javafxplugin' version '0.0.13'
+    id 'org.beryx.jlink' version '2.26.0'
+}
+
+group 'com.poketube'
+version '1.4.1'
+description = 'Poketube'
+
+repositories {
+    mavenCentral()
+}
+
+ext {
+    junitVersion = '5.9.1'
+}
+
+sourceCompatibility = '17'
+targetCompatibility = '17'
+
+tasks.withType(JavaCompile).configureEach {
+    options.encoding = 'UTF-8'
+}
+
+application {
+    mainModule = 'com.poketube'
+    mainClass = 'com.poketube.Main'
+}
+
+javafx {
+    version = '17.0.7'
+    modules = ['javafx.controls', 'javafx.fxml']
+}
+
+dependencies {
+    implementation 'org.json:json:20230227'
+
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
+}
+
+test {
+    useJUnitPlatform()
+}
+
+jlink {
+    options = ['--strip-debug', '--no-header-files', '--no-man-pages']
+    imageZip = project.file("${buildDir}/distributions/${project.name}-${project.version}-${javafx.platform.classifier}.zip")
+    launcher {
+        name = 'app'
+    }
+
+    jpackage {
+        installerName = project.name
+        imageName = project.name
+        vendor = 'Lorenzo Aoulini'
+        installerOptions = [
+                '--description', project.description,
+                '--copyright', 'Copyrigth © 2023',
+                '--app-version', project.version
+        ]
+
+        installerType = project.findProperty('installerType')
+        // we will pass this from the command line (example: -PinstallerType=msi)
+        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
+            installerOptions += ['--win-dir-chooser', '--win-menu', '--win-shortcut']
+            installerType = 'msi'
+            println "*** Windows "
+
+        }
+        if (Os.isFamily(Os.FAMILY_MAC)) {
+            imageOptions += ['--icon', 'app-icon.icns']
+            installerType = 'dmg'
+            println "*** Mac "
+        }
+        if (Os.isFamily(Os.FAMILY_UNIX) && !Os.isFamily(Os.FAMILY_MAC)) {
+            imageOptions += ['--icon', 'app-icon.png']
+            installerOptions += [
+                    '--linux-menu-group', 'Educational',
+                    '--linux-shortcut'
+            ]
+            installerType = 'deb'
+            println "*** Linux "
+        }
+    }
+}
+
+jlinkZip {
+    group = 'distribution'
+}
+
+jpackage {}

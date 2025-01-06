@@ -1,8 +1,0 @@
-Monster
-    name: test
-    type: FIRE
-    health: 10/15
-    speed: 20/22
-    attack: 5/6
-    defense: 8/11
-EndMonster

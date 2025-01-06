@@ -1,0 +1,70 @@
+name: build and deploy
+on:
+  push:
+    branches:
+      - main
+jobs:
+  build-linux:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java 21
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '21'
+          java-package: 'jdk+fx'
+      - name: package with gradle
+        run: ./gradlew jpackage
+      - name: save artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: deb-release
+          path: build/jpackage/*.deb
+  build-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java 21
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '21'
+          java-package: 'jdk+fx'
+      - name: package with gradle
+        run: ./gradlew jpackage
+      - name: save artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: exe-release
+          path: build/jpackage/*.exe
+  build-macos:
+    runs-on: macos-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Set up Java 21
+        uses: actions/setup-java@v2
+        with:
+          distribution: 'adopt'
+          java-version: '21'
+          java-package: 'jdk+fx'
+      - name: package with gradle
+        run: ./gradlew jpackage
+      - name: save artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: dmg-release
+  release:
+    needs: [ build-linux, build-windows, build-macos ]
+    runs-on: ubuntu-latest
+    steps:
+      - name: create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ needs.build-linux.outputs.artifacts }}
+            ${{ needs.build-windows.outputs.artifacts }}
+            ${{ needs.build-macos.outputs.artifacts }}
+          token: ${{ secrets.GITHUB_TOKEN }}
+          title: Release ${{ github.sha }}
+
