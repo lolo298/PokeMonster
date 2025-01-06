@@ -17,7 +17,7 @@ jobs:
       - name: package with gradle
         run: ./gradlew jpackage
       - name: save artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: deb-release
           path: build/jpackage/*.deb
@@ -34,7 +34,7 @@ jobs:
       - name: package with gradle
         run: ./gradlew jpackage
       - name: save artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: exe-release
           path: build/jpackage/*.exe
@@ -51,7 +51,7 @@ jobs:
       - name: package with gradle
         run: ./gradlew jpackage
       - name: save artifacts
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v4
         with:
           name: dmg-release
   release:
