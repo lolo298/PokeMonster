@@ -12,6 +12,10 @@ group 'com.poketube'
 version '1.4.1'
 description = 'Poketube'
 
+tasks.register('printVersionName') {
+    println project.version
+}
+
 repositories {
     mavenCentral()
 }
@@ -70,14 +74,10 @@ jlink {
         if (Os.isFamily(Os.FAMILY_WINDOWS)) {
             installerOptions += ['--win-dir-chooser', '--win-menu', '--win-shortcut']
             installerType = 'msi'
-            println "*** Windows "
-
         }
         if (Os.isFamily(Os.FAMILY_MAC)) {
             imageOptions += ['--icon', 'app-icon.icns']
-            installerType = 'dmg'
-            println "*** Mac "
-        }
+            installerType = 'dmg'}
         if (Os.isFamily(Os.FAMILY_UNIX) && !Os.isFamily(Os.FAMILY_MAC)) {
             imageOptions += ['--icon', 'app-icon.png']
             installerOptions += [
@@ -85,7 +85,6 @@ jlink {
                     '--linux-shortcut'
             ]
             installerType = 'deb'
-            println "*** Linux "
         }
     }
 }

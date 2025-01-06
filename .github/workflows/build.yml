@@ -3,7 +3,16 @@ on:
   push:
     branches:
       - main
+permissions:
+  contents: write
 jobs:
+  get-version:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Retrieve Version
+        run: |
+          echo "version=$(${{github.workspace}}/gradlew -q printVersionName)" >> $GITHUB_ENV
   build-linux:
     runs-on: ubuntu-latest
     steps:
@@ -66,4 +75,4 @@ jobs:
             ${{ needs.build-linux.outputs.artifacts }}
             ${{ needs.build-windows.outputs.artifacts }}
             ${{ needs.build-macos.outputs.artifacts }}
-          tag_name: ${{ github.sha }}
+          tag_name: ${{ env.version }}
