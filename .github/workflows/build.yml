@@ -66,6 +66,4 @@ jobs:
             ${{ needs.build-linux.outputs.artifacts }}
             ${{ needs.build-windows.outputs.artifacts }}
             ${{ needs.build-macos.outputs.artifacts }}
-          token: ${{ secrets.GITHUB_TOKEN }}
-          name: Release ${{ github.sha }}
 
