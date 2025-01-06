@@ -67,5 +67,5 @@ jobs:
             ${{ needs.build-windows.outputs.artifacts }}
             ${{ needs.build-macos.outputs.artifacts }}
           token: ${{ secrets.GITHUB_TOKEN }}
-          title: Release ${{ github.sha }}
+          name: Release ${{ github.sha }}
 
