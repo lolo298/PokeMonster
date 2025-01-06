@@ -11,7 +11,7 @@ jobs:
       - name: Set up Java 21
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
+          distribution: 'zulu'
           java-version: '21'
           java-package: 'jdk+fx'
       - name: package with gradle
@@ -28,7 +28,7 @@ jobs:
       - name: Set up Java 21
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
+          distribution: 'zulu'
           java-version: '21'
           java-package: 'jdk+fx'
       - name: package with gradle
@@ -45,7 +45,7 @@ jobs:
       - name: Set up Java 21
         uses: actions/setup-java@v2
         with:
-          distribution: 'adopt'
+          distribution: 'zulu'
           java-version: '21'
           java-package: 'jdk+fx'
       - name: package with gradle
