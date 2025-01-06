@@ -66,4 +66,4 @@ jobs:
             ${{ needs.build-linux.outputs.artifacts }}
             ${{ needs.build-windows.outputs.artifacts }}
             ${{ needs.build-macos.outputs.artifacts }}
-
+          tag_name: ${{ github.sha }}
