@@ -73,3 +73,4 @@ jobs:
             ${{ needs.build-macos.outputs.artifacts }}
           name: version ${{ env.VERSION }}
           tag_name: ${{ github.ref_name }}
+          body_path: CHANGELOG.md
