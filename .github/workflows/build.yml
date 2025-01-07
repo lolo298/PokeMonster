@@ -63,14 +63,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Get version
-        id: version
-        run: echo "::set-output name=version::$(${{runner.workspace}}gradlew -q printVersionName)"
-#      - name: create release
-#        uses: softprops/action-gh-release@v1
-#        with:
-#          files: |
-#            ${{ needs.build-linux.outputs.artifacts }}
-#            ${{ needs.build-windows.outputs.artifacts }}
-#            ${{ needs.build-macos.outputs.artifacts }}
-#          tag_name: version ${{ env.version }}
+      - uses: xom9ikk/dotenv@v2.3.0
+      - name: create release
+        uses: softprops/action-gh-release@v1
+        with:
+          files: |
+            ${{ needs.build-linux.outputs.artifacts }}
+            ${{ needs.build-windows.outputs.artifacts }}
+            ${{ needs.build-macos.outputs.artifacts }}
+          tag_name: version ${{ env.VERSION }}
