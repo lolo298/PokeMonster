@@ -65,10 +65,10 @@ jobs:
       - uses: actions/checkout@v2
       - uses: xom9ikk/dotenv@v2.3.0
       - name: create release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v2
         with:
           files: |
             ${{ needs.build-linux.outputs.artifacts }}
             ${{ needs.build-windows.outputs.artifacts }}
             ${{ needs.build-macos.outputs.artifacts }}
-          tag_name: version ${{ env.VERSION }}
+          name: version ${{ env.VERSION }}
