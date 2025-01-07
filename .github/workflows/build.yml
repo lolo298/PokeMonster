@@ -71,6 +71,6 @@ jobs:
             ${{ needs.build-linux.outputs.artifacts }}
             ${{ needs.build-windows.outputs.artifacts }}
             ${{ needs.build-macos.outputs.artifacts }}
-          name: version ${{ env.VERSION }}
-          tag_name: $(echo ${{ env.VERSION }} | grep -E -o '^\d+')
+          name: version ${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ env.PATCH_VERSION }}
+          tag_name: v${{ env.MAJOR_VERSION }}
           body_path: CHANGELOG.md

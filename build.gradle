@@ -11,7 +11,7 @@ plugins {
 }
 
 group 'com.poketube'
-version env.VERSION.value
+version env.MAJOR_VERSION.value + '.' + env.MINOR_VERSION.value + '.' + env.PATCH_VERSION.value
 description = 'Poketube'
 
 tasks.register('printVersionName') {
