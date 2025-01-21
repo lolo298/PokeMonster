@@ -36,9 +36,8 @@ public class Deserializer {
                 continue;
             }
 
-            var tmp = "End" + map.get(new String("class"));
 
-            if (line.equals("End" + map.get(new String("class")))) {
+            if (line.trim().equals("End" + map.get(new String("class")))) {
                 data.add(map);
                 map = null;
             }
@@ -53,9 +52,7 @@ public class Deserializer {
             map.put(key, value);
         }
 
-//        int tmp = this.lineNumber;
         this.lineNumber = 0;
-//        throw new InvalidDataError(tmp, this.DeserializeSource);
         return data;
     }
 
@@ -63,7 +60,7 @@ public class Deserializer {
         if (value == null) {
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
         }
-        logger.log("checking value: " + value);
+        Logger.log("checking value: " + value);
         value = value.trim();
         if (value.isEmpty()) {
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
@@ -86,11 +83,10 @@ public class Deserializer {
 
         if (types.contains(value)) {
             var name = value.charAt(0) + value.substring(1).toLowerCase() + "Type";
-            Types type = Types.valueOf(value);
             try {
                 return (Type) Class.forName("com.poketube.Game.Types." + name).getConstructor().newInstance();
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                Logger.error(e.getMessage());
             }
         }
 
@@ -102,13 +98,14 @@ public class Deserializer {
     }
 
 
-    public Serializable hydrate(HashMap<String, Serializable> data) {
+    public Serializable hydrate(HashMap<String, Serializable> data) throws Exception {
         Serializable obj = null;
         String className = (String)data.get(new String("class"));
         if (className == null) {
+            Logger.warn("Class name not found");
             return null;
         }
-
+        System.out.println(className.getValue());
         switch (className.getValue()) {
             case "Monster":
                 var keys = data.keySet();
@@ -128,8 +125,7 @@ public class Deserializer {
                         }
                         monster.getClass().getMethod(method, classType).invoke(monster, data.get(key));
                     } catch (Exception e) {
-                        logger.error(e.getMessage());
-                        continue;
+                        throw new Exception("Unable to hydrate object: " + e.getMessage());
                     }
 
                 }

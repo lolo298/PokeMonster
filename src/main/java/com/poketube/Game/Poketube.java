@@ -1,13 +1,15 @@
 package com.poketube.Game;
 
 import com.poketube.Game.Monsters.Monster;
+import com.poketube.Utils.ConfigLoader;
 import com.poketube.Utils.Deserializer;
 import com.poketube.Utils.Errors.InvalidDataError;
 import com.poketube.Utils.Serializer;
-import com.poketube.Utils.logger;
+import com.poketube.Utils.Logger;
 
 import java.io.*;
 import java.util.List;
+import java.util.Objects;
 
 public class Poketube {
     public static final String MONSTERS_FILE = "monsters.txt";
@@ -17,6 +19,21 @@ public class Poketube {
     private Deserializer deserializer;
 
     private List<Monster> monsters;
+
+    public static Poketube instance;
+
+    public Poketube() {
+        if (instance != null) {
+            throw new IllegalStateException("Poketube already initialized");
+        }
+    }
+
+    public static Poketube getInstance() {
+        if (instance == null) {
+            instance = new Poketube();
+        }
+        return instance;
+    }
 
     public void start() {
         this.Init();
@@ -28,49 +45,60 @@ public class Poketube {
         this.deserializer = new Deserializer();
 
         this.LoadMonsters();
-        logger.log("Welcome to Poketube!");
+        System.out.println(this.monsters);
+        Logger.log("Welcome to Poketube!");
     }
 
     private void LoadMonsters() {
         // Load monsters from file
-        File f = new File(MONSTERS_FILE);
-
-        if (!f.exists()) {
-            logger.warn("Monsters file not found, creating new one");
+        File f;
+        try {
+            f = ConfigLoader.loadConfig(MONSTERS_FILE);
+        } catch (FileNotFoundException e) {
+            Logger.warn("Monsters file not found, creating new one");
             try {
-                boolean res = f.createNewFile();
-                if (!res) {
-                    logger.error("Unable to create monsters file");
-                    return;
-                }
-            } catch (Exception e) {
-                logger.error("Unable to create monsters file: " + e.getMessage());
+                f = ConfigLoader.createConfig(MONSTERS_FILE);
+            } catch (Exception ex) {
+                Logger.error("Unable to create monsters file: " + ex.getMessage());
                 return;
             }
+        } catch (Exception e) {
+            Logger.error("Error loading monsters file: " + e.getMessage());
+            return;
         }
 
-        BufferedReader br = null;
+        BufferedReader br;
         try {
             br = new BufferedReader(new FileReader(f));
         } catch (FileNotFoundException e) {
-            logger.error("Monsters file not found: " + e.getMessage());
+            Logger.error("Monsters file not found: " + e.getMessage());
             return;
         }
 
         try {
             var data = this.deserializer.readFile(br);
             var rawMonsters = this.deserializer.deserialize(data);
-            this.monsters = rawMonsters.stream().map(map -> (Monster) this.deserializer.hydrate(map)).toList();
+            System.out.println(rawMonsters);
+            this.monsters = rawMonsters.stream().map(map -> {
+                try {
+                    return (Monster) this.deserializer.hydrate(map);
+                } catch (Exception e) {
+                    Logger.error(e.getMessage());
+                    return null;
+                }
+            }).filter(Objects::nonNull).toList();
         } catch (IOException e) {
-            logger.error("Error reading monsters file: " + e.getMessage());
-            return;
+            Logger.error("Error reading monsters file: " + e.getMessage());
         } catch (InvalidDataError e) {
-            logger.error(e.getMessage());
-            return;
+            Logger.error(e.getMessage());
         }
     }
 
     public List<Monster> getMonsters() {
         return monsters;
+    }
+
+    public Monster findMonster(String name) {
+        return monsters.stream().filter(monster -> monster.toString().equals(name)).findFirst().orElse(null);
     }
 }

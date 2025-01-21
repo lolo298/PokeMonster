@@ -75,4 +75,18 @@ public class Monster implements Serializable {
                 "defense: " + this.defense.serialize() + "\n" +
                 "speed: " + this.speed.serialize();
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof Monster m) {
+            return m.serialize().equals(this.serialize());
+        }
+        return false;
+    }
+
+    @Override
+    public int hashCode() {
+        return this.serialize().hashCode();
+    }
+
 }

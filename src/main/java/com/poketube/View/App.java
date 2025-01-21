@@ -8,12 +8,15 @@ import javafx.stage.Stage;
 import java.io.IOException;
 
 public class App extends Application {
+    Stage stage;
+
     @Override
     public void start(Stage stage) throws IOException {
-        var main = App.class.getResource("hello-view.fxml");
+        this.stage = stage;
+        var main = App.class.getResource(Screens.MAIN.toString());
         FXMLLoader fxmlLoader = new FXMLLoader(main);
-        Scene scene = new Scene(fxmlLoader.load(), 320, 240);
-        stage.setTitle("Hello!");
+        Scene scene = new Scene(fxmlLoader.load(), 640, 240);
+        stage.setTitle("Poketube");
         stage.setScene(scene);
         stage.show();
     }
