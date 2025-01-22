@@ -27,6 +27,10 @@ public class Range implements Serializable {
         this.max = max;
     }
 
+    public Integer generateValue() {
+        return new Integer((int)Math.floor(Math.random() * (this.max.getValue() - this.min.getValue() + 1) + this.min.getValue()));
+    }
+
     public java.lang.String serialize() {
         return this.min.serialize() + "/" + this.max.serialize();
     }

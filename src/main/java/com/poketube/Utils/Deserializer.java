@@ -1,12 +1,14 @@
 package com.poketube.Utils;
 
+import com.poketube.Game.Monsters.Attack;
 import com.poketube.Game.Monsters.Monster;
 import com.poketube.Game.Types.Types;
 import com.poketube.Game.Types.Type;
 import com.poketube.Utils.Errors.InvalidDataError;
+import com.poketube.Utils.Values.*;
+import com.poketube.Utils.Values.Float;
 import com.poketube.Utils.Values.Integer;
 import com.poketube.Utils.Values.String;
-import com.poketube.Utils.Values.Range;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -79,8 +81,24 @@ public class Deserializer {
             }
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
         }
-        List<java.lang.String> types = Arrays.stream(Types.values()).map(Enum::name).toList();
+        if (value.contains("$")) {
+            java.lang.String[] split = value.split("\\$");
+            if (split.length != 3) {
+                throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
+            }
 
+            Serializable stat = this.parseValue(split[0]);
+            Serializable power = this.parseValue(split[1]);
+            Serializable target = this.parseValue(split[2]);
+
+            if (stat instanceof String && power instanceof Integer && target instanceof Targets) {
+                return new Buff((String) stat, (Integer) power, (Targets) target);
+            }
+            throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
+        }
+
+
+        List<java.lang.String> types = Arrays.stream(Types.values()).map(Enum::name).toList();
         if (types.contains(value)) {
             var name = value.charAt(0) + value.substring(1).toLowerCase() + "Type";
             try {
@@ -90,8 +108,18 @@ public class Deserializer {
             }
         }
 
+        List<java.lang.String> targets = Arrays.stream(Targets.values()).map(Enum::name).toList();
+        if (targets.contains(value)) {
+            return Targets.valueOf(value);
+        }
+
+
         if (value.matches("[0-9]+")) {
             return new Integer(java.lang.Integer.parseInt(value));
+        }
+
+        if (value.matches("[0-9]+\\.[0-9]+")) {
+            return new Float(java.lang.Float.parseFloat(value));
         }
 
         return new String(value.trim());
@@ -106,34 +134,40 @@ public class Deserializer {
             return null;
         }
         System.out.println(className.getValue());
+        Serializable cls = null;
         switch (className.getValue()) {
             case "Monster":
-                var keys = data.keySet();
-                Monster monster = new Monster();
-                for (String key : keys) {
-                    if (key.getValue().equals("class")) {
-                        continue;
-                    }
-
-                    try {
-                        var value = data.get(key);
-                        var keyVal = key.getValue();
-                        var method = "set" +  keyVal.substring(0, 1).toUpperCase() + keyVal.substring(1);
-                        var classType = value.getClass();
-                        if (value instanceof Type) {
-                            classType = Type.class;
-                        }
-                        monster.getClass().getMethod(method, classType).invoke(monster, data.get(key));
-                    } catch (Exception e) {
-                        throw new Exception("Unable to hydrate object: " + e.getMessage());
-                    }
-
-                }
-                obj = monster;
+                cls = new Monster();
+                break;
+                case "Attack":
+                cls = new Attack();
                 break;
             default:
                 break;
         }
+
+                var keys = data.keySet();
+        for (String key : keys) {
+            if (key.getValue().equals("class")) {
+                continue;
+            }
+
+            try {
+                var value = data.get(key);
+                var keyVal = key.getValue();
+                var method = "set" +  keyVal.substring(0, 1).toUpperCase() + keyVal.substring(1);
+                var classType = value.getClass();
+                if (value instanceof Type) {
+                    classType = Type.class;
+                }
+
+                cls.getClass().getMethod(method, classType).invoke(cls, data.get(key));
+            } catch (Exception e) {
+                throw new Exception("Unable to hydrate object: " + e.getMessage());
+            }
+
+        }
+        obj = cls;
 
         return obj;
     }

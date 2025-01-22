@@ -6,7 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public enum Types implements Serializable {
-    FIRE, WATER, GRASS, GROUND, ELECTRIC;
+    FIRE, WATER, GRASS, GROUND, ELECTRIC, NORMAL;
 
     private final List<Types> strengths = new ArrayList<>();
     private final List<Types> weaknesses = new ArrayList<>();

@@ -2,17 +2,17 @@ package com.poketube.Utils.Values;
 
 import com.poketube.Utils.Serializable;
 
-public class Integer implements Serializable {
-    private int value;
-    public Integer(int value) {
+public class Float implements Serializable {
+    private double value;
+    public Float(double value) {
         this.value = value;
     }
 
-    public int getValue() {
+    public double getValue() {
         return value;
     }
 
-    public void setValue(int value) {
+    public void setValue(double value) {
         this.value = value;
     }
 
@@ -21,18 +21,19 @@ public class Integer implements Serializable {
     }
 
 
-    public Integer minusLeft(int other) {
+    public Float minusLeft(double other) {
         this.value = this.value - other;
         return this;
     }
 
-    public Integer minusRight(int other) {
+    public Float minusRight(double other) {
         this.value = other - this.value;
         return this;
     }
 
-    public Integer plus(int other) {
+    public Float plus(double other) {
         this.value = this.value + other;
         return this;
     }
+
 }

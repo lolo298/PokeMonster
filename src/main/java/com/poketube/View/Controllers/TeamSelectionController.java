@@ -2,6 +2,7 @@ package com.poketube.View.Controllers;
 
 import com.poketube.Game.Monsters.Monster;
 import com.poketube.Game.Poketube;
+import com.poketube.Utils.Logger;
 import com.poketube.View.MainController;
 import com.poketube.View.Screens;
 import javafx.application.Platform;
@@ -100,7 +101,16 @@ public class TeamSelectionController implements IController {
                 Step++;
                 break;
             case 1:
-                mainController.switchView(Screens.ORDER_TEAM);
+                Poketube app = Poketube.getInstance();
+
+                for (Monster monster : team1) {
+                    app.addMonsterTeam1(monster);
+                }
+                for (Monster monster : team2) {
+                    app.addMonsterTeam2(monster);
+                }
+                Logger.log("Navigating to select attack screen");
+                mainController.switchView(Screens.SELECT_ATTACK);
                 break;
         }
 
