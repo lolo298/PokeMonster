@@ -121,6 +121,7 @@ public class AttackSelectController implements IController {
         attackList.getSelectionModel().getSelectedItems().removeListener(this.attackChange);
         var selectedMon = teamList.getSelectionModel().getSelectedItem();
         if (selectedMon == null) {
+            attackList.getItems().clear();
             return;
         }
 

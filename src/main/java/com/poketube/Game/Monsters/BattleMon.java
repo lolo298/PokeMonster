@@ -3,15 +3,18 @@ package com.poketube.Game.Monsters;
 import com.poketube.Game.Types.Type;
 import com.poketube.Utils.Errors.BattleStarted;
 import com.poketube.Utils.Errors.TooManyAttacks;
+import com.poketube.Utils.ISprite;
 import com.poketube.Utils.Logger;
 import com.poketube.Utils.Values.Integer;
+import com.poketube.Utils.Values.SpritesType;
 import com.poketube.Utils.Values.String;
 import com.poketube.Utils.Values.Tuple;
 import javafx.scene.image.Image;
+import javafx.scene.image.WritableImage;
 
 import java.net.URISyntaxException;
 
-public class BattleMon {
+public class BattleMon implements ISprite {
     private boolean locked;
     private final String name;
     private final Type type;
@@ -102,25 +105,35 @@ public class BattleMon {
         return attacks;
     }
 
-    public Tuple<Image, Image> getSprite() throws URISyntaxException {
+    public Image getSprite(java.lang.String side, SpritesType type) throws URISyntaxException {
         Logger.log("Getting sprite for " + this.getName());
 
-        // Get sprite from ressource com.poketube.Sprites
-        java.net.URL front = this.getClass().getResource("/com/poketube/Sprites/" + this.getName().getValue().toLowerCase() + "_front.gif");
-        java.net.URL back = this.getClass().getResource("/com/poketube/Sprites/" + this.getName().getValue().toLowerCase() + "_back.gif");
+        java.lang.String extension = switch (type) {
+            case STATIC -> "png";
+            case ANIMATED -> "gif";
+        };
 
-        if (front == null) {
-            front = this.getClass().getResource("/com/poketube/Sprites/default.png");
-            assert front != null;
+        java.net.URL sprite =  this.getClass().getResource("/com/poketube/Sprites/" + this.getName().getValue().toLowerCase() + "_" + side + "." + extension);
+
+        if (sprite == null) {
+            sprite = this.getClass().getResource("/com/poketube/Sprites/default.png");
         }
 
-        if (back == null) {
-            back = this.getClass().getResource("/com/poketube/Sprites/default.png");
-            assert back != null;
-        }
+        assert sprite != null;
+        return new Image(sprite.toURI().toString(), 38, 38, true, false);
+    }
 
-        var frontImage = new Image(front.toURI().toString(), 38, 38, true, false);
-        var backImage = new Image(back.toURI().toString(), 38, 38, true, false);
+    public Image getSprite() {
+        try {
+            return getSprite("front", SpritesType.ANIMATED);
+        } catch (URISyntaxException e) {
+            return new WritableImage(40, 40);
+        }
+    }
+
+    public Tuple<Image, Image> getSprites() throws URISyntaxException {
+        var frontImage = getSprite("front", SpritesType.ANIMATED);
+        var backImage = getSprite("back", SpritesType.ANIMATED);
 
         return new Tuple<>(frontImage, backImage);
     }

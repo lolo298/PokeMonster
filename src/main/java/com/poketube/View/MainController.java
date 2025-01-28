@@ -30,7 +30,16 @@ public class MainController {
             rootPane.getChildren().add(newView);
         } catch (IOException e) {
             Logger.error("Failed to load view: " + e.getMessage());
+            var stack = e.getStackTrace();
+            for (int i = 0; i < 15; i++) {
+                Logger.error(stack[i].toString());
+            }
         }
+    }
+
+    @FXML
+    public void go() {
+        switchView(Screens.TEST);
     }
 
 }

@@ -55,7 +55,7 @@ public class BattleController implements IController {
     @FXML
     private ListView<String> useItemsList;
     @FXML
-    private ListView<String> switchMonList;
+    private ListView<BattleMon> switchMonList;
 
 
     public void setMainController(MainController mainController) {
@@ -112,7 +112,7 @@ public class BattleController implements IController {
         activeHpLabel.setText(String.format("HP: %d/%d", activeMon.getHealth().getValue(), activeMon.getMaxHealth().getValue()));
 
         try {
-            activeMonImg.setImage(activeMon.getSprite().getSecond());
+            activeMonImg.setImage(activeMon.getSprites().getSecond());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -121,7 +121,7 @@ public class BattleController implements IController {
         enemyHpLabel.setText(String.format("HP: %d/%d", enemyMon.getHealth().getValue(), enemyMon.getMaxHealth().getValue()));
 
         try {
-            enemyMonImg.setImage(enemyMon.getSprite().getFirst());
+            enemyMonImg.setImage(enemyMon.getSprites().getFirst());
         } catch (URISyntaxException e) {
             throw new RuntimeException(e);
         }
@@ -154,6 +154,9 @@ public class BattleController implements IController {
                     break;
                 }
             }
+
+            switchMonList.getItems().clear();
+            switchMonList.getItems().addAll(game.getActiveTeam());
 
             System.out.println("Setting attack " + i + " to " + attack.getName().getValue());
             assert act != null && actTooltip != null;
