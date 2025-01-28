@@ -1,6 +1,6 @@
 package com.poketube.Utils;
 
-public class logger {
+public class Logger {
     public static void log(String message) {
         System.out.println("\u001B[0;96m[INFO] " + message + "\u001B[0m");
     }

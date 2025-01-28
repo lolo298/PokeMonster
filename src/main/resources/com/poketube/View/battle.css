@@ -1,0 +1,14 @@
+#actGrid {
+    -fx-background-color: red;
+    -fx-max-height: 100%;
+    -fx-max-width: Infinity;
+    -fx-hgap: 2;
+    -fx-vgap: 2;
+    -fx-padding: 2;
+}
+
+.actButton {
+    -fx-background-color: green;
+    -fx-max-height: Infinity;
+    -fx-max-width: Infinity;
+}

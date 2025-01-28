@@ -1,12 +1,14 @@
 package com.poketube.Utils;
 
+import com.poketube.Game.Monsters.Attack;
 import com.poketube.Game.Monsters.Monster;
-import com.poketube.Game.Types.Types;
 import com.poketube.Game.Types.Type;
+import com.poketube.Game.Types.Types;
 import com.poketube.Utils.Errors.InvalidDataError;
+import com.poketube.Utils.Values.Float;
 import com.poketube.Utils.Values.Integer;
 import com.poketube.Utils.Values.String;
-import com.poketube.Utils.Values.Range;
+import com.poketube.Utils.Values.*;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -36,9 +38,8 @@ public class Deserializer {
                 continue;
             }
 
-            var tmp = "End" + map.get(new String("class"));
 
-            if (line.equals("End" + map.get(new String("class")))) {
+            if (line.trim().equals("End" + map.get(new String("class")))) {
                 data.add(map);
                 map = null;
             }
@@ -53,9 +54,7 @@ public class Deserializer {
             map.put(key, value);
         }
 
-//        int tmp = this.lineNumber;
         this.lineNumber = 0;
-//        throw new InvalidDataError(tmp, this.DeserializeSource);
         return data;
     }
 
@@ -63,7 +62,7 @@ public class Deserializer {
         if (value == null) {
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
         }
-        logger.log("checking value: " + value);
+        Logger.log("checking value: " + value);
         value = value.trim();
         if (value.isEmpty()) {
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
@@ -82,62 +81,93 @@ public class Deserializer {
             }
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
         }
-        List<java.lang.String> types = Arrays.stream(Types.values()).map(Enum::name).toList();
+        if (value.contains("$")) {
+            java.lang.String[] split = value.split("\\$");
+            if (split.length != 3) {
+                throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
+            }
 
+            Serializable stat = this.parseValue(split[0]);
+            Serializable power = this.parseValue(split[1]);
+            Serializable target = this.parseValue(split[2]);
+
+            if (stat instanceof String && power instanceof Integer && target instanceof Targets) {
+                return new Buff((String) stat, (Integer) power, (Targets) target);
+            }
+            throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
+        }
+
+
+        List<java.lang.String> types = Arrays.stream(Types.values()).map(Enum::name).toList();
         if (types.contains(value)) {
             var name = value.charAt(0) + value.substring(1).toLowerCase() + "Type";
-            Types type = Types.valueOf(value);
             try {
                 return (Type) Class.forName("com.poketube.Game.Types." + name).getConstructor().newInstance();
             } catch (Exception e) {
-                logger.error(e.getMessage());
+                Logger.error(e.getMessage());
             }
         }
 
+        List<java.lang.String> targets = Arrays.stream(Targets.values()).map(Enum::name).toList();
+        if (targets.contains(value)) {
+            return Targets.valueOf(value);
+        }
+
+
         if (value.matches("[0-9]+")) {
             return new Integer(java.lang.Integer.parseInt(value));
+        }
+
+        if (value.matches("[0-9]+\\.[0-9]+")) {
+            return new Float(java.lang.Float.parseFloat(value));
         }
 
         return new String(value.trim());
     }
 
 
-    public Serializable hydrate(HashMap<String, Serializable> data) {
+    public Serializable hydrate(HashMap<String, Serializable> data) throws Exception {
         Serializable obj = null;
-        String className = (String)data.get(new String("class"));
+        String className = (String) data.get(new String("class"));
         if (className == null) {
+            Logger.warn("Class name not found");
             return null;
         }
-
+        System.out.println(className.getValue());
+        Serializable cls = null;
         switch (className.getValue()) {
             case "Monster":
-                var keys = data.keySet();
-                Monster monster = new Monster();
-                for (String key : keys) {
-                    if (key.getValue().equals("class")) {
-                        continue;
-                    }
-
-                    try {
-                        var value = data.get(key);
-                        var keyVal = key.getValue();
-                        var method = "set" +  keyVal.substring(0, 1).toUpperCase() + keyVal.substring(1);
-                        var classType = value.getClass();
-                        if (value instanceof Type) {
-                            classType = Type.class;
-                        }
-                        monster.getClass().getMethod(method, classType).invoke(monster, data.get(key));
-                    } catch (Exception e) {
-                        logger.error(e.getMessage());
-                        continue;
-                    }
-
-                }
-                obj = monster;
+                cls = new Monster();
+                break;
+            case "Attack":
+                cls = new Attack();
                 break;
             default:
                 break;
         }
+
+        var keys = data.keySet();
+        for (String key : keys) {
+            if (key.getValue().equals("class")) {
+                continue;
+            }
+
+            try {
+                var value = data.get(key);
+                var keyVal = key.getValue();
+                var method = "set" + keyVal.substring(0, 1).toUpperCase() + keyVal.substring(1);
+                var classType = value.getClass();
+                if (value instanceof Type) {
+                    classType = Type.class;
+                }
+
+                cls.getClass().getMethod(method, classType).invoke(cls, data.get(key));
+            } catch (Exception e) {
+                throw new Exception("Unable to hydrate object: " + e.getMessage());
+            }
+
+        }
+        obj = cls;
 
         return obj;
     }
@@ -146,7 +176,7 @@ public class Deserializer {
         StringBuilder builder = new StringBuilder();
         java.lang.String line;
 
-        while((line = br.readLine()) != null) {
+        while ((line = br.readLine()) != null) {
             builder.append(line);
             builder.append(System.lineSeparator());
         }

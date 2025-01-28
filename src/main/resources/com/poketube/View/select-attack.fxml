@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.poketube.View.Controllers.AttackSelectController">
+    <Label>Select 4 attacks for each mon</Label>
+    <HBox alignment="CENTER" spacing="20.0">
+        <ListView fx:id="teamList" prefHeight="200.0" prefWidth="200.0"/>
+        <ListView fx:id="attackList" prefHeight="200.0" prefWidth="200.0"/>
+    </HBox>
+    <HBox alignment="CENTER" spacing="20.0">
+        <Label>Select pokemons attacks</Label>
+        <Button fx:id="startButton" onAction="#startGame" text="Next team" disable="true"/>
+    </HBox>
+
+</VBox>

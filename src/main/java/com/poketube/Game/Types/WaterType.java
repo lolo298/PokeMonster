@@ -6,7 +6,9 @@ public class WaterType extends Type {
         super(Types.WATER);
     }
 
-    public boolean hasSkill() { return true; }
+    public boolean hasSkill() {
+        return true;
+    }
 
 
 }

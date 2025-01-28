@@ -6,7 +6,9 @@ public class FireType extends Type {
         super(Types.FIRE);
     }
 
-    public boolean hasSkill() { return true; }
+    public boolean hasSkill() {
+        return true;
+    }
 
 
 }

@@ -6,8 +6,9 @@ public class ElectricType extends Type {
         super(Types.ELECTRIC);
     }
 
-    public boolean hasSkill() { return true; }
-
+    public boolean hasSkill() {
+        return true;
+    }
 
 
 }

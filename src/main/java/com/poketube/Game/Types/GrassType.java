@@ -6,7 +6,9 @@ public class GrassType extends Type {
         super(Types.GRASS);
     }
 
-    public boolean hasSkill() { return true; }
+    public boolean hasSkill() {
+        return true;
+    }
 
 
 }

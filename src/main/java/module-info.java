@@ -8,4 +8,6 @@ module com.poketube {
     opens com.poketube.View to javafx.fxml;
     exports com.poketube;
     exports com.poketube.View;
+    exports com.poketube.View.Controllers;
+    opens com.poketube.View.Controllers to javafx.fxml;
 }

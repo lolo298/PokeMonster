@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" spacing="20.0" stylesheets="@battle.css" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.poketube.View.Controllers.BattleController">
+    <Label>Player 1</Label>
+   <BorderPane prefHeight="200.0" prefWidth="200.0">
+      <center>
+         <HBox alignment="CENTER" BorderPane.alignment="CENTER">
+            <children>
+                 <VBox>
+                     <Label fx:id="activeMonLabel" />
+                     <VBox minHeight="100" minWidth="100">
+                         <ImageView fx:id="activeMonImg" fitHeight="80.0" fitWidth="80.0" pickOnBounds="true" preserveRatio="true" />
+                     </VBox>
+                     <Label fx:id="activeHpLabel" />
+                 </VBox>
+                 <VBox>
+                     <Label fx:id="enemyMonlabel" />
+                     <VBox minHeight="100" minWidth="100">
+            
+                               <ImageView fx:id="enemyMonImg" fitHeight="70.0" fitWidth="70.0" pickOnBounds="true" preserveRatio="true" />
+                     </VBox>
+                     <Label fx:id="enemyHpLabel" />
+                 </VBox>
+            </children>
+         </HBox>
+      </center>
+      <left>
+         <VBox BorderPane.alignment="CENTER">
+            <children>
+               <Label text="Switch pokemon" />
+               <ListView prefHeight="200.0" prefWidth="50.0" fx:id="switchMonList" />
+            </children>
+         </VBox>
+      </left>
+      <right>
+         <VBox BorderPane.alignment="CENTER">
+            <children>
+               <Label text="Use object" />
+               <ListView prefHeight="200.0" prefWidth="50.0" fx:id="useItemsList" />
+            </children>
+         </VBox>
+      </right>
+   </BorderPane>
+    <GridPane id="actGrid">
+        <Button fx:id="act1" onAction="#onActSelect" styleClass="actButton" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+         <tooltip>
+            <Tooltip fx:id="act1Tooltip" />
+         </tooltip>
+        </Button>
+        <Button fx:id="act2" onAction="#onActSelect" styleClass="actButton" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="0" GridPane.vgrow="ALWAYS">
+            <tooltip><Tooltip fx:id="act2Tooltip" /></tooltip>
+        </Button>
+        <Button fx:id="act3" onAction="#onActSelect" styleClass="actButton" GridPane.columnIndex="0" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <tooltip><Tooltip fx:id="act3Tooltip" /></tooltip>
+        </Button>
+        <Button fx:id="act4" onAction="#onActSelect" styleClass="actButton" GridPane.columnIndex="1" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+            <tooltip><Tooltip fx:id="act4Tooltip" /></tooltip>
+        </Button>
+        <columnConstraints>
+            <ColumnConstraints />
+            <ColumnConstraints />
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints />
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+   <padding>
+      <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+   </padding>
+
+</VBox>

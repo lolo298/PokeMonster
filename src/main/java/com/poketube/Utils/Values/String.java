@@ -4,6 +4,7 @@ import com.poketube.Utils.Serializable;
 
 public class String implements Serializable {
     private java.lang.String value;
+
     public String(java.lang.String value) {
         this.value = value;
     }

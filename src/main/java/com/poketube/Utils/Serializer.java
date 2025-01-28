@@ -1,9 +1,5 @@
 package com.poketube.Utils;
 
-import com.poketube.Utils.Values.Range;
-
-import java.util.HashMap;
-
 public class Serializer {
 
     public String serialize(Serializable obj) {

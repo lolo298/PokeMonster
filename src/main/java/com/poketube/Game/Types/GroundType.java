@@ -6,7 +6,9 @@ public class GroundType extends Type {
         super(Types.GROUND);
     }
 
-    public boolean hasSkill() { return true; }
+    public boolean hasSkill() {
+        return true;
+    }
 
 
 }
