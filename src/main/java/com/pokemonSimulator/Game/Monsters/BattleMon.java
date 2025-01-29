@@ -2,9 +2,11 @@ package com.pokemonSimulator.Game.Monsters;
 
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Utils.Errors.BattleStarted;
+import com.pokemonSimulator.Utils.Errors.InvalidSprite;
 import com.pokemonSimulator.Utils.Errors.TooManyAttacks;
 import com.pokemonSimulator.Utils.ISprite;
 import com.pokemonSimulator.Utils.Logger;
+import com.pokemonSimulator.Utils.SpriteLoader;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.SpritesType;
 import com.pokemonSimulator.Utils.Values.String;
@@ -105,7 +107,7 @@ public class BattleMon implements ISprite {
         return attacks;
     }
 
-    public Image getSprite(java.lang.String side, SpritesType type) throws URISyntaxException {
+    public Image getSprite(java.lang.String side, SpritesType type) {
         Logger.log("Getting sprite for " + this.getName());
 
         java.lang.String extension = switch (type) {
@@ -113,22 +115,44 @@ public class BattleMon implements ISprite {
             case ANIMATED -> "gif";
         };
 
-        java.net.URL sprite =  this.getClass().getResource("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + side + "." + extension);
+        Image sprite = null;
 
-        if (sprite == null) {
-            sprite = this.getClass().getResource("/com/pokemonSimulator/Sprites/default.png");
+        try {
+            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + side + "." + extension);
+        } catch (InvalidSprite e) {
+            Logger.warn(e.toString());
+            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/default.png");
         }
 
-        assert sprite != null;
-        return new Image(sprite.toURI().toString(), 38, 38, true, false);
+        return sprite;
+    }
+
+    public Image getSprite(java.lang.String side, SpritesType type, int width, int height) {
+        Logger.log("Getting sprite for " + this.getName());
+
+        java.lang.String extension = switch (type) {
+            case STATIC -> "png";
+            case ANIMATED -> "gif";
+        };
+
+        Image sprite = null;
+
+        try {
+            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + side + "." + extension, width, height, false, false);
+        } catch (InvalidSprite e) {
+            Logger.warn(e.toString());
+            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/default.png", width, height, true, false);
+        }
+
+        return sprite;
     }
 
     public Image getSprite() {
-        try {
-            return getSprite("front", SpritesType.ANIMATED);
-        } catch (URISyntaxException e) {
-            return new WritableImage(40, 40);
-        }
+        return getSprite("front", SpritesType.ANIMATED);
+    }
+
+    public Image getSprite(int width, int height) {
+        return getSprite("front", SpritesType.ANIMATED, width, height);
     }
 
     public Tuple<Image, Image> getSprites() throws URISyntaxException {

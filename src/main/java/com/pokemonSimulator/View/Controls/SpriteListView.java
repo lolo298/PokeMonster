@@ -20,7 +20,7 @@ public class SpriteListView<T extends ISprite> extends ListView<T> {
                     return;
                 }
 
-                Image sprite = item.getSprite();
+                Image sprite = item.getSprite(40, 40);
 
                 setText(item.toString());
                 setGraphic(new ImageView(sprite));

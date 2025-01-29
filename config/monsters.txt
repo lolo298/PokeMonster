@@ -9,10 +9,10 @@ EndMonster
 Monster
     name: Charmander
     type: FIRE
-    health: 30/35
-    speed: 60/100
-    attack: 60/60
-    defense: 40/45
+    health: 188/282
+    speed: 121/251
+    attack: 98/223
+    defense: 81/203
 EndMonster
 Monster
     name: Squirtle
@@ -25,40 +25,40 @@ EndMonster
 Monster
     name: Bulbasaur
     type: GRASS
-    health: 30/35
-    speed: 50/100
-    attack: 50/60
-    defense: 50/45
+    health: 200/294
+    speed: 85/207
+    attack: 92/216
+    defense: 92/216
 EndMonster
 Monster
     Name: Geodude
     Type: GROUND
-    Health: 30/35
-    Speed: 20/100
-    Attack: 60/60
-    Defense: 50/45
+    Health: 190/284
+    Speed: 40/152
+    Attack: 148/284
+    Defense: 184/328
 EndMonster
 Monster
     name: Weepinbell
     type: GRASS
-    health: 30/35
-    speed: 90/100
-    attack: 60/60
-    defense: 40/45
+    health: 240/334
+    speed: 103/229
+    attack: 166/306
+    defense: 94/218
 EndMonster
 Monster
     name: Psyduck
     type: WATER
-    health: 30/35
-    speed: 50/100
-    attack: 55/60
-    defense: 40/45
+    health: 210/304
+    speed: 103/229
+    attack: 98/223
+    defense: 90/214
 EndMonster
 Monster
     name: Arcanine
     type: FIRE
-    health: 30/35
-    speed: 30/100
-    attack: 60/60
-    defense: 50/45
+    health: 290/384
+    speed: 175/317
+    attack: 202/350
+    defense: 148/284
 EndMonster

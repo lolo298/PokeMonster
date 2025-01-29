@@ -1,52 +1,52 @@
 Attack
-    Name: Eclair
+    Name: Thunder Shock
     Type: ELECTRIC
     Power: 40
-    NbUse: 10
-    Fail: 0.07
+    NbUse: 30
+    Fail: 0
 EndAttack
 Attack
-    Name: Charge
+    Name: Tackle
     Type: NORMAL
-    Power: 50
+    Power: 35
     NbUse: 35
-    Fail: 0
+    Fail: 0.05
 EndAttack
 Attack
     Name: Flamethrower
     Type: FIRE
-    Power: 50
-    NbUse: 10
-    Fail: 0.05
+    Power: 95
+    NbUse: 15
+    Fail: 0
 EndAttack
 Attack
     Name: Water Gun
     Type: WATER
-    Power: 45
-    NbUse: 15
-    Fail: 0.05
+    Power: 40
+    NbUse: 25
+    Fail: 0
 EndAttack
 Attack
     Name: Vine Whip
     Type: GRASS
-    Power: 40
+    Power: 35
     NbUse: 15
-    Fail: 0.05
+    Fail: 0
 EndAttack
 Attack
     Name: Rock Throw
     Type: GROUND
     Power: 50
-    NbUse: 10
-    Fail: 0.05
+    NbUse: 15
+    Fail: 0.1
 EndAttack
 Attack
     Name: Sword Dance
     Type: NORMAL
     Power: 0
-    NbUse: 10
+    NbUse: 30
     Fail: 0
-    Buff: Defense$2$SELF
+    Buff: Attack$2$SELF
 EndAttack
 Attack
     Name: Headbutt
@@ -58,14 +58,7 @@ EndAttack
 Attack
     Name: Cut
     Type: NORMAL
-    Power: 30
-    NbUse: 50
-    Fail: 0.1
-EndAttack
-Attack
-    Name: Strength
-    Type: NORMAL
-    Power: 80
-    NbUse: 10
-    Fail: 0
+    Power: 50
+    NbUse: 30
+    Fail: 0.05
 EndAttack

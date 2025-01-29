@@ -4,16 +4,17 @@ import com.pokemonSimulator.Game.Game;
 import com.pokemonSimulator.Game.Monsters.Attack;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
+import com.pokemonSimulator.Utils.Errors.InvalidSprite;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.View.MainController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.ListView;
-import javafx.scene.control.Tooltip;
+import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
+import javafx.util.converter.NumberStringConverter;
 
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -23,17 +24,31 @@ public class BattleController implements IController {
     private Game game;
 
     @FXML
+    private StackPane battlePane;
+    @FXML
+    private ImageView battleBackground;
+    @FXML
+    private ImageView battleBackgroundMon1;
+    @FXML
+    private ImageView battleBackgroundMon2;
+    @FXML
+    private AnchorPane battleMonPane1;
+    @FXML
+    private AnchorPane battleMonPane2;
+
+
+    @FXML
     private Label activeMonLabel;
     @FXML
     private ImageView activeMonImg;
     @FXML
-    private Label activeHpLabel;
+    private ProgressBar activeHpBar;
     @FXML
-    private Label enemyMonlabel;
+    private Label enemyMonLabel;
     @FXML
     private ImageView enemyMonImg;
     @FXML
-    private Label enemyHpLabel;
+    private ProgressBar enemyHpBar;
 
     @FXML
     private Button act1;
@@ -57,6 +72,9 @@ public class BattleController implements IController {
     @FXML
     private ListView<BattleMon> switchMonList;
 
+    @FXML
+    private TextField debugWidth;
+
 
     public void setMainController(MainController mainController) {
         this.mainController = mainController;
@@ -66,6 +84,28 @@ public class BattleController implements IController {
     void initialize() {
         System.out.println("BattleController initialized");
         this.game = PokemonSimulator.getInstance().startGame();
+
+        var formatter = new TextFormatter<>(new NumberStringConverter());
+        debugWidth.setTextFormatter(formatter);
+
+
+
+//        activeMonImg.layoutYProperty().bind(formatter.valueProperty());
+
+
+        try {
+//            battleMonPane1.layoutXProperty().bind(battleBackgroundMon1.layoutXProperty().add(50));
+//            battleMonPane1.layoutYProperty().bind(battleBackgroundMon1.layoutYProperty().add(50));
+
+//            battleMonPane2.layoutXProperty().add(825);
+//            battleMonPane2.layoutYProperty().bind(battleBackgroundMon2.layoutYProperty().multiply(2));
+
+
+
+
+        } catch (InvalidSprite e) {
+            Logger.warn(e.toString());
+        }
 
         loadBattleView();
 
@@ -109,7 +149,8 @@ public class BattleController implements IController {
         BattleMon enemyMon = game.getEnemyMon();
 
         activeMonLabel.setText(activeMon.getName().getValue());
-        activeHpLabel.setText(String.format("HP: %d/%d", activeMon.getHealth().getValue(), activeMon.getMaxHealth().getValue()));
+        double health = clamp(activeMon.getHealth().getValue(), 0, activeMon.getMaxHealth().getValue());
+        activeHpBar.setProgress(normalize(health, 0, activeMon.getMaxHealth().getValue(), 0, 1));
 
         try {
             activeMonImg.setImage(activeMon.getSprites().getSecond());
@@ -117,8 +158,9 @@ public class BattleController implements IController {
             throw new RuntimeException(e);
         }
 
-        enemyMonlabel.setText(enemyMon.getName().getValue());
-        enemyHpLabel.setText(String.format("HP: %d/%d", enemyMon.getHealth().getValue(), enemyMon.getMaxHealth().getValue()));
+        enemyMonLabel.setText(enemyMon.getName().getValue());
+        health = clamp(enemyMon.getHealth().getValue(), 0, enemyMon.getMaxHealth().getValue());
+        enemyHpBar.setProgress(normalize(health, 0, enemyMon.getMaxHealth().getValue(), 0, 1));
 
         try {
             enemyMonImg.setImage(enemyMon.getSprites().getFirst());
@@ -167,5 +209,14 @@ public class BattleController implements IController {
         }
 
 
+    }
+
+    private double clamp(double value, double min, double max) {
+        return Math.max(min, Math.min(max, value));
+    }
+
+    private double normalize(double value, double originalMin, double originalMax, double newMin, double newMax) {
+        double normalized = (value - originalMin) / (originalMax - originalMin);
+        return newMin + normalized * (newMax - newMin);
     }
 }
