@@ -1,4 +1,4 @@
-# PokeMonster
+# PokemonSimulator
 
 ## Description
 
@@ -20,7 +20,7 @@ you need to have the following installed:
 2. run `./gradlew run`
 3. the game will start
 
-## Compile from source
+## Compile the installer from source
 1. clone the repository
 2. run `./gradlew jpackage`
 3. the installer will be in `build/jpackage`

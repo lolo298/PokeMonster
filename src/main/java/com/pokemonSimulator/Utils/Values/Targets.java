@@ -1,0 +1,19 @@
+package com.pokemonSimulator.Utils.Values;
+
+import com.pokemonSimulator.Utils.Serializable;
+
+import java.lang.String;
+
+public enum Targets implements Serializable {
+    SELF,
+    ENEMY;
+
+    @Override
+    public String toString() {
+        return this.name();
+    }
+
+    public String serialize() {
+        return this.name();
+    }
+}
