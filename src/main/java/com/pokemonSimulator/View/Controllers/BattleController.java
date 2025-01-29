@@ -1,12 +1,13 @@
 package com.pokemonSimulator.View.Controllers;
 
+import com.pokemonSimulator.Game.Actions.SwitchMon;
 import com.pokemonSimulator.Game.Game;
-import com.pokemonSimulator.Game.Monsters.Attack;
+import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
-import com.pokemonSimulator.Utils.Errors.InvalidSprite;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.View.MainController;
+import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -14,7 +15,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-import javafx.util.converter.NumberStringConverter;
 
 import java.net.URISyntaxException;
 import java.util.Arrays;
@@ -22,6 +22,9 @@ import java.util.Arrays;
 public class BattleController implements IController {
     private MainController mainController;
     private Game game;
+
+    @FXML
+    private Label infoLabel;
 
     @FXML
     private StackPane battlePane;
@@ -72,8 +75,37 @@ public class BattleController implements IController {
     @FXML
     private ListView<BattleMon> switchMonList;
 
+    private int isSwitching = 0;
+
     @FXML
-    private TextField debugWidth;
+    private void onSwitch() {
+        BattleMon selectedMon = switchMonList.getSelectionModel().getSelectedItem();
+
+        if (selectedMon == null || selectedMon == game.getActiveMon() || selectedMon.isFainted()) {
+            return;
+        }
+
+        SwitchMon switchMon = new SwitchMon(selectedMon);
+
+        if (isSwitching != 0) {
+            game.switchMon(isSwitching, switchMon);
+
+            act1.setDisable(false);
+            act2.setDisable(false);
+            act3.setDisable(false);
+            act4.setDisable(false);
+
+            isSwitching = 0;
+        } else {
+            game.setActivePlayerAction(switchMon);
+            if (game.getPlayerTurn() == 2) {
+                battle();
+            }
+        }
+
+        game.nextPlayer();
+        loadBattleView();
+    }
 
 
     public void setMainController(MainController mainController) {
@@ -82,36 +114,9 @@ public class BattleController implements IController {
 
     @FXML
     void initialize() {
-        System.out.println("BattleController initialized");
         this.game = PokemonSimulator.getInstance().startGame();
 
-        var formatter = new TextFormatter<>(new NumberStringConverter());
-        debugWidth.setTextFormatter(formatter);
-
-
-
-//        activeMonImg.layoutYProperty().bind(formatter.valueProperty());
-
-
-        try {
-//            battleMonPane1.layoutXProperty().bind(battleBackgroundMon1.layoutXProperty().add(50));
-//            battleMonPane1.layoutYProperty().bind(battleBackgroundMon1.layoutYProperty().add(50));
-
-//            battleMonPane2.layoutXProperty().add(825);
-//            battleMonPane2.layoutYProperty().bind(battleBackgroundMon2.layoutYProperty().multiply(2));
-
-
-
-
-        } catch (InvalidSprite e) {
-            Logger.warn(e.toString());
-        }
-
         loadBattleView();
-
-        //Init actions events
-
-
     }
 
     @FXML
@@ -134,19 +139,23 @@ public class BattleController implements IController {
         }
 
         assert attack != null;
-        game.setActivePlayerAttack(attack);
+        game.setActivePlayerAction(attack);
 
-        Logger.warn("Player " + game.getPlayerTurn());
         if (game.getPlayerTurn() == 2) {
-            game.battle();
+            battle();
         }
-        game.nextPlayer();
-        loadBattleView();
+        if (isSwitching == 0) {
+            game.nextPlayer();
+            loadBattleView();
+        }
     }
 
     private void loadBattleView() {
         BattleMon activeMon = game.getActiveMon();
         BattleMon enemyMon = game.getEnemyMon();
+
+        System.out.println(activeMon);
+        System.out.println(enemyMon);
 
         activeMonLabel.setText(activeMon.getName().getValue());
         double health = clamp(activeMon.getHealth().getValue(), 0, activeMon.getMaxHealth().getValue());
@@ -169,7 +178,6 @@ public class BattleController implements IController {
         }
 
         Attack[] attacks = activeMon.getAttacks();
-        System.out.println(Arrays.toString(attacks));
         for (int i = 0; i < 4; i++) {
             Attack attack = attacks[i];
             Button act = null;
@@ -200,12 +208,53 @@ public class BattleController implements IController {
             switchMonList.getItems().clear();
             switchMonList.getItems().addAll(game.getActiveTeam());
 
-            System.out.println("Setting attack " + i + " to " + attack.getName().getValue());
             assert act != null && actTooltip != null;
             act.setText(attack.getName().getValue());
             actTooltip.setText(String.format("%d/%d", attack.getPp().getValue(), attack.getBasePp().getValue()));
             actTooltip.setShowDelay(Duration.millis(500));
+//            infoLabel.setText("Player " + game.getPlayerTurn() + "'s turn");
 
+        }
+    }
+
+    private void battle() {
+        game.battle();
+
+        Logger.warn(game.getTeam1().toString());
+        Logger.warn(game.getTeam2().toString());
+
+        Logger.warn(game.getPlayer1Mon().toString());
+        Logger.warn(game.getPlayer2Mon().toString());
+
+
+        //check fainted mons
+        if (game.getPlayer1Mon().isFainted()) {
+            game.setTurn(1);
+            loadBattleView();
+
+            activeMonImg.setImage(null);
+
+            switchMonList.refresh();
+
+            act1.setDisable(true);
+            act2.setDisable(true);
+            act3.setDisable(true);
+            act4.setDisable(true);
+            infoLabel.setText("Player 1's " + game.getPlayer1Mon().getName() + " fainted");
+            isSwitching = 1;
+        } else if (game.getPlayer2Mon().isFainted()) {
+            game.setTurn(2);
+            loadBattleView();
+            switchMonList.refresh();
+
+            activeMonImg.setImage(null);
+
+            act1.setDisable(true);
+            act2.setDisable(true);
+            act3.setDisable(true);
+            act4.setDisable(true);
+            infoLabel.setText("Player 2's " + game.getPlayer2Mon().getName() + " fainted");
+            isSwitching = 2;
         }
 
 

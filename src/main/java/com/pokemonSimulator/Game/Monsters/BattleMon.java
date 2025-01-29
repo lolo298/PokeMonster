@@ -1,5 +1,6 @@
 package com.pokemonSimulator.Game.Monsters;
 
+import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Utils.Errors.BattleStarted;
 import com.pokemonSimulator.Utils.Errors.InvalidSprite;
@@ -12,7 +13,6 @@ import com.pokemonSimulator.Utils.Values.SpritesType;
 import com.pokemonSimulator.Utils.Values.String;
 import com.pokemonSimulator.Utils.Values.Tuple;
 import javafx.scene.image.Image;
-import javafx.scene.image.WritableImage;
 
 import java.net.URISyntaxException;
 
@@ -105,6 +105,10 @@ public class BattleMon implements ISprite {
 
     public Attack[] getAttacks() {
         return attacks;
+    }
+
+    public boolean isFainted() {
+        return this.health.compareTo(new Integer(0)) <= 0;
     }
 
     public Image getSprite(java.lang.String side, SpritesType type) {

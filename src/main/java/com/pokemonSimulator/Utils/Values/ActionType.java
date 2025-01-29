@@ -1,9 +1,10 @@
 package com.pokemonSimulator.Utils.Values;
 
-public enum AttackType {
+public enum ActionType {
     DAMAGE,
     BUFF,
-    SWITCH;
+    SWITCH,
+    ITEM;
 
 
 }

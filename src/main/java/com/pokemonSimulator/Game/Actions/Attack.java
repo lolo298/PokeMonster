@@ -1,4 +1,4 @@
-package com.pokemonSimulator.Game.Monsters;
+package com.pokemonSimulator.Game.Actions;
 
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Utils.Serializable;
@@ -7,8 +7,7 @@ import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.String;
 import com.pokemonSimulator.Utils.Values.*;
 
-public class Attack implements Serializable {
-    private AttackType attackType = AttackType.DAMAGE;
+public class Attack extends Action implements Serializable {
     private String name;
     private Type type;
     private Integer pp;
@@ -18,9 +17,12 @@ public class Attack implements Serializable {
 
     private Buff buff;
 
-    public Attack() {}
-    public Attack(AttackType type) {
-        this.attackType = type;
+    public Attack() {
+        super(ActionType.DAMAGE);
+    }
+
+    public Attack(ActionType type) {
+        super(type);
     }
 
 
@@ -88,16 +90,13 @@ public class Attack implements Serializable {
 
     public void setBuff(Buff buff) {
         this.buff = buff;
-        this.attackType = buff != null ? AttackType.BUFF : AttackType.DAMAGE;
+        this.setActionType(buff != null ? ActionType.BUFF : ActionType.DAMAGE);
     }
 
     public void use() {
         this.pp.decrement();
     }
 
-    public AttackType getAttackType() {
-        return attackType;
-    }
     @Override
     public java.lang.String toString() {
         return this.getName().getValue();

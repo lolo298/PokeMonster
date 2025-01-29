@@ -89,9 +89,6 @@ public class TeamSelectionController implements IController {
                 team1Monsters.remove(0, team1Monsters.size());
                 team2Monsters.remove(0, team2Monsters.size());
 
-                System.out.println(team1);
-                System.out.println(team2);
-
                 team1Monsters.addAll(team1);
                 team2Monsters.addAll(team2);
 
@@ -138,9 +135,6 @@ public class TeamSelectionController implements IController {
             int indexToDeselect = teamList.getItems().indexOf(oldest);
             Platform.runLater(() -> teamList.getSelectionModel().clearSelection(indexToDeselect));
         }
-        System.out.println(team1.isEmpty() + " " + team2.isEmpty() + " = " + (team1.isEmpty() || team2.isEmpty()));
-        System.out.println(team1);
-        System.out.println(team2);
     }
 
     public void setMainController(MainController mainController) {
@@ -201,8 +195,6 @@ public class TeamSelectionController implements IController {
 
                         success = true;
                     }
-
-                    System.out.println(team);
                     e.setDropCompleted(success);
                     e.consume();
                 }

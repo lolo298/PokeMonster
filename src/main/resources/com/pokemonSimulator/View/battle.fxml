@@ -31,13 +31,12 @@
         <RowConstraints minHeight="10.0" percentHeight="8.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
-        <Label GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Player 1
+        <Label fx:id="infoLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Player 1
         </Label>
         <VBox GridPane.rowIndex="1">
             <Label text="Switch pokemon"/>
             <SpriteListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>
-            <TextField fx:id="debugWidth" prefHeight="25.0" prefWidth="100.0"/>
-
+            <Button fx:id="switchButton" onAction="#onSwitch" text="Switch" VBox.vgrow="ALWAYS"/>
         </VBox>
         <StackPane fx:id="battlePane" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1"
                    GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
@@ -48,13 +47,15 @@
                         <Image url="@../Battle/grass_bg.png"/>
                     </image>
                 </ImageView>
-                <ImageView fx:id="battleBackgroundMon1" pickOnBounds="true" preserveRatio="true" fitWidth="${battleBackground.fitWidth}"
+                <ImageView fx:id="battleBackgroundMon1" pickOnBounds="true" preserveRatio="true"
+                           fitWidth="${battleBackground.fitWidth}"
                            StackPane.alignment="BOTTOM_LEFT">
                     <image>
                         <Image url="@../Battle/grass_a.png"/>
                     </image>
                 </ImageView>
-                <ImageView fx:id="battleBackgroundMon2" pickOnBounds="true" preserveRatio="true" fitWidth="${battleBackground.fitWidth}"
+                <ImageView fx:id="battleBackgroundMon2" pickOnBounds="true" preserveRatio="true"
+                           fitWidth="${battleBackground.fitWidth}"
                            StackPane.alignment="BOTTOM_LEFT">
                     <image>
                         <Image url="@../Battle/grass_b.png"/>
@@ -62,28 +63,17 @@
                 </ImageView>
 
                 <AnchorPane fx:id="battleMonPane2">
-<!--                    <children>-->
-<!--                        <Label fx:id="enemyMonlabel" layoutY="135.0"/>-->
-<!--                        <VBox minHeight="100" minWidth="100">-->
-
-                            <ImageView  AnchorPane.leftAnchor="825" AnchorPane.topAnchor="400" fx:id="enemyMonImg" fitWidth="150.0" pickOnBounds="true"
-                                       preserveRatio="true"/>
-<!--                        </VBox>-->
-<!--                        <Label fx:id="enemyHpLabel" layoutX="100.0" layoutY="135.0"/>-->
-<!--                    </children>-->
+                    <ImageView AnchorPane.leftAnchor="825" AnchorPane.topAnchor="400" fx:id="enemyMonImg"
+                               fitWidth="150.0" pickOnBounds="true"
+                               preserveRatio="true"/>
                 </AnchorPane>
                 <AnchorPane fx:id="battleMonPane1">
-<!--                    <children>-->
-<!--                        <Label fx:id="activeMonLabel" layoutY="135.0"/>-->
-<!--                        <VBox minHeight="100" minWidth="100">-->
-                            <ImageView fx:id="activeMonImg" fitWidth="250.0" pickOnBounds="true"
-                                       preserveRatio="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="300" />
-<!--                        </VBox>-->
-<!--                        <Label fx:id="activeHpLabel" layoutX="100.0" layoutY="135.0"/>-->
-<!--                    </children>-->
+                    <ImageView fx:id="activeMonImg" fitWidth="250.0" pickOnBounds="true"
+                               preserveRatio="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="300"/>
                 </AnchorPane>
                 <AnchorPane>
-                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="400" fitWidth="350">
+                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.leftAnchor="100"
+                               AnchorPane.topAnchor="400" fitWidth="350">
                         <image>
                             <Image url="@../Battle/battle_info.png"/>
                         </image>
@@ -92,7 +82,8 @@
                     <ProgressBar fx:id="activeHpBar" AnchorPane.leftAnchor="280" AnchorPane.topAnchor="450"/>
                 </AnchorPane>
                 <AnchorPane>
-                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.rightAnchor="200" AnchorPane.topAnchor="200" fitWidth="350">
+                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.rightAnchor="200"
+                               AnchorPane.topAnchor="200" fitWidth="350">
                         <image>
                             <Image url="@../Battle/battle_info.png"/>
                         </image>

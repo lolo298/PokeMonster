@@ -7,11 +7,11 @@ import com.pokemonSimulator.View.App;
 
 class Main {
     public static void main(String[] args) {
+        Logger.setLevel(Logger.LogLevel.INFO);
+
         PokemonSimulator pokemonSimulator = PokemonSimulator.getInstance();
         pokemonSimulator.start();
 
-        double tmp = Random.generateValue(1, 2);
-        Logger.log(Double.toString(tmp));
 
         App.startWindow();
     }

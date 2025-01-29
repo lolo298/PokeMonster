@@ -1,6 +1,6 @@
 package com.pokemonSimulator.View.Controllers;
 
-import com.pokemonSimulator.Game.Monsters.Attack;
+import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Game.Types.Types;
@@ -36,8 +36,6 @@ public class AttackSelectController implements IController {
     private List<Attack> availableAttacks;
 
     public void setMainController(MainController mainController) {
-
-        System.out.println("setMainController: " + mainController);
         this.mainController = mainController;
     }
 
@@ -91,9 +89,7 @@ public class AttackSelectController implements IController {
 
             if (selectedAttacks.size() > ATTACK_PER_MON) {
                 var wasAdded = c.getAddedSubList().get(0);
-                System.out.println("wasAdded: " + wasAdded);
                 int index = attackList.getItems().indexOf(wasAdded);
-                System.out.println("index: " + index);
                 Platform.runLater(() -> {
                     attackList.getSelectionModel().clearSelection(index);
                 });
@@ -106,14 +102,12 @@ public class AttackSelectController implements IController {
             for (int i = 0; i < attacks.length; i++) {
                 if (i < selectedAttacks.size()) {
                     attacks[i] = selectedAttacks.get(i);
-                    System.out.println("attacks[" + i + "]: " + attacks[i]);
                 } else {
                     attacks[i] = null;
                 }
             }
 
             teamAttacks.put(selectedMon, attacks);
-            System.out.println("teamAttacks: " + Arrays.toString(teamAttacks.get(selectedMon)));
         }
     }
 
@@ -128,13 +122,11 @@ public class AttackSelectController implements IController {
         Types type = selectedMon.getType().getType();
 
         List<Attack> compatibleAttacks = this.availableAttacks.stream().filter(attack -> attack.getType().getType() == type || attack.getType().getType() == Types.NORMAL).toList();
-        System.out.println("compatibleAttacks for " + type + ": " + compatibleAttacks);
         attackList.getItems().clear();
         attackList.getItems().addAll(compatibleAttacks);
 
 
         Attack[] attacks = teamAttacks.get(selectedMon);
-        System.out.println("attacks: " + Arrays.toString(attacks));
         for (Attack attack : attacks) {
             if (attack != null) {
                 attackList.getSelectionModel().select(attack);

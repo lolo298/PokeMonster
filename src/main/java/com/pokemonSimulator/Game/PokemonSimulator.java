@@ -1,6 +1,6 @@
 package com.pokemonSimulator.Game;
 
-import com.pokemonSimulator.Game.Monsters.Attack;
+import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Utils.ConfigLoader;
@@ -56,7 +56,6 @@ public class PokemonSimulator {
 
         this.LoadMonsters();
         this.LoadAttacks();
-        System.out.println(this.monsters);
         Logger.log("Welcome to PokemonSimulator!");
     }
 
@@ -89,7 +88,6 @@ public class PokemonSimulator {
         try {
             var data = this.deserializer.readFile(br);
             var rawMonsters = this.deserializer.deserialize(data);
-            System.out.println(rawMonsters);
             this.monsters = rawMonsters.stream().map(map -> {
                 try {
                     return (Monster) this.deserializer.hydrate(map);
@@ -134,7 +132,6 @@ public class PokemonSimulator {
         try {
             var data = this.deserializer.readFile(br);
             var rawAttacks = this.deserializer.deserialize(data);
-            System.out.println(rawAttacks);
             this.attacks = rawAttacks.stream().map(map -> {
                 try {
                     return (Attack) this.deserializer.hydrate(map);

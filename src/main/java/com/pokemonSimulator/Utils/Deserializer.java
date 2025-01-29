@@ -1,6 +1,6 @@
 package com.pokemonSimulator.Utils;
 
-import com.pokemonSimulator.Game.Monsters.Attack;
+import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Game.Types.Types;
@@ -134,7 +134,6 @@ public class Deserializer {
             Logger.warn("Class name not found");
             return null;
         }
-        System.out.println(className.getValue());
         Serializable cls = null;
         switch (className.getValue()) {
             case "Monster":
