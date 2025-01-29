@@ -58,6 +58,9 @@ dependencies {
     implementation "org.openjfx:javafx-controls:23.0.1"
     implementation "org.openjfx:javafx-fxml:23.0.1"
 
+    implementation "org.openjfx:javafx-controls:17.0.7"
+    implementation "org.openjfx:javafx-fxml:17.0.7"
+
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
 }

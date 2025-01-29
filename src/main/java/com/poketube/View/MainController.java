@@ -36,10 +36,4 @@ public class MainController {
             }
         }
     }
-
-    @FXML
-    public void go() {
-        switchView(Screens.TEST);
-    }
-
 }

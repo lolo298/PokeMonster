@@ -87,6 +87,8 @@ public class BattleMon implements ISprite {
     public Integer getSpeed() {
         return speed;
     }
+    public Integer getSpeed() { return speed; }
+    public void setSpeed(Integer speed) { this.speed = speed; }
 
     public void hit(Integer damage) {
         this.health.minusLeft(damage);

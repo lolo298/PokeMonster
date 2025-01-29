@@ -5,7 +5,6 @@ public enum Screens {
     SELECT_TEAM("team-selection.fxml"),
     SELECT_ATTACK("select-attack.fxml"),
     BATTLE("battle.fxml"),
-    TEST("test.fxml");
 
     private final String path;
 
