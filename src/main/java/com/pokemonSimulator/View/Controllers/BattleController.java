@@ -5,10 +5,8 @@ import com.pokemonSimulator.Game.Game;
 import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
-import com.pokemonSimulator.Utils.Logger;
-import com.pokemonSimulator.View.MainController;
-import com.pokemonSimulator.View.Screens;
-import javafx.collections.ListChangeListener;
+import com.pokemonSimulator.Utils.Values.enums.Screens;
+import com.pokemonSimulator.Utils.Values.enums.TerrainSpriteTypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -17,7 +15,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
-import java.net.URISyntaxException;
 import java.util.Arrays;
 
 public class BattleController extends Controller {
@@ -47,11 +44,15 @@ public class BattleController extends Controller {
     @FXML
     private ProgressBar activeHpBar;
     @FXML
+    private ImageView statusActiveImg;
+    @FXML
     private Label enemyMonLabel;
     @FXML
     private ImageView enemyMonImg;
     @FXML
     private ProgressBar enemyHpBar;
+    @FXML
+    private ImageView statusEnemyImg;
 
     @FXML
     private Button act1;
@@ -69,6 +70,8 @@ public class BattleController extends Controller {
     private Button act4;
     @FXML
     private Tooltip act4Tooltip;
+    @FXML
+    private Button struggleButton;
 
     @FXML
     private ListView<String> useItemsList;
@@ -94,21 +97,30 @@ public class BattleController extends Controller {
 
             blockActions(false);
 
+            game.setTurn(1);
+
             isSwitching = 0;
         } else {
             game.setActivePlayerAction(switchMon);
+
             if (game.getPlayerTurn() == 2) {
                 battle();
             }
+            game.nextPlayer();
         }
 
-        game.nextPlayer();
         loadBattleView();
     }
 
     @FXML
     void initialize() {
         this.game = PokemonSimulator.getInstance().startGame();
+
+        act1.visibleProperty().bind(act1.managedProperty());
+        act2.visibleProperty().bind(act2.managedProperty());
+        act3.visibleProperty().bind(act3.managedProperty());
+        act4.visibleProperty().bind(act4.managedProperty());
+        struggleButton.visibleProperty().bind(struggleButton.managedProperty());
 
         loadBattleView();
     }
@@ -148,28 +160,24 @@ public class BattleController extends Controller {
         BattleMon activeMon = game.getActiveMon();
         BattleMon enemyMon = game.getEnemyMon();
 
-        System.out.println(activeMon);
-        System.out.println(enemyMon);
+        battleBackground.setImage(game.getTerrainState().getSprite(TerrainSpriteTypes.BG));
+        battleBackgroundMon1.setImage(game.getTerrainState().getSprite(TerrainSpriteTypes.BATTLE_FRONT));
+        battleBackgroundMon2.setImage(game.getTerrainState().getSprite(TerrainSpriteTypes.BATTLE_BACK));
 
         activeMonLabel.setText(activeMon.getName().getValue());
-        double health = clamp(activeMon.getHealth().getValue(), 0, activeMon.getMaxHealth().getValue());
+        int health = clamp(activeMon.getHealth().getValue(), 0, activeMon.getMaxHealth().getValue());
         activeHpBar.setProgress(normalize(health, 0, activeMon.getMaxHealth().getValue(), 0, 1));
 
-        try {
-            activeMonImg.setImage(activeMon.getSprites().getSecond());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+
+        activeMonImg.setImage(activeMon.getSprites().getSecond());
+        statusActiveImg.setImage(activeMon.getStatus().getSprite());
 
         enemyMonLabel.setText(enemyMon.getName().getValue());
         health = clamp(enemyMon.getHealth().getValue(), 0, enemyMon.getMaxHealth().getValue());
         enemyHpBar.setProgress(normalize(health, 0, enemyMon.getMaxHealth().getValue(), 0, 1));
 
-        try {
-            enemyMonImg.setImage(enemyMon.getSprites().getFirst());
-        } catch (URISyntaxException e) {
-            throw new RuntimeException(e);
-        }
+        enemyMonImg.setImage(enemyMon.getSprites().getFirst());
+        statusEnemyImg.setImage(enemyMon.getStatus().getSprite());
 
         Attack[] attacks = activeMon.getAttacks();
         for (int i = 0; i < 4; i++) {
@@ -206,30 +214,42 @@ public class BattleController extends Controller {
             act.setText(attack.getName().getValue());
             actTooltip.setText(String.format("%d/%d", attack.getPp().getValue(), attack.getBasePp().getValue()));
             actTooltip.setShowDelay(Duration.millis(500));
-            infoLabel.setText("Player " + game.getPlayerTurn() + "'s turn");
 
+            act.setDisable(attack.getPp().getValue() == 0);
+        }
+
+        checkStruggle();
+
+
+        infoLabel.setText("Player " + game.getPlayerTurn() + "'s turn");
+    }
+
+    private void checkStruggle() {
+        if (Arrays.stream(game.getActiveMon().getAttacks()).allMatch(attack -> attack.getPp().getValue() == 0)) {
+            act1.setManaged(false);
+            act2.setManaged(false);
+            act3.setManaged(false);
+            act4.setManaged(false);
+
+            struggleButton.setManaged(true);
+        } else {
+            act1.setManaged(true);
+            act2.setManaged(true);
+            act3.setManaged(true);
+            act4.setManaged(true);
+
+            struggleButton.setManaged(false);
         }
     }
 
     private void battle() {
         game.battle();
 
-        Logger.warn(game.getTeam1().toString());
-        Logger.warn(game.getTeam2().toString());
-
-        Logger.warn(game.getPlayer1Mon().toString());
-        Logger.warn(game.getPlayer2Mon().toString());
-
-
         if (game.isOver()) {
-            int winner = game.getWinner();
-
             blockActions(true);
             switchButton.setDisable(true);
 
             mainController.switchView(Screens.END);
-
-
 
             return;
         }
@@ -267,8 +287,13 @@ public class BattleController extends Controller {
         act4.setDisable(block);
     }
 
-    private double clamp(double value, double min, double max) {
-        return Math.max(min, Math.min(max, value));
+    private <T extends Number> T clamp(T value, T min, T max) {
+        if (value.doubleValue() < min.doubleValue()) {
+            return min;
+        } else if (value.doubleValue() > max.doubleValue()) {
+            return max;
+        }
+        return value;
     }
 
     private double normalize(double value, double originalMin, double originalMax, double newMin, double newMax) {

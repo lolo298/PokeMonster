@@ -1,14 +1,19 @@
 package com.pokemonSimulator.Game.Types;
 
-public class FireType extends Type {
+import com.pokemonSimulator.Game.Monsters.BattleMon;
+import com.pokemonSimulator.Game.Types.Skills.StatusSkillType;
+import com.pokemonSimulator.Utils.Values.enums.Status;
+import com.pokemonSimulator.Utils.Values.enums.Types;
+
+public class FireType extends StatusSkillType {
 
     public FireType() {
         super(Types.FIRE);
     }
 
-    public boolean hasSkill() {
-        return true;
+
+    @Override
+    public void useSkill(BattleMon target) {
+        target.setStatus(Status.BURNED);
     }
-
-
 }

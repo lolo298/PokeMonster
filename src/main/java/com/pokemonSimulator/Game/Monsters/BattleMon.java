@@ -1,21 +1,24 @@
 package com.pokemonSimulator.Game.Monsters;
 
 import com.pokemonSimulator.Game.Actions.Attack;
+import com.pokemonSimulator.Game.Constants;
+import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Utils.Errors.BattleStarted;
 import com.pokemonSimulator.Utils.Errors.InvalidSprite;
 import com.pokemonSimulator.Utils.Errors.TooManyAttacks;
 import com.pokemonSimulator.Utils.ISprite;
 import com.pokemonSimulator.Utils.Logger;
+import com.pokemonSimulator.Utils.Random;
 import com.pokemonSimulator.Utils.SpriteLoader;
-import com.pokemonSimulator.Utils.SpriteOrientation;
+import com.pokemonSimulator.Utils.Values.enums.SpriteOrientation;
 import com.pokemonSimulator.Utils.Values.Integer;
-import com.pokemonSimulator.Utils.Values.SpritesType;
+import com.pokemonSimulator.Utils.Values.enums.SpritesType;
 import com.pokemonSimulator.Utils.Values.String;
 import com.pokemonSimulator.Utils.Values.Tuple;
+import com.pokemonSimulator.Utils.Values.enums.Status;
+import com.pokemonSimulator.Utils.Values.enums.Terrain;
 import javafx.scene.image.Image;
-
-import java.net.URISyntaxException;
 
 public class BattleMon implements ISprite {
     private boolean locked;
@@ -24,9 +27,12 @@ public class BattleMon implements ISprite {
 
     private final Integer attack;
     private final Integer defense;
-    private Integer health;
+    private final Integer health;
     private final Integer maxHealth;
     private final Integer speed;
+
+    private Status status = Status.NONE;
+    private Integer statusDuration = new Integer(0);
 
     private Attack[] attacks = new Attack[4];
 
@@ -72,7 +78,15 @@ public class BattleMon implements ISprite {
             throw new TooManyAttacks("A monster can only have 4 attacks");
         }
 
-        this.attacks = attacks;
+        Attack[] clonedAttacks = new Attack[4];
+        for (int i = 0; i < attacks.length; i++) {
+            Attack attack = attacks[i];
+            if (attack != null) {
+                clonedAttacks[i] = attack.clone();
+            }
+        }
+
+        this.attacks = clonedAttacks;
     }
 
     public Integer getDefense() {
@@ -95,6 +109,10 @@ public class BattleMon implements ISprite {
         this.health.minusLeft(damage);
     }
 
+    public void heal(Integer amount) {
+        this.health.plus(amount);
+    }
+
     public void lock() {
         this.locked = true;
     }
@@ -109,8 +127,55 @@ public class BattleMon implements ISprite {
     }
 
     public boolean isFainted() {
-        Logger.log(this.name + " health: " + this.health);
         return this.health.compareTo(new Integer(0)) <= 0;
+    }
+
+    public void setStatus(Status status) {
+        if (status == Status.HIDDEN && this.status != Status.HIDDEN) {
+            defense.multiply(2);
+        }
+        this.status = status;
+        this.statusDuration = new Integer(0);
+    }
+
+    public void turn() {
+        this.statusDuration.plus(1);
+        switch (status) {
+            case PARALYZED -> {
+                double random = Random.generateDouble(0, 1);
+                double chance = (double) statusDuration.getValue() / Constants.PARALYZE_DURATION;
+                if (random < chance) {
+                    status = Status.NONE;
+                    statusDuration = new Integer(0);
+                }
+            }
+            case HIDDEN -> {
+                double random = Random.generateDouble(0, 1);
+                double chance = (double) statusDuration.getValue() / Constants.HIDDEN_DURATION;
+                if (random < chance) {
+                    status = Status.NONE;
+                    defense.divide(2);
+                    statusDuration = new Integer(0);
+                }
+            }
+            case BURNED -> {
+                if (PokemonSimulator.game.getTerrainState() == Terrain.FLOOD) {
+                    status = Status.NONE;
+                    statusDuration = new Integer(0);
+                } else {
+                    int damage = attack.getValue() / 10;
+                    hit(new Integer(damage));
+                }
+            }
+        }
+    }
+
+    public Status getStatus() {
+        return status;
+    }
+
+    public Integer getStatusDuration() {
+        return statusDuration;
     }
 
     public Image getSprite(SpriteOrientation side, SpritesType type) {
@@ -124,7 +189,7 @@ public class BattleMon implements ISprite {
             case FRONT -> "front";
         };
 
-        Image sprite = null;
+        Image sprite;
 
         try {
             sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + orientation + "." + extension);
@@ -147,7 +212,7 @@ public class BattleMon implements ISprite {
             case FRONT -> "front";
         };
 
-        Image sprite = null;
+        Image sprite;
 
         try {
             sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + orientation + "." + extension, width, height, false, false);
@@ -167,7 +232,7 @@ public class BattleMon implements ISprite {
         return getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED, width, height);
     }
 
-    public Tuple<Image, Image> getSprites() throws URISyntaxException {
+    public Tuple<Image, Image> getSprites() {
         var frontImage = getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED);
         var backImage = getSprite(SpriteOrientation.BACK, SpritesType.ANIMATED);
 

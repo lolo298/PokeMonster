@@ -1,4 +1,4 @@
-package com.pokemonSimulator.Utils;
+package com.pokemonSimulator.Utils.Values.enums;
 
 public enum SpriteOrientation {
     FRONT,

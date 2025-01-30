@@ -4,10 +4,17 @@ import com.pokemonSimulator.Game.Actions.Action;
 import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Actions.SwitchMon;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
+import com.pokemonSimulator.Game.Types.GroundType;
+import com.pokemonSimulator.Game.Types.Skills.SelfSkillType;
+import com.pokemonSimulator.Game.Types.Skills.StatusSkillType;
+import com.pokemonSimulator.Game.Types.Skills.TerrainSkillType;
 import com.pokemonSimulator.Game.Types.Type;
+import com.pokemonSimulator.Game.Types.WaterType;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Random;
 import com.pokemonSimulator.Utils.Values.Integer;
+import com.pokemonSimulator.Utils.Values.enums.Status;
+import com.pokemonSimulator.Utils.Values.enums.Terrain;
 
 import java.util.LinkedList;
 
@@ -24,9 +31,8 @@ public class Game {
     private BattleMon activeMon;
     private BattleMon enemyMon;
 
+    private Terrain terrainState;
 
-    private static final int TEAM_SIZE = 4;
-    private static final int ATTACK_PER_MON = 4;
 
     public int getPlayerTurn() {
         return playerTurn;
@@ -65,12 +71,10 @@ public class Game {
         this.playerTurn = 1;
         this.activeTeam = this.team1;
 
+        terrainState = Terrain.NORMAL;
+
         team1.forEach(BattleMon::lock);
         team2.forEach(BattleMon::lock);
-    }
-
-    public void end() {
-        System.out.println("Game ended");
     }
 
     public void nextPlayer() {
@@ -102,14 +106,38 @@ public class Game {
             } else if (player1Mon.getSpeed().compareTo(player2Mon.getSpeed()) < 0) {
                 priority = 2;
             } else {
-                priority = (int) Random.generateValue(1, 2);
+                priority = (int) Random.generateInt(1, 2);
             }
         }
         Logger.log("Priority to player " + priority);
 
+        //check terrain
+        if (terrainState != Terrain.NORMAL) {
+            java.util.Random random = new java.util.Random();
+            if (random.nextBoolean() || terrainState.getDuration().getValue() == 0) {
+                terrainState = Terrain.NORMAL;
+            } else {
+                terrainState.turn();
+            }
+        }
 
+        // attacks
         useAction(priority);
         useAction(priority == 1 ? 2 : 1);
+
+        //turn end
+        //check healing skills (Grass, ...)
+        if (!player1Mon.isFainted() && player1Mon.getType() instanceof SelfSkillType st) {
+            st.useSkill(player1Mon);
+        }
+
+        if (!player2Mon.isFainted() && player2Mon.getType() instanceof SelfSkillType st) {
+            st.useSkill(player2Mon);
+        }
+
+        player1Mon.turn();
+        player2Mon.turn();
+
     }
 
     private void useAction(int player) {
@@ -132,7 +160,11 @@ public class Game {
                 break;
             }
         }
-        ;
+
+        if (attacker.isFainted()) {
+            Logger.warn("Attacker is fainted");
+            return;
+        }
 
         Logger.log("ActionType: " + action.getActionType().name());
 
@@ -143,8 +175,9 @@ public class Game {
             case SWITCH:
                 switchMon(player, action);
                 break;
-            default:
-                Logger.error("Invalid action type");
+            case STRUGGLE:
+                struggle(attacker, defender);
+                break;
         }
 
 
@@ -153,6 +186,39 @@ public class Game {
         } else if (isTeamDefeated(team2)) {
             winner = 1;
         }
+    }
+
+    private boolean attack(double accuracy, double damage, BattleMon attacker, BattleMon defender) {
+        Type attackerType = attacker.getType();
+
+        if (attacker.getStatus() == Status.PARALYZED) {
+            double random = Random.generateDouble(0, 1);
+            if (random > 0.25) {
+                Logger.warn("Paralyzed");
+                return false;
+            }
+        }
+
+        if (terrainState == Terrain.FLOOD) {
+            if (!(attackerType instanceof WaterType)) {
+                double random = Random.generateDouble(0, 1);
+                if (random < Constants.SLIP) {
+                    Logger.warn("Falling due to flood");
+                    attacker.hit(new Integer((int) Math.floor(damage / 4)));
+                    return true;
+                }
+            }
+        }
+
+        double random = Random.generateDouble(0, 1);
+        if (random < accuracy) {
+            Logger.warn("damage " + damage);
+            defender.hit(new Integer((int) Math.floor(damage)));
+        } else {
+            Logger.warn("Attack missed");
+        }
+
+        return true;
     }
 
     private void damage(BattleMon attacker, BattleMon defender, Action action) {
@@ -166,29 +232,51 @@ public class Game {
         float attackPower = attack.getPower().getValue();
         float defenseStat = defender.getDefense().getValue();
         float avantage = calculateAvantage(attackerType, defenderType);
-        double coef = Random.generateValue(0.85, 1);
+        double coef = Random.generateDouble(0.85, 1);
 
         double damage = ((11 * attackStat * attackPower) / (25 * defenseStat) + 2) * avantage * coef;
-        Logger.warn("damage " + damage);
 
-        defender.hit(new Integer((int) Math.floor(damage)));
-        attack.use();
+        double accuracy = attack.getAccuracy().getValue();
+
+        boolean attackUsed = attack(accuracy, damage, attacker, defender);
+
+
+        if (attackUsed) {
+            if (attackerType instanceof TerrainSkillType type) {
+                type.useSkill(attacker);
+            }
+
+            if (attackerType instanceof StatusSkillType type && attack.getType().equals(type)) {
+                type.useSkill(type instanceof GroundType ? attacker : defender);
+            }
+            attack.use();
+        }
     }
 
     public void switchMon(int player, Action action) {
         SwitchMon switchMon = (SwitchMon) action;
+
         Logger.warn("Switching mons");
         switch (player) {
             case 2: {
+                if (terrainState != Terrain.NORMAL && terrainState.getCreator() == player2Mon) {
+                    terrainState = Terrain.NORMAL;
+                }
+
                 player2Mon = switchMon.getTarget();
                 break;
             }
             case 1:
             default: {
+                if (terrainState != Terrain.NORMAL && terrainState.getCreator() == player1Mon) {
+                    terrainState = Terrain.NORMAL;
+                }
+
                 player1Mon = switchMon.getTarget();
                 break;
             }
         }
+
         reloadActiveMon();
     }
 
@@ -203,6 +291,16 @@ public class Game {
         }
 
         return 1;
+    }
+
+    private void struggle(BattleMon attacker, BattleMon defender) {
+        Logger.warn("Struggling");
+        double attackStat = attacker.getAttack().getValue();
+        double defenseStat = defender.getDefense().getValue();
+        double coef = Random.generateDouble(.85, 1);
+        double damage = 20 * (attackStat / defenseStat) * coef;
+        attack(1, damage, attacker, defender);
+
     }
 
     private boolean isTeamDefeated(LinkedList<BattleMon> team) {
@@ -264,6 +362,14 @@ public class Game {
 
     public boolean isOver() {
         return winner != -1;
+    }
+
+    public void setTerrain(Terrain terrain) {
+        this.terrainState = terrain;
+    }
+
+    public Terrain getTerrainState() {
+        return terrainState;
     }
 
     public LinkedList<BattleMon> getWinnerTeam() {

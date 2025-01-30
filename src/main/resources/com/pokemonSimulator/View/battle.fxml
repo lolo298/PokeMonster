@@ -13,10 +13,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <?import com.pokemonSimulator.View.Controls.*?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.ProgressBar?>
-<?import javafx.scene.control.ListView?>
 <GridPane id="actGrid" stylesheets="@battle.css" xmlns="http://javafx.com/javafx/23.0.1" prefWidth="1664"
           prefHeight="936"
           gridLinesVisible="true"
@@ -33,39 +30,28 @@
         <RowConstraints minHeight="10.0" percentHeight="12.0" vgrow="SOMETIMES"/>
         <RowConstraints minHeight="10.0" percentHeight="12.0" vgrow="SOMETIMES"/>
     </rowConstraints>
-    <children>
         <Label fx:id="infoLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER"
                GridPane.valignment="CENTER">Player 1
         </Label>
         <VBox GridPane.rowIndex="1">
             <Label text="Switch pokemon"/>
-            <!--            <SpriteListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>-->
-            <ListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>
+                        <SpriteListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>
+<!--            <ListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>-->
             <Button fx:id="switchButton" onAction="#onSwitch" text="Switch" VBox.vgrow="ALWAYS"/>
         </VBox>
         <StackPane fx:id="battlePane" alignment="TOP_LEFT" GridPane.columnIndex="1"
                    GridPane.columnSpan="2" GridPane.rowIndex="1">
-            <children>
                 <ImageView fx:id="battleBackground"
                            pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_LEFT"
                            fitWidth="${battlePane.width}">
-                    <image>
-                        <Image url="@../Battle/grass_bg.png"/>
-                    </image>
                 </ImageView>
                 <ImageView fx:id="battleBackgroundMon1" pickOnBounds="true" preserveRatio="true"
                            fitWidth="${battleBackground.fitWidth}"
                            StackPane.alignment="BOTTOM_LEFT">
-                    <image>
-                        <Image url="@../Battle/grass_a.png"/>
-                    </image>
                 </ImageView>
                 <ImageView fx:id="battleBackgroundMon2" pickOnBounds="true" preserveRatio="true"
                            fitWidth="${battleBackground.fitWidth}"
                            StackPane.alignment="BOTTOM_LEFT">
-                    <image>
-                        <Image url="@../Battle/grass_b.png"/>
-                    </image>
                 </ImageView>
 
                 <AnchorPane fx:id="battleMonPane2">
@@ -80,24 +66,23 @@
                 <AnchorPane>
                         <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.leftAnchor="50"
                                    AnchorPane.topAnchor="300" fitWidth="350">
-                            <image>
                                 <Image url="@../Battle/battle_info.png"/>
-                            </image>
                         </ImageView>
+                        <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.leftAnchor="315"
+                                      AnchorPane.bottomAnchor="310" fitWidth="60" fx:id="statusActiveImg"/>
                         <Label fx:id="activeMonLabel" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="310"/>
                         <ProgressBar fx:id="activeHpBar" AnchorPane.leftAnchor="232" AnchorPane.topAnchor="350"/>
                 </AnchorPane>
                 <AnchorPane>
                     <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.rightAnchor="100"
                                AnchorPane.topAnchor="50" fitWidth="350">
-                        <image>
                             <Image url="@../Battle/battle_info.png"/>
-                        </image>
                     </ImageView>
+                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.rightAnchor="130"
+                               AnchorPane.topAnchor="70" fitWidth="60" fx:id="statusEnemyImg"/>
                     <Label fx:id="enemyMonLabel" AnchorPane.leftAnchor="748" AnchorPane.topAnchor="60"/>
                     <ProgressBar fx:id="enemyHpBar" AnchorPane.rightAnchor="130" AnchorPane.topAnchor="100"/>
                 </AnchorPane>
-            </children>
         </StackPane>
 
         <VBox GridPane.columnIndex="3" GridPane.rowIndex="1">
@@ -129,5 +114,6 @@
                 <Tooltip fx:id="act4Tooltip"/>
             </tooltip>
         </Button>
-    </children>
+        <Button fx:id="struggleButton" onAction="#onActSelect" styleClass="actButton" GridPane.columnIndex="0"
+                GridPane.columnSpan="4" GridPane.rowSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS" text="Struggle" />
 </GridPane>

@@ -1,4 +1,4 @@
-package com.pokemonSimulator.Game.Types;
+package com.pokemonSimulator.Utils.Values.enums;
 
 import com.pokemonSimulator.Utils.Serializable;
 

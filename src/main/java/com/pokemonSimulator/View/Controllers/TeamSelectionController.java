@@ -1,10 +1,10 @@
 package com.pokemonSimulator.View.Controllers;
 
+import com.pokemonSimulator.Game.Constants;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Utils.Logger;
-import com.pokemonSimulator.View.MainController;
-import com.pokemonSimulator.View.Screens;
+import com.pokemonSimulator.Utils.Values.enums.Screens;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
@@ -22,8 +22,6 @@ import java.util.List;
 import java.util.ListIterator;
 
 public class TeamSelectionController extends Controller {
-    private static final int TEAM_SIZE = 4;
-
     private int Step = 0;
 
     @FXML
@@ -128,7 +126,7 @@ public class TeamSelectionController extends Controller {
             }
         }
 
-        if (selectedItems.size() > TEAM_SIZE) {
+        if (selectedItems.size() > Constants.TEAM_SIZE) {
             Monster oldest = team.poll();
             int indexToDeselect = teamList.getItems().indexOf(oldest);
             Platform.runLater(() -> teamList.getSelectionModel().clearSelection(indexToDeselect));

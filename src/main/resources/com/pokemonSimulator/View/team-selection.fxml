@@ -13,6 +13,7 @@
         <ListView fx:id="team1List" prefHeight="200.0" prefWidth="200.0"/>
         <VBox alignment="CENTER" spacing="20.0">
             <Label>VS</Label>
+            <Label>(Ctrl+Click to select multiple)</Label>
             <Button fx:id="startButton" onAction="#startGame" text="Order teams" disable="true"/>
         </VBox>
         <ListView fx:id="team2List" prefHeight="200.0" prefWidth="200.0"/>

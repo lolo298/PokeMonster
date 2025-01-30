@@ -1,6 +1,7 @@
 package com.pokemonSimulator.View;
 
 import com.pokemonSimulator.Utils.Logger;
+import com.pokemonSimulator.Utils.Values.enums.Screens;
 import com.pokemonSimulator.View.Controllers.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;

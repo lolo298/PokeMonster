@@ -1,5 +1,6 @@
 package com.pokemonSimulator.View;
 
+import com.pokemonSimulator.Utils.Values.enums.Screens;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

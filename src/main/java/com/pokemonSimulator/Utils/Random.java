@@ -1,7 +1,11 @@
 package com.pokemonSimulator.Utils;
 
 public class Random {
-    public static <T extends Number> double generateValue(T min, T max) {
-        return Math.floor(Math.random() * (max.doubleValue() - min.doubleValue() + 1) + min.doubleValue());
+    public static int generateInt(int min, int max) {
+        return (int) Math.floor(Math.random() * (max - min + 1) + min);
+    }
+
+    public static double generateDouble(double min, double max) {
+        return Math.random() * (max - min) + min;
     }
 }

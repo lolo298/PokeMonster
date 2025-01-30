@@ -1,12 +1,12 @@
 package com.pokemonSimulator.View.Controllers;
 
 import com.pokemonSimulator.Game.Actions.Attack;
+import com.pokemonSimulator.Game.Constants;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
-import com.pokemonSimulator.Game.Types.Types;
+import com.pokemonSimulator.Utils.Values.enums.Types;
 import com.pokemonSimulator.Utils.Logger;
-import com.pokemonSimulator.View.MainController;
-import com.pokemonSimulator.View.Screens;
+import com.pokemonSimulator.Utils.Values.enums.Screens;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
@@ -20,7 +20,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class AttackSelectController extends Controller {
-    public static final int ATTACK_PER_MON = 4;
     private int Step = 0;
 
     @FXML
@@ -82,7 +81,7 @@ public class AttackSelectController extends Controller {
                 return;
             }
 
-            if (selectedAttacks.size() > ATTACK_PER_MON) {
+            if (selectedAttacks.size() > Constants.ATTACK_PER_MON) {
                 var wasAdded = c.getAddedSubList().get(0);
                 int index = attackList.getItems().indexOf(wasAdded);
                 Platform.runLater(() -> {

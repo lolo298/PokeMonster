@@ -13,10 +13,6 @@ public class Integer implements Serializable, Comparable<Integer>, Cloneable {
         return value;
     }
 
-    public void setValue(int value) {
-        this.value = value;
-    }
-
     public void decrement() {
         this.value--;
     }
@@ -48,6 +44,29 @@ public class Integer implements Serializable, Comparable<Integer>, Cloneable {
         this.value = this.value + other;
         return this;
     }
+
+    public Integer plus(Integer other) {
+        return plus(other.value);
+    }
+
+    public Integer multiply(int other) {
+        this.value = this.value * other;
+        return this;
+    }
+
+    public Integer multiply(Integer other) {
+        return multiply(other.value);
+    }
+
+    public Integer divide(int other) {
+        this.value = this.value / other;
+        return this;
+    }
+
+    public Integer divide(Integer other) {
+        return divide(other.value);
+    }
+
 
     @Override
     public int compareTo(Integer o) {

@@ -11,6 +11,11 @@ public class Range implements Serializable {
         this.max = max;
     }
 
+    public Range(int min, int max) {
+        this.min = new Integer(min);
+        this.max = new Integer(max);
+    }
+
     public Integer getMin() {
         return min;
     }

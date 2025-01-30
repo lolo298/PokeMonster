@@ -1,4 +1,4 @@
-package com.pokemonSimulator.View;
+package com.pokemonSimulator.Utils.Values.enums;
 
 public enum Screens {
     MAIN("MainView.fxml"),

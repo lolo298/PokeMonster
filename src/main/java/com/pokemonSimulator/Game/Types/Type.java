@@ -1,6 +1,7 @@
 package com.pokemonSimulator.Game.Types;
 
 import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.enums.Types;
 
 import java.util.List;
 
@@ -23,11 +24,6 @@ public abstract class Type implements Serializable {
         return this.type.getStrengths();
     }
 
-    public abstract boolean hasSkill();
-
-    //TODO
-//    public abstract void useSkill();
-
     @Override
     public String toString() {
         return this.type.toString();
@@ -35,5 +31,9 @@ public abstract class Type implements Serializable {
 
     public String serialize() {
         return this.type.serialize();
+    }
+
+    public boolean equals(Type type) {
+        return this.type.equals(type.getType());
     }
 }

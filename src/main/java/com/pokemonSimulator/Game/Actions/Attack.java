@@ -6,15 +6,13 @@ import com.pokemonSimulator.Utils.Values.Float;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.String;
 import com.pokemonSimulator.Utils.Values.*;
+import com.pokemonSimulator.Utils.Values.enums.ActionType;
 
-public class Attack extends Action implements Serializable {
+public class Attack extends Action implements Serializable, Cloneable {
     private String name;
     private Type type;
-    private Integer pp;
-    private Integer basePp;
     private Integer power;
     private Float accuracy;
-
     private Buff buff;
 
     public Attack() {
@@ -40,24 +38,6 @@ public class Attack extends Action implements Serializable {
 
     public void setType(Type type) {
         this.type = type;
-    }
-
-    public Integer getPp() {
-        return pp;
-    }
-
-    public void setPp(Integer pp) {
-        this.pp = pp;
-        this.basePp = pp;
-    }
-
-    public void setNbUse(Integer nbUse) {
-        this.pp = nbUse;
-        this.basePp = nbUse;
-    }
-
-    public Integer getBasePp() {
-        return basePp;
     }
 
     public Integer getPower() {
@@ -93,10 +73,6 @@ public class Attack extends Action implements Serializable {
         this.setActionType(buff != null ? ActionType.BUFF : ActionType.DAMAGE);
     }
 
-    public void use() {
-        this.pp.decrement();
-    }
-
     @Override
     public java.lang.String toString() {
         return this.getName().getValue();
@@ -110,8 +86,16 @@ public class Attack extends Action implements Serializable {
                 "accuracy: " + this.accuracy.serialize() + "\n";
     }
 
-    public Attack clone() throws CloneNotSupportedException {
-        return (Attack) super.clone();
+    @Override
+    public Attack clone() {
+        Attack attack = new Attack(this.actionType);
+        attack.setName(this.name);
+        attack.setType(this.type);
+        attack.setPower(this.power);
+        attack.setAccuracy(this.accuracy);
+        attack.setBuff(this.buff != null ? this.buff : null);
+        attack.setPp(this.getPp());
+        return attack;
     }
 
 }

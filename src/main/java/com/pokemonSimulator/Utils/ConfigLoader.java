@@ -1,5 +1,6 @@
 package com.pokemonSimulator.Utils;
 
+import com.pokemonSimulator.Game.Constants;
 import com.pokemonSimulator.Utils.Errors.CantCreateFile;
 
 import java.io.File;
@@ -7,10 +8,8 @@ import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;
 
 public class ConfigLoader {
-    public static final String CONFIG_FOLDER = "config";
-
     public static void initConfig() throws CantCreateFile {
-        File f = new File(CONFIG_FOLDER);
+        File f = new File(Constants.CONFIG_FOLDER);
         if (!f.exists()) {
             Logger.warn("Config folder not found, creating new one");
             boolean res = f.mkdir();
@@ -23,7 +22,7 @@ public class ConfigLoader {
 
     public static File loadConfig(String path) throws FileNotFoundException, CantCreateFile {
         ConfigLoader.initConfig();
-        path = CONFIG_FOLDER + File.separator + path;
+        path = Constants.CONFIG_FOLDER + File.separator + path;
 
         File f = new File(path);
 
@@ -38,7 +37,7 @@ public class ConfigLoader {
 
     public static File createConfig(String path) throws FileAlreadyExistsException, CantCreateFile {
         ConfigLoader.initConfig();
-        path = CONFIG_FOLDER + File.separator + path;
+        path = Constants.CONFIG_FOLDER + File.separator + path;
 
         File f = new File(path);
         if (f.exists()) {

@@ -3,12 +3,13 @@ package com.pokemonSimulator.Utils;
 import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Game.Types.Type;
-import com.pokemonSimulator.Game.Types.Types;
+import com.pokemonSimulator.Utils.Values.enums.Types;
 import com.pokemonSimulator.Utils.Errors.InvalidDataError;
 import com.pokemonSimulator.Utils.Values.Float;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.String;
 import com.pokemonSimulator.Utils.Values.*;
+import com.pokemonSimulator.Utils.Values.enums.Targets;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -127,8 +128,8 @@ public class Deserializer {
     }
 
 
-    public Serializable hydrate(HashMap<String, Serializable> data) throws Exception {
-        Serializable obj = null;
+    public Serializable hydrate(HashMap<String, Serializable> data) {
+        Serializable obj;
         String className = (String) data.get(new String("class"));
         if (className == null) {
             Logger.warn("Class name not found");
@@ -161,9 +162,10 @@ public class Deserializer {
                     classType = Type.class;
                 }
 
+                assert cls != null;
                 cls.getClass().getMethod(method, classType).invoke(cls, data.get(key));
             } catch (Exception e) {
-                throw new Exception("Unable to hydrate object: " + e.getMessage());
+                Logger.error("Unable to hydrate " + key + ": " + e.getMessage());
             }
 
         }

@@ -69,3 +69,31 @@ Attack
     NbUse: 1000
     Fail: 0
 EndAttack
+Attack
+    Name: test PP
+    Type: NORMAL
+    Power: 0
+    NbUse: 1
+    Fail: 0
+EndAttack
+Attack
+    Name: test PP
+    Type: NORMAL
+    Power: 0
+    NbUse: 1
+    Fail: 0
+EndAttack
+Attack
+    Name: test PP
+    Type: NORMAL
+    Power: 0
+    NbUse: 1
+    Fail: 0
+EndAttack
+Attack
+    Name: test PP
+    Type: NORMAL
+    Power: 0
+    NbUse: 1
+    Fail: 0
+EndAttack

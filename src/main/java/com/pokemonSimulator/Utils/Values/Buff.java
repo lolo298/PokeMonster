@@ -1,12 +1,13 @@
 package com.pokemonSimulator.Utils.Values;
 
 import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.enums.Targets;
 
 public class Buff implements Serializable {
 
-    private String stat;
-    private Integer stage;
-    private Targets target;
+    private final String stat;
+    private final Integer stage;
+    private final Targets target;
 
     public Buff(String stat, Integer stage, Targets target) {
         this.stat = stat;

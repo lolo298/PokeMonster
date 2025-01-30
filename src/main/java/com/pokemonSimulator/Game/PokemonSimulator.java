@@ -15,10 +15,6 @@ import java.util.List;
 import java.util.Objects;
 
 public class PokemonSimulator {
-    public static final String MONSTERS_FILE = "monsters.txt";
-    public static final String ATTACKS_FILE = "attacks.txt";
-    public static final String PRESETS_FILE = "presets.txt";
-
     private Serializer serializer;
     private Deserializer deserializer;
 
@@ -60,14 +56,15 @@ public class PokemonSimulator {
     }
 
     private void LoadMonsters() {
+        Logger.log("Loading monsters...");
         // Load monsters from file
         File f;
         try {
-            f = ConfigLoader.loadConfig(MONSTERS_FILE);
+            f = ConfigLoader.loadConfig(Constants.MONSTERS_FILE);
         } catch (FileNotFoundException e) {
             Logger.warn("Monsters file not found, creating new one");
             try {
-                f = ConfigLoader.createConfig(MONSTERS_FILE);
+                f = ConfigLoader.createConfig(Constants.MONSTERS_FILE);
             } catch (Exception ex) {
                 Logger.error("Unable to create monsters file: " + ex.getMessage());
                 return;
@@ -100,18 +97,23 @@ public class PokemonSimulator {
             Logger.error("Error reading monsters file: " + e.getMessage());
         } catch (InvalidDataError e) {
             Logger.error(e.getMessage());
+            var stack = e.getStackTrace();
+            for (int i = 0; i < 15; i++) {
+                Logger.error(stack[i].toString());
+            }
         }
     }
 
     private void LoadAttacks() {
+        Logger.log("Loading attacks...");
         // Load attacks from file
         File f;
         try {
-            f = ConfigLoader.loadConfig(ATTACKS_FILE);
+            f = ConfigLoader.loadConfig(Constants.ATTACKS_FILE);
         } catch (FileNotFoundException e) {
             Logger.warn("Attacks file not found, creating new one");
             try {
-                f = ConfigLoader.createConfig(ATTACKS_FILE);
+                f = ConfigLoader.createConfig(Constants.ATTACKS_FILE);
             } catch (Exception ex) {
                 Logger.error("Unable to create attacks file: " + ex.getMessage());
                 return;
