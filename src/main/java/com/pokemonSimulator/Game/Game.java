@@ -37,6 +37,8 @@ public class Game {
     private Action player1Action;
     private Action player2Action;
 
+    private int winner = -1;
+
     public Game(LinkedList<BattleMon> team1, LinkedList<BattleMon> team2) {
         //team values
         this.team1 = team1;
@@ -144,6 +146,13 @@ public class Game {
             default:
                 Logger.error("Invalid action type");
         }
+
+
+        if (isTeamDefeated(team1)) {
+            winner = 2;
+        } else if (isTeamDefeated(team2)) {
+            winner = 1;
+        }
     }
 
     private void damage(BattleMon attacker, BattleMon defender, Action action) {
@@ -196,6 +205,10 @@ public class Game {
         return 1;
     }
 
+    private boolean isTeamDefeated(LinkedList<BattleMon> team) {
+        return team.stream().allMatch(BattleMon::isFainted);
+    }
+
     public LinkedList<BattleMon> getActiveTeam() {
         return this.activeTeam;
     }
@@ -243,5 +256,20 @@ public class Game {
         } else {
             this.player2Action = action;
         }
+    }
+
+    public int getWinner() {
+        return winner;
+    }
+
+    public boolean isOver() {
+        return winner != -1;
+    }
+
+    public LinkedList<BattleMon> getWinnerTeam() {
+        if (!isOver()) {
+            return null;
+        }
+        return winner == 1 ? team1 : team2;
     }
 }

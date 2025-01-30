@@ -21,12 +21,10 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.ListIterator;
 
-public class TeamSelectionController implements IController {
+public class TeamSelectionController extends Controller {
     private static final int TEAM_SIZE = 4;
 
     private int Step = 0;
-
-    private MainController mainController;
 
     @FXML
     private Button startButton;
@@ -135,10 +133,6 @@ public class TeamSelectionController implements IController {
             int indexToDeselect = teamList.getItems().indexOf(oldest);
             Platform.runLater(() -> teamList.getSelectionModel().clearSelection(indexToDeselect));
         }
-    }
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
     public void initDrag(ListView<Monster> listView, LinkedList<Monster> team) {

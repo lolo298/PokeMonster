@@ -7,6 +7,7 @@ import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.View.MainController;
+import com.pokemonSimulator.View.Screens;
 import javafx.collections.ListChangeListener;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -19,8 +20,7 @@ import javafx.util.Duration;
 import java.net.URISyntaxException;
 import java.util.Arrays;
 
-public class BattleController implements IController {
-    private MainController mainController;
+public class BattleController extends Controller {
     private Game game;
 
     @FXML
@@ -74,6 +74,8 @@ public class BattleController implements IController {
     private ListView<String> useItemsList;
     @FXML
     private ListView<BattleMon> switchMonList;
+    @FXML
+    private Button switchButton;
 
     private int isSwitching = 0;
 
@@ -90,10 +92,7 @@ public class BattleController implements IController {
         if (isSwitching != 0) {
             game.switchMon(isSwitching, switchMon);
 
-            act1.setDisable(false);
-            act2.setDisable(false);
-            act3.setDisable(false);
-            act4.setDisable(false);
+            blockActions(false);
 
             isSwitching = 0;
         } else {
@@ -105,11 +104,6 @@ public class BattleController implements IController {
 
         game.nextPlayer();
         loadBattleView();
-    }
-
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
     }
 
     @FXML
@@ -212,7 +206,7 @@ public class BattleController implements IController {
             act.setText(attack.getName().getValue());
             actTooltip.setText(String.format("%d/%d", attack.getPp().getValue(), attack.getBasePp().getValue()));
             actTooltip.setShowDelay(Duration.millis(500));
-//            infoLabel.setText("Player " + game.getPlayerTurn() + "'s turn");
+            infoLabel.setText("Player " + game.getPlayerTurn() + "'s turn");
 
         }
     }
@@ -227,6 +221,20 @@ public class BattleController implements IController {
         Logger.warn(game.getPlayer2Mon().toString());
 
 
+        if (game.isOver()) {
+            int winner = game.getWinner();
+
+            blockActions(true);
+            switchButton.setDisable(true);
+
+            mainController.switchView(Screens.END);
+
+
+
+            return;
+        }
+
+
         //check fainted mons
         if (game.getPlayer1Mon().isFainted()) {
             game.setTurn(1);
@@ -236,10 +244,7 @@ public class BattleController implements IController {
 
             switchMonList.refresh();
 
-            act1.setDisable(true);
-            act2.setDisable(true);
-            act3.setDisable(true);
-            act4.setDisable(true);
+            blockActions(true);
             infoLabel.setText("Player 1's " + game.getPlayer1Mon().getName() + " fainted");
             isSwitching = 1;
         } else if (game.getPlayer2Mon().isFainted()) {
@@ -249,15 +254,17 @@ public class BattleController implements IController {
 
             activeMonImg.setImage(null);
 
-            act1.setDisable(true);
-            act2.setDisable(true);
-            act3.setDisable(true);
-            act4.setDisable(true);
+            blockActions(true);
             infoLabel.setText("Player 2's " + game.getPlayer2Mon().getName() + " fainted");
             isSwitching = 2;
         }
+    }
 
-
+    private void blockActions(boolean block) {
+        act1.setDisable(block);
+        act2.setDisable(block);
+        act3.setDisable(block);
+        act4.setDisable(block);
     }
 
     private double clamp(double value, double min, double max) {

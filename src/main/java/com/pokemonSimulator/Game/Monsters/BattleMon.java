@@ -8,6 +8,7 @@ import com.pokemonSimulator.Utils.Errors.TooManyAttacks;
 import com.pokemonSimulator.Utils.ISprite;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.SpriteLoader;
+import com.pokemonSimulator.Utils.SpriteOrientation;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.SpritesType;
 import com.pokemonSimulator.Utils.Values.String;
@@ -108,21 +109,25 @@ public class BattleMon implements ISprite {
     }
 
     public boolean isFainted() {
+        Logger.log(this.name + " health: " + this.health);
         return this.health.compareTo(new Integer(0)) <= 0;
     }
 
-    public Image getSprite(java.lang.String side, SpritesType type) {
-        Logger.log("Getting sprite for " + this.getName());
-
+    public Image getSprite(SpriteOrientation side, SpritesType type) {
         java.lang.String extension = switch (type) {
             case STATIC -> "png";
             case ANIMATED -> "gif";
         };
 
+        java.lang.String orientation = switch (side) {
+            case BACK -> "back";
+            case FRONT -> "front";
+        };
+
         Image sprite = null;
 
         try {
-            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + side + "." + extension);
+            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + orientation + "." + extension);
         } catch (InvalidSprite e) {
             Logger.warn(e.toString());
             sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/default.png");
@@ -131,18 +136,21 @@ public class BattleMon implements ISprite {
         return sprite;
     }
 
-    public Image getSprite(java.lang.String side, SpritesType type, int width, int height) {
-        Logger.log("Getting sprite for " + this.getName());
-
+    public Image getSprite(SpriteOrientation side, SpritesType type, int width, int height) {
         java.lang.String extension = switch (type) {
             case STATIC -> "png";
             case ANIMATED -> "gif";
         };
 
+        java.lang.String orientation = switch (side) {
+            case BACK -> "back";
+            case FRONT -> "front";
+        };
+
         Image sprite = null;
 
         try {
-            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + side + "." + extension, width, height, false, false);
+            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + orientation + "." + extension, width, height, false, false);
         } catch (InvalidSprite e) {
             Logger.warn(e.toString());
             sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/default.png", width, height, true, false);
@@ -152,16 +160,16 @@ public class BattleMon implements ISprite {
     }
 
     public Image getSprite() {
-        return getSprite("front", SpritesType.ANIMATED);
+        return getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED);
     }
 
     public Image getSprite(int width, int height) {
-        return getSprite("front", SpritesType.ANIMATED, width, height);
+        return getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED, width, height);
     }
 
     public Tuple<Image, Image> getSprites() throws URISyntaxException {
-        var frontImage = getSprite("front", SpritesType.ANIMATED);
-        var backImage = getSprite("back", SpritesType.ANIMATED);
+        var frontImage = getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED);
+        var backImage = getSprite(SpriteOrientation.BACK, SpritesType.ANIMATED);
 
         return new Tuple<>(frontImage, backImage);
     }

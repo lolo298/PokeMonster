@@ -30,7 +30,7 @@ public class PokemonSimulator {
     private static final LinkedList<BattleMon> team1 = new LinkedList<>();
     private static final LinkedList<BattleMon> team2 = new LinkedList<>();
 
-    public Game game;
+    public static Game game;
 
     public PokemonSimulator() {
         if (instance != null) {
@@ -180,9 +180,16 @@ public class PokemonSimulator {
     }
 
     public Game startGame() {
-        this.game = new Game(team1, team2);
-        this.game.start();
-        return this.game;
+        game = new Game(team1, team2);
+        game.start();
+        return game;
+    }
+
+    public static void reset() {
+        team1.clear();
+        team2.clear();
+
+        game = null;
     }
 
 }

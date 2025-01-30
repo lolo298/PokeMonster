@@ -62,3 +62,10 @@ Attack
     NbUse: 30
     Fail: 0.05
 EndAttack
+Attack
+    name: CHEAT
+    Type: NORMAL
+    Power: 1000
+    NbUse: 1000
+    Fail: 0
+EndAttack

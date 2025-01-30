@@ -16,7 +16,10 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.chart.NumberAxis?>
 <?import javafx.scene.control.ProgressBar?>
-<GridPane id="actGrid" stylesheets="@battle.css" xmlns="http://javafx.com/javafx/23.0.1"
+<?import javafx.scene.control.ListView?>
+<GridPane id="actGrid" stylesheets="@battle.css" xmlns="http://javafx.com/javafx/23.0.1" prefWidth="1664"
+          prefHeight="936"
+          gridLinesVisible="true"
           xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.pokemonSimulator.View.Controllers.BattleController">
     <columnConstraints>
         <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0"/>
@@ -27,22 +30,25 @@
     <rowConstraints>
         <RowConstraints minHeight="10.0" percentHeight="5.0" vgrow="SOMETIMES"/>
         <RowConstraints minHeight="10.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" percentHeight="8.0" vgrow="SOMETIMES"/>
-        <RowConstraints minHeight="10.0" percentHeight="8.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" percentHeight="12.0" vgrow="SOMETIMES"/>
+        <RowConstraints minHeight="10.0" percentHeight="12.0" vgrow="SOMETIMES"/>
     </rowConstraints>
     <children>
-        <Label fx:id="infoLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Player 1
+        <Label fx:id="infoLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER"
+               GridPane.valignment="CENTER">Player 1
         </Label>
         <VBox GridPane.rowIndex="1">
             <Label text="Switch pokemon"/>
-            <SpriteListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>
+            <!--            <SpriteListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>-->
+            <ListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0"/>
             <Button fx:id="switchButton" onAction="#onSwitch" text="Switch" VBox.vgrow="ALWAYS"/>
         </VBox>
-        <StackPane fx:id="battlePane" alignment="TOP_LEFT" prefHeight="150.0" prefWidth="200.0" GridPane.columnIndex="1"
-                   GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="1" GridPane.vgrow="ALWAYS">
+        <StackPane fx:id="battlePane" alignment="TOP_LEFT" GridPane.columnIndex="1"
+                   GridPane.columnSpan="2" GridPane.rowIndex="1">
             <children>
-                <ImageView fx:id="battleBackground" fitWidth="${battlePane.width}" fitHeight="${battlePane.height}"
-                           pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_LEFT">
+                <ImageView fx:id="battleBackground"
+                           pickOnBounds="true" preserveRatio="true" StackPane.alignment="BOTTOM_LEFT"
+                           fitWidth="${battlePane.width}">
                     <image>
                         <Image url="@../Battle/grass_bg.png"/>
                     </image>
@@ -63,33 +69,33 @@
                 </ImageView>
 
                 <AnchorPane fx:id="battleMonPane2">
-                    <ImageView AnchorPane.leftAnchor="825" AnchorPane.topAnchor="400" fx:id="enemyMonImg"
+                    <ImageView AnchorPane.rightAnchor="300" AnchorPane.bottomAnchor="250" fx:id="enemyMonImg"
                                fitWidth="150.0" pickOnBounds="true"
                                preserveRatio="true"/>
                 </AnchorPane>
                 <AnchorPane fx:id="battleMonPane1">
                     <ImageView fx:id="activeMonImg" fitWidth="250.0" pickOnBounds="true"
-                               preserveRatio="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="300"/>
+                               preserveRatio="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="225"/>
                 </AnchorPane>
                 <AnchorPane>
-                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.leftAnchor="100"
-                               AnchorPane.topAnchor="400" fitWidth="350">
+                        <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.leftAnchor="50"
+                                   AnchorPane.topAnchor="300" fitWidth="350">
+                            <image>
+                                <Image url="@../Battle/battle_info.png"/>
+                            </image>
+                        </ImageView>
+                        <Label fx:id="activeMonLabel" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="310"/>
+                        <ProgressBar fx:id="activeHpBar" AnchorPane.leftAnchor="232" AnchorPane.topAnchor="350"/>
+                </AnchorPane>
+                <AnchorPane>
+                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.rightAnchor="100"
+                               AnchorPane.topAnchor="50" fitWidth="350">
                         <image>
                             <Image url="@../Battle/battle_info.png"/>
                         </image>
                     </ImageView>
-                    <Label fx:id="activeMonLabel" AnchorPane.leftAnchor="170" AnchorPane.topAnchor="410"/>
-                    <ProgressBar fx:id="activeHpBar" AnchorPane.leftAnchor="280" AnchorPane.topAnchor="450"/>
-                </AnchorPane>
-                <AnchorPane>
-                    <ImageView preserveRatio="true" pickOnBounds="true" AnchorPane.rightAnchor="200"
-                               AnchorPane.topAnchor="200" fitWidth="350">
-                        <image>
-                            <Image url="@../Battle/battle_info.png"/>
-                        </image>
-                    </ImageView>
-                    <Label fx:id="enemyMonLabel" AnchorPane.rightAnchor="400" AnchorPane.topAnchor="213"/>
-                    <ProgressBar fx:id="enemyHpBar" AnchorPane.rightAnchor="229" AnchorPane.topAnchor="250"/>
+                    <Label fx:id="enemyMonLabel" AnchorPane.leftAnchor="748" AnchorPane.topAnchor="60"/>
+                    <ProgressBar fx:id="enemyHpBar" AnchorPane.rightAnchor="130" AnchorPane.topAnchor="100"/>
                 </AnchorPane>
             </children>
         </StackPane>

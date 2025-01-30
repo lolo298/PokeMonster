@@ -1,113 +1,1 @@
-
-import org.apache.tools.ant.taskdefs.condition.Os
-
-
-plugins {
-    id 'java'
-    id 'application'
-    id 'org.openjfx.javafxplugin' version '0.1.0'
-    id 'org.beryx.jlink' version '3.1.1'
-    id("co.uzzu.dotenv.gradle") version "4.0.0"
-}
-
-
-group 'com.pokemonSimulator'
-version env.MAJOR_VERSION.value + '.' + env.MINOR_VERSION.value + '.' + env.PATCH_VERSION.value
-description = 'PokemonSimulator'
-
-tasks.register('printVersionName') {
-    println project.version
-}
-
-repositories {
-    mavenCentral()
-}
-
-ext {
-    junitVersion = '5.9.1'
-}
-
-sourceCompatibility = '21'
-targetCompatibility = '21'
-
-tasks.withType(JavaCompile).configureEach {
-    options.encoding = 'UTF-8'
-}
-
-application {
-    mainModule = 'com.pokemonSimulator'
-    mainClass = 'com.pokemonSimulator.Main'
-}
-
-javafx {
-    version = '23.0.1'
-    modules = ['javafx.controls', 'javafx.fxml']
-}
-
-configurations.configureEach {
-    attributes {
-        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))
-        attribute(OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE, objects.named(OperatingSystemFamily, javafx.platform.osFamily))
-        attribute(MachineArchitecture.ARCHITECTURE_ATTRIBUTE, objects.named(MachineArchitecture, javafx.platform.arch))
-    }
-}
-
-dependencies {
-    implementation 'org.json:json:20231013'
-
-    implementation "org.openjfx:javafx-controls:23.0.1"
-    implementation "org.openjfx:javafx-fxml:23.0.1"
-
-    implementation "org.openjfx:javafx-controls:23.0.1"
-    implementation "org.openjfx:javafx-fxml:23.0.1"
-
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
-    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")
-}
-
-test {
-    useJUnitPlatform()
-}
-
-jlink {
-    options = ['--strip-debug', '--no-header-files', '--no-man-pages']
-    imageZip = project.file("${buildDir}/distributions/${project.name}-${project.version}-${javafx.platform.classifier}.zip")
-    launcher {
-        name = 'app'
-    }
-
-    jpackage {
-        installerName = project.name + "-" + javafx.platform.classifier + "-installer"
-        imageName = project.name + "-" + javafx.platform.classifier + "-portable-" + project.version
-        vendor = 'Lorenzo Aoulini'
-        installerOptions = [
-                '--description', project.description,
-                '--copyright', 'Copyrigth © 2023',
-                '--app-version', project.version
-        ]
-
-        installerType = project.findProperty('installerType')
-        // we will pass this from the command line (example: -PinstallerType=msi)
-        if (Os.isFamily(Os.FAMILY_WINDOWS)) {
-            installerOptions += ['--win-dir-chooser', '--win-menu', '--win-shortcut']
-            installerType = 'msi'
-        }
-        if (Os.isFamily(Os.FAMILY_MAC)) {
-            imageOptions += ['--icon', 'app-icon.icns']
-            installerType = 'dmg'}
-        if (Os.isFamily(Os.FAMILY_UNIX) && !Os.isFamily(Os.FAMILY_MAC)) {
-            imageOptions += ['--icon', 'app-icon.png']
-            installerOptions += [
-                    '--linux-menu-group', 'Educational',
-                    '--linux-shortcut'
-            ]
-            installerType = 'deb'
-        }
-    }
-}
-
-jlinkZip {
-    group = 'distribution'
-}
-
-jpackage {}
+import org.apache.tools.ant.taskdefs.condition.Osplugins {    id 'java'    id 'application'    id 'org.openjfx.javafxplugin' version '0.1.0'    id 'org.beryx.jlink' version '3.1.1'    id("co.uzzu.dotenv.gradle") version "4.0.0"}group 'com.pokemonSimulator'version env.MAJOR_VERSION.value + '.' + env.MINOR_VERSION.value + '.' + env.PATCH_VERSION.valuedescription = 'PokemonSimulator'tasks.register('printVersionName') {    println project.version}repositories {    mavenCentral()}ext {    junitVersion = '5.9.1'}sourceCompatibility = '17'targetCompatibility = '17'tasks.withType(JavaCompile).configureEach {    options.encoding = 'UTF-8'}application {    mainModule = 'com.pokemonSimulator'    mainClass = 'com.pokemonSimulator.Main'}javafx {    version = '23.0.1'    modules = ['javafx.controls', 'javafx.fxml']}configurations.configureEach {    attributes {        attribute(Usage.USAGE_ATTRIBUTE, objects.named(Usage, Usage.JAVA_RUNTIME))        attribute(OperatingSystemFamily.OPERATING_SYSTEM_ATTRIBUTE, objects.named(OperatingSystemFamily, javafx.platform.osFamily))        attribute(MachineArchitecture.ARCHITECTURE_ATTRIBUTE, objects.named(MachineArchitecture, javafx.platform.arch))    }}dependencies {    implementation 'org.json:json:20231013'    implementation "org.openjfx:javafx-controls:23.0.1"    implementation "org.openjfx:javafx-fxml:23.0.1"    implementation "org.openjfx:javafx-controls:23.0.1"    implementation "org.openjfx:javafx-fxml:23.0.1"    testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")}test {    useJUnitPlatform()}jlink {    options = ['--strip-debug', '--no-header-files', '--no-man-pages']    imageZip = project.file("${buildDir}/distributions/${project.name}-${project.version}-${javafx.platform.classifier}.zip")    launcher {        name = 'app'    }    jpackage {        installerName = project.name + "-" + javafx.platform.classifier + "-installer"        imageName = project.name + "-" + javafx.platform.classifier + "-portable-" + project.version        vendor = 'Lorenzo Aoulini'        installerOptions = [                '--description', project.description,                '--copyright', 'Copyrigth © 2023',                '--app-version', project.version        ]        installerType = project.findProperty('installerType')        // we will pass this from the command line (example: -PinstallerType=msi)        if (Os.isFamily(Os.FAMILY_WINDOWS)) {            installerOptions += ['--win-dir-chooser', '--win-menu', '--win-shortcut']            installerType = 'msi'        }        if (Os.isFamily(Os.FAMILY_MAC)) {            imageOptions += ['--icon', 'app-icon.icns']            installerType = 'dmg'}        if (Os.isFamily(Os.FAMILY_UNIX) && !Os.isFamily(Os.FAMILY_MAC)) {            imageOptions += ['--icon', 'app-icon.png']            installerOptions += [                    '--linux-menu-group', 'Educational',                    '--linux-shortcut'            ]            installerType = 'deb'        }    }}jlinkZip {    group = 'distribution'}jpackage {}

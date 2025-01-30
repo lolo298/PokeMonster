@@ -62,4 +62,9 @@ public class Integer implements Serializable, Comparable<Integer>, Cloneable {
     public Integer clone() {
         return new Integer(this.value);
     }
+
+    @Override
+    public java.lang.String toString() {
+        return this.serialize();
+    }
 }

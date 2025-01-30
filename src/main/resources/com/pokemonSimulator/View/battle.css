@@ -28,7 +28,7 @@
 #enemyHpBar {
     -fx-accent: red;
     -fx-pref-height: 15;
-    -fx-pref-width: 140;
+    -fx-pref-width: 138;
     -fx-border-width: 0;
     -fx-padding: 1px;
     -fx-background-insets: 0;
@@ -38,4 +38,9 @@
 #activeHpBar > .track,
 #enemyHpBar > .track {
     -fx-background-color: transparent;
+}
+
+.border {
+    -fx-border-color: red;
+    -fx-border-width: 2;
 }

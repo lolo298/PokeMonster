@@ -19,9 +19,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Objects;
 
-public class AttackSelectController implements IController {
+public class AttackSelectController extends Controller {
     public static final int ATTACK_PER_MON = 4;
-    private MainController mainController;
     private int Step = 0;
 
     @FXML
@@ -34,10 +33,6 @@ public class AttackSelectController implements IController {
     private HashMap<BattleMon, Attack[]> teamAttacks = new HashMap<>();
 
     private List<Attack> availableAttacks;
-
-    public void setMainController(MainController mainController) {
-        this.mainController = mainController;
-    }
 
     private final ListChangeListener<BattleMon> teamChange = new ListChangeListener<>() {
         @Override

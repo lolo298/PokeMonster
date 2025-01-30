@@ -1,7 +1,7 @@
 package com.pokemonSimulator.View;
 
 import com.pokemonSimulator.Utils.Logger;
-import com.pokemonSimulator.View.Controllers.IController;
+import com.pokemonSimulator.View.Controllers.Controller;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -15,6 +15,7 @@ public class MainController {
 
     @FXML
     void initialize() {
+        Controller.setMainController(this);
         switchView(Screens.SELECT_TEAM);
     }
 
@@ -22,9 +23,6 @@ public class MainController {
         try {
             FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile.toString()));
             Parent newView = loader.load();
-            IController controller = loader.getController();
-            controller.setMainController(this);
-
 
             rootPane.getChildren().clear();
             rootPane.getChildren().add(newView);
