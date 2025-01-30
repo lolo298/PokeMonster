@@ -3,6 +3,7 @@ package com.pokemonSimulator.Utils;
 import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Game.Types.Type;
+import com.pokemonSimulator.Utils.Values.enums.BuffStat;
 import com.pokemonSimulator.Utils.Values.enums.Types;
 import com.pokemonSimulator.Utils.Errors.InvalidDataError;
 import com.pokemonSimulator.Utils.Values.Float;
@@ -33,6 +34,11 @@ public class Deserializer {
         java.lang.String[] lines = this.DeserializeSource.split("\n");
         for (java.lang.String line : lines) {
             this.lineNumber++;
+
+            if (line.trim().isEmpty()) {
+                continue;
+            }
+
             if (map == null) {
                 map = new HashMap<>();
                 map.put(new String("class"), new String(line.trim()));
@@ -92,8 +98,8 @@ public class Deserializer {
             Serializable power = this.parseValue(split[1]);
             Serializable target = this.parseValue(split[2]);
 
-            if (stat instanceof String && power instanceof Integer && target instanceof Targets) {
-                return new Buff((String) stat, (Integer) power, (Targets) target);
+            if (stat instanceof BuffStat && power instanceof Integer && target instanceof Targets) {
+                return new Buff((BuffStat) stat, (Integer) power, (Targets) target);
             }
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
         }
@@ -115,12 +121,17 @@ public class Deserializer {
             return Targets.valueOf(value);
         }
 
+        List<java.lang.String> buffStat = Arrays.stream(BuffStat.values()).map(Enum::name).toList();
+        if (buffStat.contains(value)) {
+            return BuffStat.valueOf(value);
+        }
 
-        if (value.matches("[0-9]+")) {
+
+        if (value.matches("-?[0-9]+")) {
             return new Integer(java.lang.Integer.parseInt(value));
         }
 
-        if (value.matches("[0-9]+\\.[0-9]+")) {
+        if (value.matches("-?[0-9]*\\.[0-9]+")) {
             return new Float(java.lang.Float.parseFloat(value));
         }
 

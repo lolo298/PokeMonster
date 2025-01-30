@@ -5,6 +5,7 @@ import com.pokemonSimulator.Game.Game;
 import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
+import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Values.enums.Screens;
 import com.pokemonSimulator.Utils.Values.enums.TerrainSpriteTypes;
 import javafx.event.ActionEvent;
@@ -221,7 +222,9 @@ public class BattleController extends Controller {
         checkStruggle();
 
 
-        infoLabel.setText("Player " + game.getPlayerTurn() + "'s turn");
+        if (isSwitching == 0) {
+            infoLabel.setText("Player " + game.getPlayerTurn() + "'s turn");
+        }
     }
 
     private void checkStruggle() {
@@ -244,6 +247,9 @@ public class BattleController extends Controller {
 
     private void battle() {
         game.battle();
+
+        Logger.log("Player 1's " + game.getPlayer1Mon().getName() + " boostedAttack: " + game.getPlayer1Mon().getAttack());
+        Logger.log("Player 2's " + game.getPlayer2Mon().getName() + " boostedAttack: " + game.getPlayer2Mon().getAttack());
 
         if (game.isOver()) {
             blockActions(true);

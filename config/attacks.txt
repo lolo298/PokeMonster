@@ -46,7 +46,15 @@ Attack
     Power: 0
     NbUse: 30
     Fail: 0
-    Buff: Attack$2$SELF
+    Buff: ATTACK$2$SELF
+EndAttack
+Attack
+    Name: Charm
+    Type: NORMAL
+    Power: 0
+    NbUse: 30
+    Fail: 0
+    Buff: DEFENSE$-2$ENEMY
 EndAttack
 Attack
     Name: Headbutt
@@ -54,6 +62,14 @@ Attack
     Power: 70
     NbUse: 15
     Fail: 0
+EndAttack
+Attack
+    Name: Close Combat
+    Type: NORMAL
+    Power: 120
+    NbUse: 5
+    Fail: 0
+    Buff: DEFENSE$-1$SELF
 EndAttack
 Attack
     Name: Cut

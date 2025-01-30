@@ -11,6 +11,7 @@ import com.pokemonSimulator.Utils.ISprite;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Random;
 import com.pokemonSimulator.Utils.SpriteLoader;
+import com.pokemonSimulator.Utils.Values.Buff;
 import com.pokemonSimulator.Utils.Values.enums.SpriteOrientation;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.enums.SpritesType;
@@ -30,6 +31,10 @@ public class BattleMon implements ISprite {
     private final Integer health;
     private final Integer maxHealth;
     private final Integer speed;
+
+    private Integer attackBoost = new Integer(0);
+    private Integer defenseBoost = new Integer(0);
+    private Integer speedBoost = new Integer(0);
 
     private Status status = Status.NONE;
     private Integer statusDuration = new Integer(0);
@@ -65,8 +70,16 @@ public class BattleMon implements ISprite {
         return type;
     }
 
+    private double getBoostMultiplier(Integer boost) {
+        if(boost.compareTo(new Integer(0)) >= 0) {
+            return (2 + boost.getValue()) / 2.0;
+        } else {
+            return 2.0 / (2 - boost.getValue());
+        }
+    }
+
     public Integer getAttack() {
-        return attack;
+        return new Integer((int) (attack.getValue() * getBoostMultiplier(attackBoost)));
     }
 
     public void setAttacks(Attack[] attacks) throws TooManyAttacks, BattleStarted {
@@ -90,7 +103,7 @@ public class BattleMon implements ISprite {
     }
 
     public Integer getDefense() {
-        return defense;
+        return new Integer((int) (defense.getValue() * getBoostMultiplier(defenseBoost)));
     }
 
     public Integer getHealth() {
@@ -102,7 +115,7 @@ public class BattleMon implements ISprite {
     }
 
     public Integer getSpeed() {
-        return speed;
+        return new Integer((int) (speed.getValue() * getBoostMultiplier(speedBoost)));
     }
 
     public void hit(Integer damage) {
@@ -132,7 +145,7 @@ public class BattleMon implements ISprite {
 
     public void setStatus(Status status) {
         if (status == Status.HIDDEN && this.status != Status.HIDDEN) {
-            defense.multiply(2);
+            defenseBoost.plus(2);
         }
         this.status = status;
         this.statusDuration = new Integer(0);
@@ -154,7 +167,7 @@ public class BattleMon implements ISprite {
                 double chance = (double) statusDuration.getValue() / Constants.HIDDEN_DURATION;
                 if (random < chance) {
                     status = Status.NONE;
-                    defense.divide(2);
+                    defenseBoost.minusLeft(2);
                     statusDuration = new Integer(0);
                 }
             }
@@ -163,7 +176,7 @@ public class BattleMon implements ISprite {
                     status = Status.NONE;
                     statusDuration = new Integer(0);
                 } else {
-                    int damage = attack.getValue() / 10;
+                    int damage = getAttack().getValue() / 10;
                     hit(new Integer(damage));
                 }
             }
@@ -176,6 +189,30 @@ public class BattleMon implements ISprite {
 
     public Integer getStatusDuration() {
         return statusDuration;
+    }
+
+    public void buff(Buff buff) {
+        Logger.warn("Buffing " + this.getName() + " with " + buff.getStat() + " by " + buff.getStage());
+        switch (buff.getStat()) {
+            case ATTACK -> {
+                if (attackBoost.compareTo(new Integer(6)) >= 0 || attackBoost.compareTo(new Integer(-6)) <= 0) {
+                    return;
+                }
+                attackBoost.plus(buff.getStage());
+            }
+            case DEFENSE -> {
+                if (defenseBoost.compareTo(new Integer(6)) >= 0 || defenseBoost.compareTo(new Integer(-6)) <= 0) {
+                    return;
+                }
+                defenseBoost.plus(buff.getStage());
+            }
+            case SPEED -> {
+                if (speedBoost.compareTo(new Integer(6)) >= 0 || speedBoost.compareTo(new Integer(-6)) <= 0) {
+                    return;
+                }
+                speedBoost.plus(buff.getStage());
+            }
+        }
     }
 
     public Image getSprite(SpriteOrientation side, SpritesType type) {

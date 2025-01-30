@@ -12,6 +12,7 @@ import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Game.Types.WaterType;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Random;
+import com.pokemonSimulator.Utils.Values.Buff;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.enums.Status;
 import com.pokemonSimulator.Utils.Values.enums.Terrain;
@@ -80,14 +81,7 @@ public class Game {
     public void nextPlayer() {
         this.playerTurn = this.playerTurn == 1 ? 2 : 1;
 
-        //switch active and enemy team
-        this.activeTeam = this.playerTurn == 1 ? this.team1 : this.team2;
-        this.enemyTeam = this.playerTurn == 1 ? this.team2 : this.team1;
-
-        //switch active and enemy mon
-        var tmp = this.activeMon;
-        this.activeMon = this.enemyMon;
-        this.enemyMon = tmp;
+        reloadActiveMon();
     }
 
     public void battle() {
@@ -178,6 +172,13 @@ public class Game {
             case STRUGGLE:
                 struggle(attacker, defender);
                 break;
+            case BUFF:
+                buff(attacker, defender, action);
+                break;
+        }
+
+        if (action instanceof Attack attack) {
+            attack.use();
         }
 
 
@@ -188,7 +189,7 @@ public class Game {
         }
     }
 
-    private boolean attack(double accuracy, double damage, BattleMon attacker, BattleMon defender) {
+    private boolean attack(double accuracy, int damage, BattleMon attacker, BattleMon defender) {
         Type attackerType = attacker.getType();
 
         if (attacker.getStatus() == Status.PARALYZED) {
@@ -204,7 +205,7 @@ public class Game {
                 double random = Random.generateDouble(0, 1);
                 if (random < Constants.SLIP) {
                     Logger.warn("Falling due to flood");
-                    attacker.hit(new Integer((int) Math.floor(damage / 4)));
+                    attacker.hit(new Integer(damage / 4));
                     return true;
                 }
             }
@@ -213,7 +214,7 @@ public class Game {
         double random = Random.generateDouble(0, 1);
         if (random < accuracy) {
             Logger.warn("damage " + damage);
-            defender.hit(new Integer((int) Math.floor(damage)));
+            defender.hit(new Integer(damage));
         } else {
             Logger.warn("Attack missed");
         }
@@ -230,11 +231,12 @@ public class Game {
 
         float attackStat = attacker.getAttack().getValue();
         float attackPower = attack.getPower().getValue();
+
         float defenseStat = defender.getDefense().getValue();
         float avantage = calculateAvantage(attackerType, defenderType);
         double coef = Random.generateDouble(0.85, 1);
 
-        double damage = ((11 * attackStat * attackPower) / (25 * defenseStat) + 2) * avantage * coef;
+        int damage = (int) Math.floor(((11 * attackStat * attackPower) / (25 * defenseStat) + 2) * avantage * coef);
 
         double accuracy = attack.getAccuracy().getValue();
 
@@ -242,6 +244,8 @@ public class Game {
 
 
         if (attackUsed) {
+            Logger.log("Dealt " + damage + " damage");
+            Logger.log(defender.getHealth() + " HP left");
             if (attackerType instanceof TerrainSkillType type) {
                 type.useSkill(attacker);
             }
@@ -249,7 +253,10 @@ public class Game {
             if (attackerType instanceof StatusSkillType type && attack.getType().equals(type)) {
                 type.useSkill(type instanceof GroundType ? attacker : defender);
             }
-            attack.use();
+
+            if (attack.hasBuff()) {
+                buff(attacker, defender, action);
+            }
         }
     }
 
@@ -298,10 +305,19 @@ public class Game {
         double attackStat = attacker.getAttack().getValue();
         double defenseStat = defender.getDefense().getValue();
         double coef = Random.generateDouble(.85, 1);
-        double damage = 20 * (attackStat / defenseStat) * coef;
+        int damage = (int) Math.floor(20 * (attackStat / defenseStat) * coef);
         attack(1, damage, attacker, defender);
-
     }
+
+    private void buff(BattleMon attacker, BattleMon defender, Action action) {
+        Attack attack = (Attack) action;
+        Buff buff = attack.getBuff();
+        switch (buff.getTarget()) {
+            case SELF -> attacker.buff(buff);
+            case ENEMY -> defender.buff(buff);
+        }
+    }
+
 
     private boolean isTeamDefeated(LinkedList<BattleMon> team) {
         return team.stream().allMatch(BattleMon::isFainted);
@@ -321,9 +337,13 @@ public class Game {
         if (turn == 1) {
             this.activeMon = this.player1Mon;
             this.enemyMon = this.player2Mon;
+            this.activeTeam = this.team1;
+            this.enemyTeam = this.team2;
         } else {
             this.activeMon = this.player2Mon;
             this.enemyMon = this.player1Mon;
+            this.activeTeam = this.team2;
+            this.enemyTeam = this.team1;
         }
     }
 

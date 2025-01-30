@@ -46,6 +46,11 @@ public class Attack extends Action implements Serializable, Cloneable {
 
     public void setPower(Integer power) {
         this.power = power;
+        if (power.compareTo(new Integer(0)) <= 0 && hasBuff()) {
+            this.setActionType(ActionType.BUFF);
+        } else {
+            this.setActionType(ActionType.DAMAGE);
+        }
     }
 
     public Float getAccuracy() {
@@ -64,13 +69,22 @@ public class Attack extends Action implements Serializable, Cloneable {
         this.accuracy = new Float(fail.minusRight(1).getValue());
     }
 
+    public boolean hasBuff() {
+        return this.buff != null;
+    }
+
     public Buff getBuff() {
         return buff;
     }
 
     public void setBuff(Buff buff) {
         this.buff = buff;
-        this.setActionType(buff != null ? ActionType.BUFF : ActionType.DAMAGE);
+        if (buff != null && this.power.compareTo(new Integer(0)) <= 0) {
+            this.setActionType(ActionType.BUFF);
+        } else {
+            this.setActionType(ActionType.DAMAGE);
+        }
+
     }
 
     @Override
