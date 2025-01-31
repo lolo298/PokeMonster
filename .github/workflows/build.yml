@@ -17,7 +17,7 @@ jobs:
           java-version: '21'
           java-package: 'jdk+fx'
       - name: package with gradle
-        run: ./gradlew jpackage
+        run: chmod +x ./gradlew && ./gradlew jpackage
       - name: save artifacts
         uses: actions/upload-artifact@v4
         with:
@@ -51,7 +51,7 @@ jobs:
           java-version: '21'
           java-package: 'jdk+fx'
       - name: package with gradle
-        run: ./gradlew jpackage
+        run: chmod +x ./gradlew && ./gradlew jpackage
       - name: save artifacts
         uses: actions/upload-artifact@v4
         with:
