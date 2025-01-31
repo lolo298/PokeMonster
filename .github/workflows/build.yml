@@ -63,13 +63,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: xom9ikk/dotenv@v2.3.0
+      - name: get installers
+        uses: actions/download-artifact@v2
+        with:
+          name: |
+            deb-release
+            exe-release
+            dmg-release
+          path: installers
       - name: create release
         uses: softprops/action-gh-release@v2
         with:
-          files: |
-            ${{ needs.build-linux.outputs.artifacts }}
-            ${{ needs.build-windows.outputs.artifacts }}
-            ${{ needs.build-macos.outputs.artifacts }}
+          files: installers/*
           name: version ${{ env.MAJOR_VERSION }}.${{ env.MINOR_VERSION }}.${{ env.PATCH_VERSION }}
           tag_name: v${{ env.MAJOR_VERSION }}
           body_path: CHANGELOG.md
