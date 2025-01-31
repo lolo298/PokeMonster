@@ -4,6 +4,7 @@ import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Constants;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Game.Types.Type;
+import com.pokemonSimulator.Utils.BattleLogger;
 import com.pokemonSimulator.Utils.Errors.BattleStarted;
 import com.pokemonSimulator.Utils.Errors.InvalidSprite;
 import com.pokemonSimulator.Utils.Errors.TooManyAttacks;
@@ -40,6 +41,10 @@ public class BattleMon implements ISprite {
     private Integer statusDuration = new Integer(0);
 
     private Attack[] attacks = new Attack[4];
+
+    private BattleLogger getBattleLogger() {
+        return PokemonSimulator.game.getBattleLogger();
+    }
 
     public BattleMon(String name, Type type, Integer attack, Integer defense, Integer health, Integer speed) {
         this.speed = speed;
@@ -119,6 +124,8 @@ public class BattleMon implements ISprite {
     }
 
     public void hit(Integer damage) {
+        BattleLogger battleLogger = getBattleLogger();
+        battleLogger.damageLog(this, damage.getValue());
         this.health.minusLeft(damage);
     }
 
@@ -127,6 +134,8 @@ public class BattleMon implements ISprite {
     }
 
     public void heal(int amount) {
+        BattleLogger battleLogger = getBattleLogger();
+        battleLogger.healLog(this, amount);
         this.health.plus(amount);
     }
 
@@ -148,6 +157,8 @@ public class BattleMon implements ISprite {
     }
 
     public void setStatus(Status status) {
+        BattleLogger battleLogger = getBattleLogger();
+        battleLogger.statusLog(this, status);
         if (status == Status.HIDDEN && this.status != Status.HIDDEN) {
             defenseBoost.plus(2);
         }
@@ -156,6 +167,7 @@ public class BattleMon implements ISprite {
     }
 
     public void turn() {
+        BattleLogger battleLogger = getBattleLogger();
         this.statusDuration.plus(1);
         switch (status) {
             case PARALYZED -> {
@@ -164,6 +176,7 @@ public class BattleMon implements ISprite {
                 if (random < chance) {
                     status = Status.NONE;
                     statusDuration = new Integer(0);
+                    battleLogger.removeStatusLog(this, Status.PARALYZED);
                 }
             }
             case HIDDEN -> {
@@ -173,14 +186,17 @@ public class BattleMon implements ISprite {
                     status = Status.NONE;
                     defenseBoost.minusLeft(2);
                     statusDuration = new Integer(0);
+                    battleLogger.removeStatusLog(this, Status.HIDDEN);
                 }
             }
             case BURNED -> {
                 if (PokemonSimulator.game.getTerrainState() == Terrain.FLOOD) {
                     status = Status.NONE;
                     statusDuration = new Integer(0);
+                    battleLogger.removeStatusLog(this, Status.BURNED);
                 } else {
                     int damage = getAttack().getValue() / 10;
+                    battleLogger.damageLog(this, damage, Status.BURNED);
                     hit(new Integer(damage));
                 }
             }
@@ -196,15 +212,23 @@ public class BattleMon implements ISprite {
     }
 
     public boolean canBuff(Buff buff) {
+        BattleLogger battleLogger = getBattleLogger();
+
         switch (buff.getStat()) {
             case ATTACK -> {
-                return attackBoost.compareTo(new Integer(6)) < 0 && attackBoost.compareTo(new Integer(-6)) > 0;
+                boolean canBuff = attackBoost.compareTo(new Integer(6)) < 0 && attackBoost.compareTo(new Integer(-6)) > 0;
+                battleLogger.canBuffLog(canBuff, this, buff);
+                return canBuff;
             }
             case DEFENSE -> {
-                return defenseBoost.compareTo(new Integer(6)) < 0 && defenseBoost.compareTo(new Integer(-6)) > 0;
+                boolean canBuff = defenseBoost.compareTo(new Integer(6)) < 0 && defenseBoost.compareTo(new Integer(-6)) > 0;
+                battleLogger.canBuffLog(canBuff, this, buff);
+                return canBuff;
             }
             case SPEED -> {
-                return speedBoost.compareTo(new Integer(6)) < 0 && speedBoost.compareTo(new Integer(-6)) > 0;
+                boolean canBuff = speedBoost.compareTo(new Integer(6)) < 0 && speedBoost.compareTo(new Integer(-6)) > 0;
+                battleLogger.canBuffLog(canBuff, this, buff);
+                return canBuff;
             }
         }
         return false;
@@ -214,7 +238,6 @@ public class BattleMon implements ISprite {
         if (!canBuff(buff)) {
             return;
         }
-        Logger.warn("Buffing " + this.getName() + " with " + buff.getStat() + " by " + buff.getStage());
         switch (buff.getStat()) {
             case ATTACK -> {
                 attackBoost.plus(buff.getStage());

@@ -5,7 +5,7 @@
 }
 
 .actButton {
-    -fx-background-color: green;
+    /*-fx-background-color: green;*/
     -fx-max-height: Infinity;
     -fx-max-width: Infinity;
 }
@@ -43,4 +43,8 @@
 .border {
     -fx-border-color: red;
     -fx-border-width: 2;
+}
+
+#logList:disabled > * {
+    -fx-opacity: 1;
 }

@@ -1,6 +1,8 @@
 package com.pokemonSimulator.Game.Items;
 
 import com.pokemonSimulator.Game.Monsters.BattleMon;
+import com.pokemonSimulator.Game.PokemonSimulator;
+import com.pokemonSimulator.Utils.BattleLogger;
 import com.pokemonSimulator.Utils.Values.Buff;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.enums.BuffStat;
@@ -19,6 +21,8 @@ public class StatusClear extends Item {
     @Override
     public void use(BattleMon target) {
         if (target.getStatus() == status || status == Status.ALL) {
+            BattleLogger logger = PokemonSimulator.game.getBattleLogger();
+            logger.removeStatusLog(target, target.getStatus());
             target.setStatus(Status.NONE);
             super.use();
         }

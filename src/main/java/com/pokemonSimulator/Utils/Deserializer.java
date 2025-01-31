@@ -70,7 +70,7 @@ public class Deserializer {
         if (value == null) {
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
         }
-        Logger.log("checking value: " + value);
+
         value = value.trim();
         if (value.isEmpty()) {
             throw new InvalidDataError(this.lineNumber, this.DeserializeSource);
@@ -112,7 +112,6 @@ public class Deserializer {
             try {
                 return (Type) Class.forName("com.pokemonSimulator.Game.Types." + name).getConstructor().newInstance();
             } catch (Exception e) {
-                Logger.warn("Unable to create type: " + e.getMessage());
                 Logger.error(e.getMessage());
             }
         }
@@ -144,7 +143,7 @@ public class Deserializer {
         Serializable obj;
         String className = (String) data.get(new String("class"));
         if (className == null) {
-            Logger.warn("Class name not found");
+            Logger.error("Class name not found");
             return null;
         }
         Serializable cls = null;
@@ -177,6 +176,9 @@ public class Deserializer {
                 assert cls != null;
                 cls.getClass().getMethod(method, classType).invoke(cls, data.get(key));
             } catch (Exception e) {
+                if (key.getValue().equals("Buff")) {
+                    continue;
+                }
                 Logger.error("Unable to hydrate " + key + ": " + e.getMessage());
             }
 

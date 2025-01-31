@@ -9,10 +9,7 @@ import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SelectionMode;
+import javafx.scene.control.*;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.input.Dragboard;
 import javafx.scene.input.TransferMode;
@@ -24,6 +21,8 @@ import java.util.ListIterator;
 public class TeamSelectionController extends Controller {
     private int Step = 0;
 
+    @FXML
+    private Label mainLabel;
     @FXML
     private Button startButton;
     @FXML
@@ -56,6 +55,8 @@ public class TeamSelectionController extends Controller {
         PokemonSimulator app = PokemonSimulator.getInstance();
 
         List<Monster> monsters = app.getMonsters();
+
+        mainLabel.setText("Select your team (Up to " + Constants.TEAM_SIZE + " monsters)");
 
 
         team1List.getItems().addAll(monsters);
@@ -91,6 +92,8 @@ public class TeamSelectionController extends Controller {
                 this.initDrag(team1List, team1);
                 this.initDrag(team2List, team2);
 
+                mainLabel.setText("Reorder your team, the first monster will be your lead");
+
                 Step++;
                 break;
             case 1:
@@ -102,7 +105,6 @@ public class TeamSelectionController extends Controller {
                 for (Monster monster : team2) {
                     app.addMonsterTeam2(monster);
                 }
-                Logger.log("Navigating to select attack screen");
                 mainController.switchView(Screens.SELECT_ATTACK);
                 break;
         }

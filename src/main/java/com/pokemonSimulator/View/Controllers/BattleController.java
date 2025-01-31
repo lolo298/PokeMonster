@@ -7,11 +7,17 @@ import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Items.Item;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
+import com.pokemonSimulator.Utils.BattleLogger;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Values.enums.ItemTarget;
 import com.pokemonSimulator.Utils.Values.enums.Screens;
 import com.pokemonSimulator.Utils.Values.enums.TerrainSpriteTypes;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableListValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.*;
@@ -26,6 +32,7 @@ import java.util.concurrent.atomic.AtomicReference;
 
 public class BattleController extends Controller {
     private Game game;
+    private BattleLogger battleLogger;
 
     @FXML
     private Label infoLabel;
@@ -83,6 +90,8 @@ public class BattleController extends Controller {
     @FXML
     private ListView<Item> useItemsList;
     @FXML
+    private Button useItemButton;
+    @FXML
     private ListView<BattleMon> useItemsMonList;
     @FXML
     private ListView<BattleMon> switchMonList;
@@ -91,13 +100,21 @@ public class BattleController extends Controller {
     @FXML
     private Button switchButton;
 
+    @FXML
+    private ListView<java.lang.String> logList;
+
     private int isSwitching = 0;
 
     @FXML
     private void onSwitch() {
         BattleMon selectedMon = switchMonList.getSelectionModel().getSelectedItem();
 
-        if (selectedMon == null || selectedMon == game.getActiveMon() || selectedMon.isFainted()) {
+        if (selectedMon == null) {
+            return;
+        }
+
+        if (selectedMon == game.getActiveMon() || selectedMon.isFainted()) {
+            battleLogger.cantSwitchLog(selectedMon == game.getActiveMon(), selectedMon.isFainted());
             return;
         }
 
@@ -139,13 +156,21 @@ public class BattleController extends Controller {
 //            useItemsMonList.getItems().addAll(game.getActiveTeam());
 
             ChoiceDialog<BattleMon> dialog = new ChoiceDialog<>(game.getActiveMon(), game.getActiveTeam());
+            dialog.setContentText("Select a target");
+            dialog.setHeaderText("Select a target");
+
             dialog.showAndWait();
             target = dialog.getSelectedItem();
         } else {
             target = game.getActiveMon();
         }
 
-        if (target == null || !selectedItem.canUse(target)) {
+        if (target == null) {
+            return;
+        }
+
+        if (!selectedItem.canUse(target)) {
+            battleLogger.cantUseItemLog(selectedItem);
             return;
         }
 
@@ -159,19 +184,20 @@ public class BattleController extends Controller {
     }
 
     @FXML
-    void onUseItemMon() {
-
-    }
-
-    @FXML
     void initialize() {
         this.game = PokemonSimulator.getInstance().startGame();
+        this.battleLogger = game.getBattleLogger();
 
         act1.visibleProperty().bind(act1.managedProperty());
         act2.visibleProperty().bind(act2.managedProperty());
         act3.visibleProperty().bind(act3.managedProperty());
         act4.visibleProperty().bind(act4.managedProperty());
         struggleButton.visibleProperty().bind(struggleButton.managedProperty());
+
+        logList.itemsProperty().bind(battleLogger.getLogs());
+        battleLogger.getLogs().addListener((observable, oldValue, newValue) -> {
+            logList.scrollTo(newValue.size() - 1);
+        });
 
         loadBattleView();
     }
@@ -196,6 +222,12 @@ public class BattleController extends Controller {
         }
 
         assert attack != null;
+
+        if (clickedAct.isDisabled() && attack.getPp().getValue() == 0) {
+            battleLogger.noPpLog(attack);
+            return;
+        }
+
         game.setActivePlayerAction(attack);
 
         if (game.getPlayerTurn() == 2) {
@@ -301,15 +333,6 @@ public class BattleController extends Controller {
     private void battle() {
         game.battle();
 
-        Logger.log("Player 1's " + game.getPlayer1Mon().getName() + " boostedAttack: " + game.getPlayer1Mon().getAttack());
-        Logger.log("Player 2's " + game.getPlayer2Mon().getName() + " boostedAttack: " + game.getPlayer2Mon().getAttack());
-
-        Logger.log("Player 1's " + game.getPlayer1Mon().getName() + " boostedDefense: " + game.getPlayer1Mon().getDefense());
-        Logger.log("Player 2's " + game.getPlayer2Mon().getName() + " boostedDefense: " + game.getPlayer2Mon().getDefense());
-
-        Logger.log("Player 1's " + game.getPlayer1Mon().getName() + " boostedSpeed: " + game.getPlayer1Mon().getSpeed());
-        Logger.log("Player 2's " + game.getPlayer2Mon().getName() + " boostedSpeed: " + game.getPlayer2Mon().getSpeed());
-
 
         if (game.isOver()) {
             blockActions(true);
@@ -351,6 +374,8 @@ public class BattleController extends Controller {
         act2.setDisable(block);
         act3.setDisable(block);
         act4.setDisable(block);
+        useItemsList.setDisable(block);
+        useItemButton.setDisable(block);
     }
 
     private <T extends Number> T clamp(T value, T min, T max) {

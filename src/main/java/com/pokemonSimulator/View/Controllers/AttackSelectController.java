@@ -11,6 +11,7 @@ import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.SelectionMode;
 
@@ -22,6 +23,8 @@ import java.util.Objects;
 public class AttackSelectController extends Controller {
     private int Step = 0;
 
+    @FXML
+    private Label mainLabel;
     @FXML
     private Button startButton;
     @FXML
@@ -53,6 +56,8 @@ public class AttackSelectController extends Controller {
     void initialize() {
         PokemonSimulator app = PokemonSimulator.getInstance();
 
+        mainLabel.setText("Player 1: Select your team's attacks (Exactly " + Constants.ATTACK_PER_MON + " attacks per monster)");
+
         List<BattleMon> monsters = app.getTeam1();
 
         this.availableAttacks = app.getAttacks();
@@ -75,7 +80,6 @@ public class AttackSelectController extends Controller {
 
 
             var selectedAttacks = attackList.getSelectionModel().getSelectedItems();
-            Logger.warn("syncAttacks: " + selectedAttacks);
             var selectedMon = teamList.getSelectionModel().getSelectedItem();
             if (selectedMon == null) {
                 return;
@@ -89,7 +93,6 @@ public class AttackSelectController extends Controller {
                 });
             }
 
-            Logger.log("Saving attacks for " + selectedMon);
 
             Attack[] attacks = teamAttacks.get(selectedMon);
 
@@ -152,6 +155,8 @@ public class AttackSelectController extends Controller {
 
         teamList.getSelectionModel().getSelectedItems().addListener(this.teamChange);
         attackList.getSelectionModel().getSelectedItems().addListener(this.attackChange);
+
+        mainLabel.setText("Player 2: Select your team's attacks (Exactly " + Constants.ATTACK_PER_MON + " attacks per monster)");
 
         this.startButton.setText("Start Battle");
         checkButton();

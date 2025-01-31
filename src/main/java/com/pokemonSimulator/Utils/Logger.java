@@ -21,7 +21,7 @@ public class Logger {
         if (level.compareTo(LogLevel.ERROR) < 0) {
             return;
         }
-        System.err.println("\u001B[0;91m[ERROR] " + message + "\u001B[0m");
+        System.out.println("\u001B[0;91m[ERROR] " + message + "\u001B[0m");
     }
 
     public enum LogLevel {

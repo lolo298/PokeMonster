@@ -8,15 +8,21 @@
 
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pokemonSimulator.View.Controllers.TeamSelectionController">
-
+    <Label fx:id="mainLabel"/>
+    <Label>(Ctrl+Click to select multiple)</Label>
     <HBox alignment="CENTER" spacing="20.0">
-        <ListView fx:id="team1List" prefHeight="200.0" prefWidth="200.0"/>
+        <VBox alignment="CENTER">
+            <Label>Team 1</Label>
+            <ListView fx:id="team1List" prefHeight="200.0" prefWidth="200.0"/>
+        </VBox>
         <VBox alignment="CENTER" spacing="20.0">
             <Label>VS</Label>
-            <Label>(Ctrl+Click to select multiple)</Label>
             <Button fx:id="startButton" onAction="#startGame" text="Order teams" disable="true"/>
         </VBox>
-        <ListView fx:id="team2List" prefHeight="200.0" prefWidth="200.0"/>
+        <VBox alignment="CENTER">
+            <Label>Team 2</Label>
+            <ListView fx:id="team2List" prefHeight="200.0" prefWidth="200.0"/>
+        </VBox>
     </HBox>
 
 </VBox>

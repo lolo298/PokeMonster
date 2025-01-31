@@ -12,6 +12,7 @@ import com.pokemonSimulator.Game.Types.Skills.StatusSkillType;
 import com.pokemonSimulator.Game.Types.Skills.TerrainSkillType;
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Game.Types.WaterType;
+import com.pokemonSimulator.Utils.BattleLogger;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Random;
 import com.pokemonSimulator.Utils.Values.Buff;
@@ -24,6 +25,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
+    private BattleLogger battleLogger;
 
     private List<Item> team1items;
     private List<Item> team2items;
@@ -57,8 +59,7 @@ public class Game {
         this.team1items = items.stream().map(Item::clone).toList();
         this.team2items = items.stream().map(Item::clone).toList();
 
-
-        Logger.log(team1items == team2items ? "Items are the same" : "Items are different");
+        battleLogger = new BattleLogger();
 
         //team values
         this.team1 = team1;
@@ -84,6 +85,7 @@ public class Game {
     public void start() {
         this.playerTurn = 1;
         this.activeTeam = this.team1;
+        battleLogger.playerTurnLog(playerTurn);
 
         terrainState = Terrain.NORMAL;
 
@@ -93,6 +95,7 @@ public class Game {
 
     public void nextPlayer() {
         this.playerTurn = this.playerTurn == 1 ? 2 : 1;
+        battleLogger.playerTurnLog(playerTurn);
 
         reloadActiveMon();
     }
@@ -120,7 +123,6 @@ public class Game {
                 priority = Random.generateInt(1, 2);
             }
         }
-        Logger.log("Priority to player " + priority);
 
         //check terrain
         if (terrainState != Terrain.NORMAL) {
@@ -152,7 +154,6 @@ public class Game {
     }
 
     private void useAction(int player) {
-        Logger.warn("Player " + player + " attacking");
         BattleMon attacker;
         BattleMon defender;
         Action action;
@@ -215,7 +216,7 @@ public class Game {
         if (attacker.getStatus() == Status.PARALYZED) {
             double random = Random.generateDouble(0, 1);
             if (random > 0.25) {
-                Logger.warn("Paralyzed");
+                battleLogger.missLog(attacker, Status.PARALYZED);
                 return false;
             }
         }
@@ -224,19 +225,18 @@ public class Game {
             if (!(attackerType instanceof WaterType)) {
                 double random = Random.generateDouble(0, 1);
                 if (random < Constants.SLIP) {
-                    Logger.warn("Falling due to flood");
+                    battleLogger.missLog(attacker, Terrain.FLOOD);
                     attacker.hit(new Integer(damage / 4));
-                    return true;
+                    return false;
                 }
             }
         }
 
         double random = Random.generateDouble(0, 1);
         if (random < accuracy) {
-            Logger.warn("damage " + damage);
             defender.hit(new Integer(damage));
         } else {
-            Logger.warn("Attack missed");
+            battleLogger.missLog(attacker);
         }
 
         return true;
@@ -247,7 +247,7 @@ public class Game {
         Type attackerType = attacker.getType();
         Type defenderType = defender.getType();
 
-        Logger.log(attacker + " attacking " + defender + " with " + attack);
+        battleLogger.attackLog(attacker, defender, attack);
 
         float attackStat = attacker.getAttack().getValue();
         float attackPower = attack.getPower().getValue();
@@ -264,8 +264,7 @@ public class Game {
 
 
         if (attackUsed) {
-            Logger.log("Dealt " + damage + " damage");
-            Logger.log(defender.getHealth() + " HP left");
+            battleLogger.effectiveLog(avantage);
             if (attackerType instanceof TerrainSkillType type) {
                 type.useSkill(attacker);
             }
@@ -277,13 +276,16 @@ public class Game {
             if (attack.hasBuff()) {
                 buff(attacker, defender, action);
             }
+
+            if (defender.isFainted()) {
+                battleLogger.faintedLog(defender);
+            }
         }
     }
 
     public void switchMon(int player, Action action) {
         SwitchMon switchMon = (SwitchMon) action;
 
-        Logger.warn("Switching mons");
         switch (player) {
             case 2: {
                 if (terrainState != Terrain.NORMAL && terrainState.getCreator() == player2Mon) {
@@ -291,6 +293,7 @@ public class Game {
                 }
                 player2Mon.clearBuff();
                 player2Mon = switchMon.getTarget();
+                battleLogger.sendMonOut(player2Mon);
                 break;
             }
             case 1:
@@ -300,6 +303,7 @@ public class Game {
                 }
                 player1Mon.clearBuff();
                 player1Mon = switchMon.getTarget();
+                battleLogger.sendMonOut(player1Mon);
                 break;
             }
         }
@@ -313,11 +317,11 @@ public class Game {
         BattleMon target = useItem.getTarget();
 
         item.use(target);
+        battleLogger.useItemLog(target, item, playerTurn);
     }
 
     private float calculateAvantage(Type attakerType, Type defenderType) {
         if (attakerType.getStrengths().contains(defenderType.getType())) {
-            Logger.log(String.format("%s weak to %s", defenderType.getType(), attakerType.getType()));
             return 2;
         }
 
@@ -329,7 +333,8 @@ public class Game {
     }
 
     private void struggle(BattleMon attacker, BattleMon defender) {
-        Logger.warn("Struggling");
+        battleLogger.struggleLog(attacker);
+
         double attackStat = attacker.getAttack().getValue();
         double defenseStat = defender.getDefense().getValue();
         double coef = Random.generateDouble(.85, 1);
@@ -340,6 +345,9 @@ public class Game {
     private void buff(BattleMon attacker, BattleMon defender, Action action) {
         Attack attack = (Attack) action;
         Buff buff = attack.getBuff();
+
+        battleLogger.buffLog(attacker, defender, buff);
+
         switch (buff.getTarget()) {
             case SELF -> attacker.buff(buff);
             case ENEMY -> defender.buff(buff);
@@ -417,6 +425,7 @@ public class Game {
     }
 
     public void setTerrain(Terrain terrain) {
+        battleLogger.terrainLog(terrain);
         this.terrainState = terrain;
     }
 
@@ -429,5 +438,9 @@ public class Game {
             return null;
         }
         return winner == 1 ? team1 : team2;
+    }
+
+    public BattleLogger getBattleLogger() {
+        return battleLogger;
     }
 }

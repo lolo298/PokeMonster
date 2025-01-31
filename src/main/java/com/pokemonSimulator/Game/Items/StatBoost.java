@@ -18,7 +18,6 @@ public class StatBoost extends Item {
 
     @Override
     public void use(BattleMon target) {
-        Logger.log("Using " + name + " on " + target.getName());
         target.buff(buff);
         super.use();
     }
