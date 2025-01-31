@@ -67,10 +67,12 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: deb-release
+          path: installers
       - name: get windows artifact
         uses: actions/download-artifact@v4
         with:
           name: exe-release
+          path: installers
       - name: get macos artifact
         uses: actions/download-artifact@v4
         with:
