@@ -1,10 +1,11 @@
 package com.pokemonSimulator.Utils.Values.enums;
 
-import com.pokemonSimulator.Utils.ISprite;
+import com.pokemonSimulator.Utils.Values.Interfaces.ISprite;
 import com.pokemonSimulator.Utils.SpriteLoader;
 import javafx.scene.image.Image;
 
 public enum Status implements ISprite {
+    ALL,
     NONE,
     HIDDEN,
     BURNED,

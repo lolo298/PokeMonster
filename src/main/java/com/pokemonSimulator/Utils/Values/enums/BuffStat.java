@@ -1,6 +1,6 @@
 package com.pokemonSimulator.Utils.Values.enums;
 
-import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 
 public enum BuffStat implements Serializable {
     ATTACK,

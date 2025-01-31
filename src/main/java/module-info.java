@@ -9,6 +9,7 @@ module com.pokemonSimulator {
     exports com.pokemonSimulator.Game.Monsters;
     exports com.pokemonSimulator.Game.Actions;
     exports com.pokemonSimulator.Game.Types;
+    exports com.pokemonSimulator.Game.Items;
     exports com.pokemonSimulator.View;
     exports com.pokemonSimulator.View.Controllers;
     exports com.pokemonSimulator.View.Controls;
@@ -19,4 +20,6 @@ module com.pokemonSimulator {
     opens com.pokemonSimulator.View.Controls to javafx.fxml;
     exports com.pokemonSimulator.Utils.Values.enums;
     opens com.pokemonSimulator.Utils.Values.enums to javafx.fxml;
+    exports com.pokemonSimulator.Utils.Values.Interfaces;
+    opens com.pokemonSimulator.Utils.Values.Interfaces to javafx.fxml;
 }

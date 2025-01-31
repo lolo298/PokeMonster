@@ -1,5 +1,7 @@
 package com.pokemonSimulator.Utils;
 
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
+
 public class Serializer {
 
     public String serialize(Serializable obj) {

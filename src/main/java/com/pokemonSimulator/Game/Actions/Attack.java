@@ -1,7 +1,7 @@
 package com.pokemonSimulator.Game.Actions;
 
 import com.pokemonSimulator.Game.Types.Type;
-import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 import com.pokemonSimulator.Utils.Values.Float;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.String;

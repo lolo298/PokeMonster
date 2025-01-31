@@ -1,6 +1,6 @@
 package com.pokemonSimulator.Game.Types;
 
-import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 import com.pokemonSimulator.Utils.Values.enums.Types;
 
 import java.util.List;

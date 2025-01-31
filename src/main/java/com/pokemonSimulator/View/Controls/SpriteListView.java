@@ -1,7 +1,8 @@
 package com.pokemonSimulator.View.Controls;
 
 import com.pokemonSimulator.Game.Monsters.BattleMon;
-import com.pokemonSimulator.Utils.ISprite;
+import com.pokemonSimulator.Utils.Values.Interfaces.ISprite;
+import com.pokemonSimulator.Utils.Values.enums.Status;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.effect.ColorAdjust;
@@ -27,13 +28,14 @@ public class SpriteListView<T extends ISprite> extends ListView<T> {
                 setText(item.toString());
                 setGraphic(new ImageView(sprite));
 
-                if (item instanceof BattleMon) {
-                    BattleMon mon = (BattleMon) item;
+                if (item instanceof BattleMon mon) {
                     if (mon.isFainted()) {
                         ColorAdjust colorAdjust = new ColorAdjust();
                         colorAdjust.setBrightness(-0.5);
 
                         getGraphic().setEffect(colorAdjust);
+                    } else if (mon.getStatus() != Status.NONE) {
+                        setText(mon.getName() + " (" + mon.getStatus() + ")");
                     }
                 }
 

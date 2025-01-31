@@ -1,15 +1,19 @@
 package com.pokemonSimulator.View.Controllers;
 
 import com.pokemonSimulator.Game.Actions.SwitchMon;
+import com.pokemonSimulator.Game.Actions.UseItem;
 import com.pokemonSimulator.Game.Game;
 import com.pokemonSimulator.Game.Actions.Attack;
+import com.pokemonSimulator.Game.Items.Item;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Utils.Logger;
+import com.pokemonSimulator.Utils.Values.enums.ItemTarget;
 import com.pokemonSimulator.Utils.Values.enums.Screens;
 import com.pokemonSimulator.Utils.Values.enums.TerrainSpriteTypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
@@ -17,6 +21,8 @@ import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
 
 import java.util.Arrays;
+import java.util.Optional;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class BattleController extends Controller {
     private Game game;
@@ -75,9 +81,13 @@ public class BattleController extends Controller {
     private Button struggleButton;
 
     @FXML
-    private ListView<String> useItemsList;
+    private ListView<Item> useItemsList;
+    @FXML
+    private ListView<BattleMon> useItemsMonList;
     @FXML
     private ListView<BattleMon> switchMonList;
+    @FXML
+    private DialogPane useItemMonDialog;
     @FXML
     private Button switchButton;
 
@@ -111,6 +121,46 @@ public class BattleController extends Controller {
         }
 
         loadBattleView();
+    }
+
+    @FXML
+    void onUseItem() {
+        Item selectedItem = useItemsList.getSelectionModel().getSelectedItem();
+
+        if (selectedItem == null) {
+            return;
+        }
+
+        BattleMon target;
+
+        // if the item can target any mon, show all mons to select one
+        if (selectedItem.getItemTarget() == ItemTarget.ANY) {
+//            useItemsMonList.getItems().clear();
+//            useItemsMonList.getItems().addAll(game.getActiveTeam());
+
+            ChoiceDialog<BattleMon> dialog = new ChoiceDialog<>(game.getActiveMon(), game.getActiveTeam());
+            dialog.showAndWait();
+            target = dialog.getSelectedItem();
+        } else {
+            target = game.getActiveMon();
+        }
+
+        if (target == null || !selectedItem.canUse(target)) {
+            return;
+        }
+
+        game.setActivePlayerAction(new UseItem(selectedItem, target));
+
+        if (game.getPlayerTurn() == 2) {
+            battle();
+        }
+        game.nextPlayer();
+        loadBattleView();
+    }
+
+    @FXML
+    void onUseItemMon() {
+
     }
 
     @FXML
@@ -179,6 +229,9 @@ public class BattleController extends Controller {
 
         enemyMonImg.setImage(enemyMon.getSprites().getFirst());
         statusEnemyImg.setImage(enemyMon.getStatus().getSprite());
+
+        useItemsList.getItems().clear();
+        useItemsList.getItems().addAll(game.getActiveItems().stream().filter(item -> item.getQuantity().getValue() > 0).toList());
 
         Attack[] attacks = activeMon.getAttacks();
         for (int i = 0; i < 4; i++) {
@@ -250,6 +303,13 @@ public class BattleController extends Controller {
 
         Logger.log("Player 1's " + game.getPlayer1Mon().getName() + " boostedAttack: " + game.getPlayer1Mon().getAttack());
         Logger.log("Player 2's " + game.getPlayer2Mon().getName() + " boostedAttack: " + game.getPlayer2Mon().getAttack());
+
+        Logger.log("Player 1's " + game.getPlayer1Mon().getName() + " boostedDefense: " + game.getPlayer1Mon().getDefense());
+        Logger.log("Player 2's " + game.getPlayer2Mon().getName() + " boostedDefense: " + game.getPlayer2Mon().getDefense());
+
+        Logger.log("Player 1's " + game.getPlayer1Mon().getName() + " boostedSpeed: " + game.getPlayer1Mon().getSpeed());
+        Logger.log("Player 2's " + game.getPlayer2Mon().getName() + " boostedSpeed: " + game.getPlayer2Mon().getSpeed());
+
 
         if (game.isOver()) {
             blockActions(true);

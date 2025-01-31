@@ -1,6 +1,6 @@
 package com.pokemonSimulator.Utils.Values;
 
-import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 
 public class Range implements Serializable {
     private Integer min;

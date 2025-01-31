@@ -1,6 +1,7 @@
 package com.pokemonSimulator.Game;
 
 import com.pokemonSimulator.Game.Actions.Attack;
+import com.pokemonSimulator.Game.Items.*;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Utils.ConfigLoader;
@@ -8,8 +9,13 @@ import com.pokemonSimulator.Utils.Deserializer;
 import com.pokemonSimulator.Utils.Errors.InvalidDataError;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Serializer;
+import com.pokemonSimulator.Utils.Values.enums.BuffStat;
+import com.pokemonSimulator.Utils.Values.enums.ItemTarget;
+import com.pokemonSimulator.Utils.Values.enums.Status;
+import com.pokemonSimulator.Utils.Values.enums.Terrain;
 
 import java.io.*;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Objects;
@@ -25,6 +31,7 @@ public class PokemonSimulator {
 
     private static final LinkedList<BattleMon> team1 = new LinkedList<>();
     private static final LinkedList<BattleMon> team2 = new LinkedList<>();
+    private static final ArrayList<Item> items = new ArrayList<>();
 
     public static Game game;
 
@@ -52,6 +59,19 @@ public class PokemonSimulator {
 
         this.LoadMonsters();
         this.LoadAttacks();
+
+
+        //load items
+        items.add(new Potion(20, 5, ItemTarget.ANY));
+        items.add(new StatBoost("X Attack", BuffStat.ATTACK, 1, 5, ItemTarget.ACTIVE));
+        items.add(new StatBoost("X Defense", BuffStat.DEFENSE, 1, 5, ItemTarget.ACTIVE));
+        items.add(new StatBoost("X Speed", BuffStat.SPEED, 1, 5, ItemTarget.ACTIVE));
+        items.add(new StatusClear("Full Heal", Status.ALL, 1, ItemTarget.ANY));
+        items.add(new StatusClear("Paralyze Heal", Status.PARALYZED, 1, ItemTarget.ANY));
+        items.add(new StatusClear("Burn Heal", Status.BURNED, 1, ItemTarget.ANY));
+        items.add(new TerrainClear("Flood Clear", Terrain.FLOOD, 1, ItemTarget.ACTIVE));
+
+
         Logger.log("Welcome to PokemonSimulator!");
     }
 
@@ -182,7 +202,7 @@ public class PokemonSimulator {
     }
 
     public Game startGame() {
-        game = new Game(team1, team2);
+        game = new Game(team1, team2, items);
         game.start();
         return game;
     }

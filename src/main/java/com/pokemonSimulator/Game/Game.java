@@ -3,6 +3,8 @@ package com.pokemonSimulator.Game;
 import com.pokemonSimulator.Game.Actions.Action;
 import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Actions.SwitchMon;
+import com.pokemonSimulator.Game.Actions.UseItem;
+import com.pokemonSimulator.Game.Items.Item;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.Types.GroundType;
 import com.pokemonSimulator.Game.Types.Skills.SelfSkillType;
@@ -16,10 +18,15 @@ import com.pokemonSimulator.Utils.Values.Buff;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.enums.Status;
 import com.pokemonSimulator.Utils.Values.enums.Terrain;
+import javafx.application.Platform;
 
 import java.util.LinkedList;
+import java.util.List;
 
 public class Game {
+
+    private List<Item> team1items;
+    private List<Item> team2items;
 
     private LinkedList<BattleMon> team1;
     private LinkedList<BattleMon> team2;
@@ -46,7 +53,13 @@ public class Game {
 
     private int winner = -1;
 
-    public Game(LinkedList<BattleMon> team1, LinkedList<BattleMon> team2) {
+    public Game(LinkedList<BattleMon> team1, LinkedList<BattleMon> team2, List<Item> items) {
+        this.team1items = items.stream().map(Item::clone).toList();
+        this.team2items = items.stream().map(Item::clone).toList();
+
+
+        Logger.log(team1items == team2items ? "Items are the same" : "Items are different");
+
         //team values
         this.team1 = team1;
         this.team2 = team2;
@@ -93,6 +106,10 @@ public class Game {
             priority = 1;
         } else if (player2Action instanceof SwitchMon) {
             priority = 2;
+        } else if (player1Action instanceof UseItem) {
+            priority = 1;
+        } else if (player2Action instanceof UseItem) {
+            priority = 2;
         } else {
             //check pokemons speed
             if (player1Mon.getSpeed().compareTo(player2Mon.getSpeed()) > 0) {
@@ -100,7 +117,7 @@ public class Game {
             } else if (player1Mon.getSpeed().compareTo(player2Mon.getSpeed()) < 0) {
                 priority = 2;
             } else {
-                priority = (int) Random.generateInt(1, 2);
+                priority = Random.generateInt(1, 2);
             }
         }
         Logger.log("Priority to player " + priority);
@@ -174,6 +191,9 @@ public class Game {
                 break;
             case BUFF:
                 buff(attacker, defender, action);
+                break;
+            case ITEM:
+                useItem(action);
                 break;
         }
 
@@ -269,7 +289,7 @@ public class Game {
                 if (terrainState != Terrain.NORMAL && terrainState.getCreator() == player2Mon) {
                     terrainState = Terrain.NORMAL;
                 }
-
+                player2Mon.clearBuff();
                 player2Mon = switchMon.getTarget();
                 break;
             }
@@ -278,13 +298,21 @@ public class Game {
                 if (terrainState != Terrain.NORMAL && terrainState.getCreator() == player1Mon) {
                     terrainState = Terrain.NORMAL;
                 }
-
+                player1Mon.clearBuff();
                 player1Mon = switchMon.getTarget();
                 break;
             }
         }
 
         reloadActiveMon();
+    }
+
+    public void useItem(Action action) {
+        UseItem useItem = (UseItem) action;
+        Item item = useItem.getItem();
+        BattleMon target = useItem.getTarget();
+
+        item.use(target);
     }
 
     private float calculateAvantage(Type attakerType, Type defenderType) {
@@ -366,6 +394,10 @@ public class Game {
 
     public BattleMon getEnemyMon() {
         return this.enemyMon;
+    }
+
+    public List<Item> getActiveItems() {
+        return playerTurn == 1 ? team1items : team2items;
     }
 
     public void setActivePlayerAction(Action action) {

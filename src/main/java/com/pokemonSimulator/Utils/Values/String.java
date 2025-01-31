@@ -1,8 +1,8 @@
 package com.pokemonSimulator.Utils.Values;
 
-import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 
-public class String implements Serializable {
+public class String implements Serializable, Cloneable {
     private java.lang.String value;
 
     public String(java.lang.String value) {
@@ -38,5 +38,10 @@ public class String implements Serializable {
     @Override
     public java.lang.String toString() {
         return this.value;
+    }
+
+    @Override
+    public String clone() {
+        return new String(this.value);
     }
 }

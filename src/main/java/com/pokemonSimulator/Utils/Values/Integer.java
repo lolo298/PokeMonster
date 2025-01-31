@@ -1,6 +1,6 @@
 package com.pokemonSimulator.Utils.Values;
 
-import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 
 public class Integer implements Serializable, Comparable<Integer>, Cloneable {
     private int value;

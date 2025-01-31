@@ -1,7 +1,7 @@
 package com.pokemonSimulator.Utils.Values.enums;
 
 import com.pokemonSimulator.Game.Monsters.BattleMon;
-import com.pokemonSimulator.Utils.ISprite;
+import com.pokemonSimulator.Utils.Values.Interfaces.ISprite;
 import com.pokemonSimulator.Utils.SpriteLoader;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.Range;

@@ -1,6 +1,6 @@
 package com.pokemonSimulator.Utils.Values;
 
-import com.pokemonSimulator.Utils.Serializable;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 import com.pokemonSimulator.Utils.Values.enums.Targets;
 
 public class Target implements Serializable {

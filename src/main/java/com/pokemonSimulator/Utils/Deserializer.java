@@ -3,6 +3,7 @@ package com.pokemonSimulator.Utils;
 import com.pokemonSimulator.Game.Actions.Attack;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Game.Types.Type;
+import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 import com.pokemonSimulator.Utils.Values.enums.BuffStat;
 import com.pokemonSimulator.Utils.Values.enums.Types;
 import com.pokemonSimulator.Utils.Errors.InvalidDataError;

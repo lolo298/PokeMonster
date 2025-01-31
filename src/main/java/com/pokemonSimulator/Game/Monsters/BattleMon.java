@@ -7,7 +7,7 @@ import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Utils.Errors.BattleStarted;
 import com.pokemonSimulator.Utils.Errors.InvalidSprite;
 import com.pokemonSimulator.Utils.Errors.TooManyAttacks;
-import com.pokemonSimulator.Utils.ISprite;
+import com.pokemonSimulator.Utils.Values.Interfaces.ISprite;
 import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Random;
 import com.pokemonSimulator.Utils.SpriteLoader;
@@ -71,7 +71,7 @@ public class BattleMon implements ISprite {
     }
 
     private double getBoostMultiplier(Integer boost) {
-        if(boost.compareTo(new Integer(0)) >= 0) {
+        if (boost.compareTo(new Integer(0)) >= 0) {
             return (2 + boost.getValue()) / 2.0;
         } else {
             return 2.0 / (2 - boost.getValue());
@@ -123,6 +123,10 @@ public class BattleMon implements ISprite {
     }
 
     public void heal(Integer amount) {
+        this.heal(amount.getValue());
+    }
+
+    public void heal(int amount) {
         this.health.plus(amount);
     }
 
@@ -191,28 +195,43 @@ public class BattleMon implements ISprite {
         return statusDuration;
     }
 
+    public boolean canBuff(Buff buff) {
+        switch (buff.getStat()) {
+            case ATTACK -> {
+                return attackBoost.compareTo(new Integer(6)) < 0 && attackBoost.compareTo(new Integer(-6)) > 0;
+            }
+            case DEFENSE -> {
+                return defenseBoost.compareTo(new Integer(6)) < 0 && defenseBoost.compareTo(new Integer(-6)) > 0;
+            }
+            case SPEED -> {
+                return speedBoost.compareTo(new Integer(6)) < 0 && speedBoost.compareTo(new Integer(-6)) > 0;
+            }
+        }
+        return false;
+    }
+
     public void buff(Buff buff) {
+        if (!canBuff(buff)) {
+            return;
+        }
         Logger.warn("Buffing " + this.getName() + " with " + buff.getStat() + " by " + buff.getStage());
         switch (buff.getStat()) {
             case ATTACK -> {
-                if (attackBoost.compareTo(new Integer(6)) >= 0 || attackBoost.compareTo(new Integer(-6)) <= 0) {
-                    return;
-                }
                 attackBoost.plus(buff.getStage());
             }
             case DEFENSE -> {
-                if (defenseBoost.compareTo(new Integer(6)) >= 0 || defenseBoost.compareTo(new Integer(-6)) <= 0) {
-                    return;
-                }
                 defenseBoost.plus(buff.getStage());
             }
             case SPEED -> {
-                if (speedBoost.compareTo(new Integer(6)) >= 0 || speedBoost.compareTo(new Integer(-6)) <= 0) {
-                    return;
-                }
                 speedBoost.plus(buff.getStage());
             }
         }
+    }
+
+    public void clearBuff() {
+        attackBoost = new Integer(0);
+        defenseBoost = new Integer(0);
+        speedBoost = new Integer(0);
     }
 
     public Image getSprite(SpriteOrientation side, SpritesType type) {
