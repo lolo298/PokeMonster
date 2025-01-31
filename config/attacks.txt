@@ -1,75 +1,106 @@
 Attack
-    Name: Thunder Shock
-    Type: ELECTRIC
-    Power: 40
-    NbUse: 30
-    Fail: 0
-EndAttack
-Attack
-    Name: Tackle
+    Name: Pound
     Type: NORMAL
-    Power: 35
-    NbUse: 35
-    Fail: 0.05
-EndAttack
-Attack
-    Name: Flamethrower
-    Type: FIRE
-    Power: 95
-    NbUse: 15
-    Fail: 0
-EndAttack
-Attack
-    Name: Water Gun
-    Type: WATER
     Power: 40
+    NbUse: 35
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Karate chop
+    Type: NORMAL
+    Power: 50
     NbUse: 25
     Fail: 0
+    
 EndAttack
 Attack
-    Name: Vine Whip
-    Type: GRASS
-    Power: 35
+    Name: Double slap
+    Type: NORMAL
+    Power: 15
+    NbUse: 10
+    Fail: 0.15
+    
+EndAttack
+Attack
+    Name: Comet punch
+    Type: NORMAL
+    Power: 18
+    NbUse: 15
+    Fail: 0.15
+    
+EndAttack
+Attack
+    Name: Mega punch
+    Type: NORMAL
+    Power: 80
+    NbUse: 20
+    Fail: 0.15
+    
+EndAttack
+Attack
+    Name: Pay day
+    Type: NORMAL
+    Power: 40
+    NbUse: 20
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Fire punch
+    Type: FIRE
+    Power: 75
     NbUse: 15
     Fail: 0
+    
 EndAttack
 Attack
-    Name: Rock Throw
-    Type: GROUND
-    Power: 50
+    Name: Ice punch
+    Type: WATER
+    Power: 75
     NbUse: 15
-    Fail: 0.1
+    Fail: 0
+    
 EndAttack
 Attack
-    Name: Sword Dance
+    Name: Thunder punch
+    Type: ELECTRIC
+    Power: 75
+    NbUse: 15
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Scratch
+    Type: NORMAL
+    Power: 40
+    NbUse: 35
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Vice grip
+    Type: NORMAL
+    Power: 55
+    NbUse: 30
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Razor wind
+    Type: NORMAL
+    Power: 80
+    NbUse: 10
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Swords dance
     Type: NORMAL
     Power: 0
-    NbUse: 30
+    NbUse: 20
     Fail: 0
     Buff: ATTACK$2$SELF
-EndAttack
-Attack
-    Name: Charm
-    Type: NORMAL
-    Power: 0
-    NbUse: 30
-    Fail: 0
-    Buff: DEFENSE$-2$ENEMY
-EndAttack
-Attack
-    Name: Headbutt
-    Type: NORMAL
-    Power: 70
-    NbUse: 15
-    Fail: 0
-EndAttack
-Attack
-    Name: Close Combat
-    Type: NORMAL
-    Power: 120
-    NbUse: 5
-    Fail: 0
-    Buff: DEFENSE$-1$SELF
 EndAttack
 Attack
     Name: Cut
@@ -77,39 +108,781 @@ Attack
     Power: 50
     NbUse: 30
     Fail: 0.05
+    
 EndAttack
 Attack
-    name: CHEAT
+    Name: Gust
     Type: NORMAL
-    Power: 1000
-    NbUse: 1000
+    Power: 40
+    NbUse: 35
     Fail: 0
+    
 EndAttack
 Attack
-    Name: test PP
+    Name: Wing attack
+    Type: NORMAL
+    Power: 60
+    NbUse: 35
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Fly
+    Type: NORMAL
+    Power: 90
+    NbUse: 15
+    Fail: 0.05
+    
+EndAttack
+Attack
+    Name: Bind
+    Type: NORMAL
+    Power: 15
+    NbUse: 20
+    Fail: 0.15
+    
+EndAttack
+Attack
+    Name: Slam
+    Type: NORMAL
+    Power: 80
+    NbUse: 20
+    Fail: 0.25
+    
+EndAttack
+Attack
+    Name: Vine whip
+    Type: GRASS
+    Power: 45
+    NbUse: 25
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Stomp
+    Type: NORMAL
+    Power: 65
+    NbUse: 20
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Double kick
+    Type: NORMAL
+    Power: 30
+    NbUse: 30
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Mega kick
+    Type: NORMAL
+    Power: 120
+    NbUse: 5
+    Fail: 0.25
+    
+EndAttack
+Attack
+    Name: Jump kick
+    Type: NORMAL
+    Power: 100
+    NbUse: 10
+    Fail: 0.05
+    
+EndAttack
+Attack
+    Name: Rolling kick
+    Type: NORMAL
+    Power: 60
+    NbUse: 15
+    Fail: 0.15
+    
+EndAttack
+Attack
+    Name: Headbutt
+    Type: NORMAL
+    Power: 70
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Horn attack
+    Type: NORMAL
+    Power: 65
+    NbUse: 25
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Fury attack
+    Type: NORMAL
+    Power: 15
+    NbUse: 20
+    Fail: 0.15
+
+EndAttack
+Attack
+    Name: Tackle
+    Type: NORMAL
+    Power: 40
+    NbUse: 35
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Body slam
+    Type: NORMAL
+    Power: 85
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Wrap
+    Type: NORMAL
+    Power: 15
+    NbUse: 20
+    Fail: 0.10
+
+EndAttack
+Attack
+    Name: Take down
+    Type: NORMAL
+    Power: 90
+    NbUse: 20
+    Fail: 0.15
+
+EndAttack
+Attack
+    Name: Thrash
+    Type: NORMAL
+    Power: 120
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Double edge
+    Type: NORMAL
+    Power: 120
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Tail whip
     Type: NORMAL
     Power: 0
-    NbUse: 1
+    NbUse: 30
     Fail: 0
+    Buff: DEFENSE$-1$ENEMY
 EndAttack
 Attack
-    Name: test PP
-    Type: NORMAL
-    Power: 0
-    NbUse: 1
+    Name: Poison sting
+    Type: GRASS
+    Power: 15
+    NbUse: 35
     Fail: 0
+
 EndAttack
 Attack
-    Name: test PP
-    Type: NORMAL
-    Power: 0
-    NbUse: 1
+    Name: Twineedle
+    Type: GRASS
+    Power: 25
+    NbUse: 20
     Fail: 0
+
 EndAttack
 Attack
-    Name: test PP
+    Name: Pin missile
+    Type: GRASS
+    Power: 25
+    NbUse: 20
+    Fail: 0.05
+
+EndAttack
+Attack
+    Name: Leer
     Type: NORMAL
     Power: 0
+    NbUse: 30
+    Fail: 0
+    Buff: DEFENSE$-1$ENEMY
+EndAttack
+Attack
+    Name: Bite
+    Type: NORMAL
+    Power: 60
+    NbUse: 25
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Growl
+    Type: NORMAL
+    Power: 0
+    NbUse: 40
+    Fail: 0
+    Buff: ATTACK$-1$ENEMY
+EndAttack
+Attack
+    Name: Ember
+    Type: FIRE
+    Power: 40
+    NbUse: 25
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Flamethrower
+    Type: FIRE
+    Power: 90
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Water gun
+    Type: WATER
+    Power: 40
+    NbUse: 25
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Hydro pump
+    Type: WATER
+    Power: 110
+    NbUse: 5
+    Fail: 0.20
+
+EndAttack
+Attack
+    Name: Surf
+    Type: WATER
+    Power: 90
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Ice beam
+    Type: WATER
+    Power: 90
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Blizzard
+    Type: WATER
+    Power: 110
+    NbUse: 5
+    Fail: 0.30
+
+EndAttack
+Attack
+    Name: Psybeam
+    Type: NORMAL
+    Power: 65
+    NbUse: 20
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Bubble beam
+    Type: WATER
+    Power: 65
+    NbUse: 20
+    Fail: 0
+    Buff: SPEED$-1$ENEMY
+EndAttack
+Attack
+    Name: Aurora beam
+    Type: WATER
+    Power: 65
+    NbUse: 20
+    Fail: 0
+    Buff: ATTACK$-1$ENEMY
+EndAttack
+Attack
+    Name: Hyper beam
+    Type: NORMAL
+    Power: 150
+    NbUse: 5
+    Fail: 0.10
+
+EndAttack
+Attack
+    Name: Peck
+    Type: NORMAL
+    Power: 35
+    NbUse: 35
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Drill peck
+    Type: NORMAL
+    Power: 80
+    NbUse: 20
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Submission
+    Type: NORMAL
+    Power: 80
+    NbUse: 20
+    Fail: 0.20
+
+EndAttack
+Attack
+    Name: Strength
+    Type: NORMAL
+    Power: 80
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Absorb
+    Type: GRASS
+    Power: 20
+    NbUse: 25
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Mega drain
+    Type: GRASS
+    Power: 40
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Growth
+    Type: NORMAL
+    Power: 0
+    NbUse: 20
+    Fail: 0
+    Buff: ATTACK$1$SELF
+EndAttack
+Attack
+    Name: Razor leaf
+    Type: GRASS
+    Power: 55
+    NbUse: 25
+    Fail: 0.05
+
+EndAttack
+Attack
+    Name: Solar beam
+    Type: GRASS
+    Power: 120
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Petal dance
+    Type: GRASS
+    Power: 120
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: String shot
+    Type: GRASS
+    Power: 0
+    NbUse: 40
+    Fail: 0.05
+    Buff: SPEED$-2$ENEMY
+EndAttack
+Attack
+    Name: Fire spin
+    Type: FIRE
+    Power: 35
+    NbUse: 15
+    Fail: 0.15
+
+EndAttack
+Attack
+    Name: Thunder shock
+    Type: ELECTRIC
+    Power: 40
+    NbUse: 30
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Thunderbolt
+    Type: ELECTRIC
+    Power: 90
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Thunder
+    Type: ELECTRIC
+    Power: 110
+    NbUse: 10
+    Fail: 0.30
+
+EndAttack
+Attack
+    Name: Rock throw
+    Type: GROUND
+    Power: 50
+    NbUse: 15
+    Fail: 0.10
+
+EndAttack
+Attack
+    Name: Earthquake
+    Type: GROUND
+    Power: 100
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Dig
+    Type: GROUND
+    Power: 80
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Confusion
+    Type: NORMAL
+    Power: 50
+    NbUse: 25
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Meditate
+    Type: NORMAL
+    Power: 0
+    NbUse: 40
+    Fail: 0
+    Buff: ATTACK$1$SELF
+EndAttack
+Attack
+    Name: Agility
+    Type: NORMAL
+    Power: 0
+    NbUse: 30
+    Fail: 0
+    Buff: SPEED$2$SELF
+EndAttack
+Attack
+    Name: Quick attack
+    Type: NORMAL
+    Power: 40
+    NbUse: 30
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Rage
+    Type: NORMAL
+    Power: 20
+    NbUse: 20
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Screech
+    Type: NORMAL
+    Power: 0
+    NbUse: 40
+    Fail: 0.15
+    Buff: DEFENSE$-2$ENEMY
+EndAttack
+Attack
+    Name: Harden
+    Type: NORMAL
+    Power: 0
+    NbUse: 30
+    Fail: 0
+    Buff: DEFENSE$1$SELF
+EndAttack
+Attack
+    Name: Withdraw
+    Type: WATER
+    Power: 0
+    NbUse: 40
+    Fail: 0
+    Buff: DEFENSE$1$SELF
+EndAttack
+Attack
+    Name: Defense curl
+    Type: NORMAL
+    Power: 0
+    NbUse: 40
+    Fail: 0
+    Buff: DEFENSE$1$SELF
+EndAttack
+Attack
+    Name: Barrier
+    Type: NORMAL
+    Power: 0
+    NbUse: 20
+    Fail: 0
+    Buff: DEFENSE$2$SELF
+EndAttack
+Attack
+    Name: Self destruct
+    Type: NORMAL
+    Power: 200
+    NbUse: 5
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Egg bomb
+    Type: NORMAL
+    Power: 100
+    NbUse: 10
+    Fail: 0.25
+
+EndAttack
+Attack
+    Name: Lick
+    Type: NORMAL
+    Power: 30
+    NbUse: 30
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Smog
+    Type: GRASS
+    Power: 30
+    NbUse: 20
+    Fail: 0.30
+
+EndAttack
+Attack
+    Name: Sludge
+    Type: GRASS
+    Power: 65
+    NbUse: 20
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Bone club
+    Type: GROUND
+    Power: 65
+    NbUse: 20
+    Fail: 0.15
+
+EndAttack
+Attack
+    Name: Fire blast
+    Type: FIRE
+    Power: 110
+    NbUse: 5
+    Fail: 0.15
+
+EndAttack
+Attack
+    Name: Waterfall
+    Type: WATER
+    Power: 80
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Clamp
+    Type: WATER
+    Power: 35
+    NbUse: 15
+    Fail: 0.15
+
+EndAttack
+Attack
+    Name: Swift
+    Type: NORMAL
+    Power: 60
+    NbUse: 20
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Skull bash
+    Type: NORMAL
+    Power: 130
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Spike cannon
+    Type: NORMAL
+    Power: 20
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Constrict
+    Type: NORMAL
+    Power: 10
+    NbUse: 35
+    Fail: 0
+    Buff: SPEED$-1$ENEMY
+EndAttack
+Attack
+    Name: High jump kick
+    Type: NORMAL
+    Power: 130
+    NbUse: 10
+    Fail: 0.10
+
+EndAttack
+Attack
+    Name: Dream eater
+    Type: NORMAL
+    Power: 100
+    NbUse: 15
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Barrage
+    Type: NORMAL
+    Power: 15
+    NbUse: 20
+    Fail: 0.15
+
+EndAttack
+Attack
+    Name: Leech life
+    Type: GRASS
+    Power: 80
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Sky attack
+    Type: NORMAL
+    Power: 140
+    NbUse: 5
+    Fail: 0.10
+
+EndAttack
+Attack
+    Name: Bubble
+    Type: WATER
+    Power: 40
+    NbUse: 30
+    Fail: 0
+    Buff: SPEED$-1$ENEMY
+EndAttack
+Attack
+    Name: Dizzy punch
+    Type: NORMAL
+    Power: 70
+    NbUse: 10
+    Fail: 0
+
+EndAttack
+Attack
+    Name: Acid armor
+    Type: GRASS
+    Power: 0
+    NbUse: 20
+    Fail: 0
+    Buff: DEFENSE$2$SELF
+EndAttack
+Attack
+    Name: Crabhammer
+    Type: WATER
+    Power: 100
+    NbUse: 10
+    Fail: 0.10
+    
+EndAttack
+Attack
+    Name: Explosion
+    Type: NORMAL
+    Power: 250
+    NbUse: 5
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Fury swipes
+    Type: NORMAL
+    Power: 18
+    NbUse: 15
+    Fail: 0.20
+    
+EndAttack
+Attack
+    Name: Bonemerang
+    Type: GROUND
+    Power: 50
+    NbUse: 10
+    Fail: 0.10
+    
+EndAttack
+Attack
+    Name: Rock slide
+    Type: GROUND
+    Power: 75
+    NbUse: 10
+    Fail: 0.10
+    
+EndAttack
+Attack
+    Name: Hyper fang
+    Type: NORMAL
+    Power: 80
+    NbUse: 15
+    Fail: 0.10
+    
+EndAttack
+Attack
+    Name: Sharpen
+    Type: NORMAL
+    Power: 0
+    NbUse: 30
+    Fail: 0
+    Buff: ATTACK$1$SELF
+EndAttack
+Attack
+    Name: Tri attack
+    Type: NORMAL
+    Power: 80
+    NbUse: 10
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Slash
+    Type: NORMAL
+    Power: 70
+    NbUse: 20
+    Fail: 0
+    
+EndAttack
+Attack
+    Name: Struggle
+    Type: NORMAL
+    Power: 50
     NbUse: 1
     Fail: 0
+    
 EndAttack

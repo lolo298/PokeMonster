@@ -3,10 +3,8 @@ package com.pokemonSimulator.Game.Monsters;
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Utils.Values.Interfaces.Serializable;
 import com.pokemonSimulator.Utils.Values.Range;
-import com.pokemonSimulator.Utils.Values.String;
 
-public class Monster implements Serializable {
-    private String name;
+public class Monster extends MonsterSprite implements Serializable {
     private Type type;
 
     private Range attack;
@@ -46,14 +44,6 @@ public class Monster implements Serializable {
         this.speed = speed;
     }
 
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Type getType() {
         return type;
     }
@@ -63,11 +53,11 @@ public class Monster implements Serializable {
     }
 
     @Override
-    public java.lang.String toString() {
+    public String toString() {
         return this.getName().getValue();
     }
 
-    public java.lang.String serialize() {
+    public String serialize() {
         return "name: " + this + "\n" +
                 "type: " + this.getType() + "\n" +
                 "health: " + this.health.serialize() + "\n" +

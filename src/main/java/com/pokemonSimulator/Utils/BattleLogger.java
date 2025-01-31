@@ -7,16 +7,12 @@ import com.pokemonSimulator.Utils.Values.Buff;
 import com.pokemonSimulator.Utils.Values.enums.Status;
 import com.pokemonSimulator.Utils.Values.enums.Terrain;
 import javafx.beans.property.SimpleListProperty;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableStringValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 
 import java.util.LinkedList;
 
 public class BattleLogger {
 
-//    private LinkedList<String> logs = new LinkedList<>();
     private final SimpleListProperty<String> logs = new SimpleListProperty<>(FXCollections.observableList(new LinkedList<>()));
 
     public void log(String message) {

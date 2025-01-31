@@ -5,7 +5,6 @@ import com.pokemonSimulator.Game.Constants;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Utils.Values.enums.Types;
-import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Values.enums.Screens;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;

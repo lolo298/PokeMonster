@@ -3,20 +3,15 @@ package com.pokemonSimulator.View.Controllers;
 import com.pokemonSimulator.Game.Constants;
 import com.pokemonSimulator.Game.Monsters.Monster;
 import com.pokemonSimulator.Game.PokemonSimulator;
-import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Values.enums.Screens;
+import com.pokemonSimulator.View.Controls.SpriteListView;
 import javafx.application.Platform;
 import javafx.collections.ListChangeListener;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.input.ClipboardContent;
-import javafx.scene.input.Dragboard;
-import javafx.scene.input.TransferMode;
-
 import java.util.LinkedList;
 import java.util.List;
-import java.util.ListIterator;
 
 public class TeamSelectionController extends Controller {
     private int Step = 0;
@@ -26,9 +21,14 @@ public class TeamSelectionController extends Controller {
     @FXML
     private Button startButton;
     @FXML
-    private ListView<Monster> team1List;
+    public SpriteListView<Monster> team1List;
     @FXML
-    private ListView<Monster> team2List;
+    public SpriteListView<Monster> team2List;
+
+    @FXML
+    private TextField team1Search;
+    @FXML
+    private TextField team2Search;
 
     private final LinkedList<Monster> team1 = new LinkedList<>();
     private final LinkedList<Monster> team2 = new LinkedList<>();
@@ -49,6 +49,17 @@ public class TeamSelectionController extends Controller {
         }
     };
 
+    private void addMonster(LinkedList<Monster> team, Monster monster) {
+        if (team.size() >= Constants.TEAM_SIZE || team.contains(monster)) {
+            return;
+        }
+        team.add(monster);
+    }
+
+    private void removeMonster(LinkedList<Monster> team, Monster monster) {
+        team.remove(monster);
+    }
+
 
     @FXML
     void initialize() {
@@ -58,7 +69,6 @@ public class TeamSelectionController extends Controller {
 
         mainLabel.setText("Select your team (Up to " + Constants.TEAM_SIZE + " monsters)");
 
-
         team1List.getItems().addAll(monsters);
         team2List.getItems().addAll(monsters);
 
@@ -67,6 +77,32 @@ public class TeamSelectionController extends Controller {
 
         team1List.getSelectionModel().getSelectedItems().addListener(this.team1Change);
         team2List.getSelectionModel().getSelectedItems().addListener(this.team2Change);
+
+
+        team1Search.textProperty().addListener((observable, oldValue, newValue) -> {
+            team1List.getSelectionModel().getSelectedItems().removeListener(team1Change);
+            team1List.getItems().clear();
+            for (Monster monster : monsters) {
+                if (monster.getName().getValue().toLowerCase().contains(newValue.toLowerCase())) {
+                    team1List.getItems().add(monster);
+                }
+            }
+            syncSelected(team1, team1List);
+            team1List.getSelectionModel().getSelectedItems().addListener(team1Change);
+        });
+
+        team2Search.textProperty().addListener((observable, oldValue, newValue) -> {
+            team2List.getSelectionModel().getSelectedItems().removeListener(team2Change);
+            team2List.getItems().clear();
+            for (Monster monster : monsters) {
+                if (monster.getName().getValue().toLowerCase().contains(newValue.toLowerCase())) {
+                    team2List.getItems().add(monster);
+                }
+            }
+            syncSelected(team2, team2List);
+            team2List.getSelectionModel().getSelectedItems().addListener(team2Change);
+        });
+
     }
 
     @FXML
@@ -99,10 +135,10 @@ public class TeamSelectionController extends Controller {
             case 1:
                 PokemonSimulator app = PokemonSimulator.getInstance();
 
-                for (Monster monster : team1) {
+                for (Monster monster : team1List.getItems()) {
                     app.addMonsterTeam1(monster);
                 }
-                for (Monster monster : team2) {
+                for (Monster monster : team2List.getItems()) {
                     app.addMonsterTeam2(monster);
                 }
                 mainController.switchView(Screens.SELECT_ATTACK);
@@ -117,14 +153,12 @@ public class TeamSelectionController extends Controller {
 
 
         while (c.next()) {
+            for (Monster monster : c.getAddedSubList()) {
+                addMonster(team, monster);
+            }
 
-            team.addAll(c.getAddedSubList());
             for (Monster monster : c.getRemoved()) {
-                for (int i = 0; i < team.size(); i++) {
-                    if (team.get(i).equals(monster)) {
-                        team.remove(i);
-                    }
-                }
+                removeMonster(team, monster);
             }
         }
 
@@ -135,66 +169,15 @@ public class TeamSelectionController extends Controller {
         }
     }
 
-    public void initDrag(ListView<Monster> listView, LinkedList<Monster> team) {
-        listView.setCellFactory(lv -> {
-            ListCell<Monster> cell = new ListCell<>() {
-                @Override
-                protected void updateItem(Monster item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setText(empty ? null : item.toString());
-                }
-            };
+    private void syncSelected(LinkedList<Monster> team, ListView<Monster> teamList) {
+        for (Monster monster : team) {
+            Platform.runLater(() -> teamList.getSelectionModel().select(monster));
+        }
+    }
 
-            cell.setOnDragDetected(e -> {
-                if (!cell.isEmpty()) {
-                    Dragboard db = cell.startDragAndDrop(TransferMode.MOVE);
-                    ClipboardContent content = new ClipboardContent();
-                    content.putString(cell.getItem().toString());
-                    db.setContent(content);
-                    e.consume();
-                }
-            });
-
-            cell.setOnDragOver(e -> {
-                if (e.getGestureSource() != cell && e.getDragboard().hasString()) {
-                    e.acceptTransferModes(TransferMode.MOVE);
-                }
-                e.consume();
-            });
-
-            cell.setOnDragDropped(e -> {
-                if (e.getGestureSource() != cell && e.getDragboard().hasString()) {
-                    Dragboard db = e.getDragboard();
-                    boolean success = false;
-
-                    if (db.hasString()) {
-                        Monster draggedItem = PokemonSimulator.getInstance().findMonster(db.getString());
-                        int draggedIndex = listView.getItems().indexOf(draggedItem);
-                        int dropIndex = cell.getIndex();
-
-                        if (draggedIndex != dropIndex) {
-                            listView.getItems().remove(draggedIndex);
-                            listView.getItems().add(dropIndex, draggedItem);
-
-                            ListIterator<Monster> iterator = team.listIterator();
-                            while (iterator.hasNext()) {
-                                Monster monster = iterator.next();
-                                if (monster.equals(draggedItem)) {
-                                    iterator.remove();
-                                    team.add(dropIndex, draggedItem);
-                                    break;
-                                }
-                            }
-                        }
-
-                        success = true;
-                    }
-                    e.setDropCompleted(success);
-                    e.consume();
-                }
-            });
-
-            return cell;
-        });
+    public void initDrag(SpriteListView<Monster> listView, LinkedList<Monster> team) {
+        listView.setDragEnabled(true);
+        listView.getItems().clear();
+        listView.getItems().addAll(team);
     }
 }

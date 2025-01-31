@@ -36,7 +36,7 @@
     </Label>
           <VBox GridPane.rowIndex="1">
               <Label text="Switch pokemon" />
-              <SpriteListView fx:id="switchMonList" prefHeight="200.0" prefWidth="100.0" />
+              <SpriteListView fx:id="switchMonList" prefHeight="500.0" prefWidth="100.0" />
               <Button fx:id="switchButton" onAction="#onSwitch" text="Switch" VBox.vgrow="ALWAYS" />
           </VBox>
           <StackPane fx:id="battlePane" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
@@ -74,7 +74,7 @@
           </StackPane>
           <VBox GridPane.columnIndex="3" GridPane.rowIndex="1">
               <Label text="Use object" />
-              <SpriteListView fx:id="useItemsList" prefHeight="200.0" prefWidth="100.0" />
+              <SpriteListView fx:id="useItemsList" prefHeight="500.0" prefWidth="100.0" />
               <Button fx:id="useItemButton" onAction="#onUseItem" text="Use item" VBox.vgrow="ALWAYS" />
           </VBox>
           <Button fx:id="act1" onAction="#onActSelect" styleClass="actButton" text="Test" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">

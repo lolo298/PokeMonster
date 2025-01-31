@@ -6,25 +6,16 @@ import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Game.Types.Type;
 import com.pokemonSimulator.Utils.BattleLogger;
 import com.pokemonSimulator.Utils.Errors.BattleStarted;
-import com.pokemonSimulator.Utils.Errors.InvalidSprite;
 import com.pokemonSimulator.Utils.Errors.TooManyAttacks;
-import com.pokemonSimulator.Utils.Values.Interfaces.ISprite;
-import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Random;
-import com.pokemonSimulator.Utils.SpriteLoader;
 import com.pokemonSimulator.Utils.Values.Buff;
-import com.pokemonSimulator.Utils.Values.enums.SpriteOrientation;
 import com.pokemonSimulator.Utils.Values.Integer;
-import com.pokemonSimulator.Utils.Values.enums.SpritesType;
 import com.pokemonSimulator.Utils.Values.String;
-import com.pokemonSimulator.Utils.Values.Tuple;
 import com.pokemonSimulator.Utils.Values.enums.Status;
 import com.pokemonSimulator.Utils.Values.enums.Terrain;
-import javafx.scene.image.Image;
 
-public class BattleMon implements ISprite {
+public class BattleMon extends MonsterSprite {
     private boolean locked;
-    private final String name;
     private final Type type;
 
     private final Integer attack;
@@ -67,9 +58,6 @@ public class BattleMon implements ISprite {
         );
     }
 
-    public String getName() {
-        return name;
-    }
 
     public Type getType() {
         return type;
@@ -257,64 +245,4 @@ public class BattleMon implements ISprite {
         speedBoost = new Integer(0);
     }
 
-    public Image getSprite(SpriteOrientation side, SpritesType type) {
-        java.lang.String extension = switch (type) {
-            case STATIC -> "png";
-            case ANIMATED -> "gif";
-        };
-
-        java.lang.String orientation = switch (side) {
-            case BACK -> "back";
-            case FRONT -> "front";
-        };
-
-        Image sprite;
-
-        try {
-            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + orientation + "." + extension);
-        } catch (InvalidSprite e) {
-            Logger.warn(e.toString());
-            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/default.png");
-        }
-
-        return sprite;
-    }
-
-    public Image getSprite(SpriteOrientation side, SpritesType type, int width, int height) {
-        java.lang.String extension = switch (type) {
-            case STATIC -> "png";
-            case ANIMATED -> "gif";
-        };
-
-        java.lang.String orientation = switch (side) {
-            case BACK -> "back";
-            case FRONT -> "front";
-        };
-
-        Image sprite;
-
-        try {
-            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/" + this.getName().getValue().toLowerCase() + "_" + orientation + "." + extension, width, height, false, false);
-        } catch (InvalidSprite e) {
-            Logger.warn(e.toString());
-            sprite = SpriteLoader.loadSprite("/com/pokemonSimulator/Sprites/default.png", width, height, true, false);
-        }
-
-        return sprite;
-    }
-
-    public Image getSprite() {
-        return getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED);
-    }
-
-    public Image getSprite(int width, int height) {
-        return getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED, width, height);
-    }
-
-    public Tuple<Image, Image> getSprites() {
-        var frontImage = getSprite(SpriteOrientation.FRONT, SpritesType.ANIMATED);
-        var backImage = getSprite(SpriteOrientation.BACK, SpritesType.ANIMATED);
-
-        return new Tuple<>(frontImage, backImage);
-    }
 }

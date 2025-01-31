@@ -8,27 +8,17 @@ import com.pokemonSimulator.Game.Items.Item;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Utils.BattleLogger;
-import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Values.enums.ItemTarget;
 import com.pokemonSimulator.Utils.Values.enums.Screens;
 import com.pokemonSimulator.Utils.Values.enums.TerrainSpriteTypes;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableListValue;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
 import javafx.util.Duration;
-
 import java.util.Arrays;
-import java.util.Optional;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class BattleController extends Controller {
     private Game game;
@@ -45,11 +35,6 @@ public class BattleController extends Controller {
     private ImageView battleBackgroundMon1;
     @FXML
     private ImageView battleBackgroundMon2;
-    @FXML
-    private AnchorPane battleMonPane1;
-    @FXML
-    private AnchorPane battleMonPane2;
-
 
     @FXML
     private Label activeMonLabel;
@@ -92,11 +77,7 @@ public class BattleController extends Controller {
     @FXML
     private Button useItemButton;
     @FXML
-    private ListView<BattleMon> useItemsMonList;
-    @FXML
     private ListView<BattleMon> switchMonList;
-    @FXML
-    private DialogPane useItemMonDialog;
     @FXML
     private Button switchButton;
 

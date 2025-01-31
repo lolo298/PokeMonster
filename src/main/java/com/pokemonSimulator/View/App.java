@@ -17,7 +17,6 @@ public class App extends Application {
         var main = App.class.getResource(Screens.MAIN.toString());
         FXMLLoader fxmlLoader = new FXMLLoader(main);
         Scene scene = new Scene(fxmlLoader.load(), 1664, 936);
-//        stage.setMaximized(true);
         stage.setResizable(false);
 
         stage.setTitle("PokemonSimulator");

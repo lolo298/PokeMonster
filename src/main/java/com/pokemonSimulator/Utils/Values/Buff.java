@@ -36,9 +36,7 @@ public class Buff implements Serializable, Cloneable {
     @Override
     public Buff clone() {
         try {
-            Buff clone = (Buff) super.clone();
-            // TODO: copy mutable state here, so the clone can't change the internals of the original
-            return clone;
+            return (Buff) super.clone();
         } catch (CloneNotSupportedException e) {
             throw new AssertionError();
         }

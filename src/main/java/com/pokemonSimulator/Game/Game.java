@@ -19,19 +19,18 @@ import com.pokemonSimulator.Utils.Values.Buff;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.enums.Status;
 import com.pokemonSimulator.Utils.Values.enums.Terrain;
-import javafx.application.Platform;
 
 import java.util.LinkedList;
 import java.util.List;
 
 public class Game {
-    private BattleLogger battleLogger;
+    private final BattleLogger battleLogger;
 
-    private List<Item> team1items;
-    private List<Item> team2items;
+    private final List<Item> team1items;
+    private final List<Item> team2items;
 
-    private LinkedList<BattleMon> team1;
-    private LinkedList<BattleMon> team2;
+    private final LinkedList<BattleMon> team1;
+    private final LinkedList<BattleMon> team2;
     private BattleMon player1Mon;
     private BattleMon player2Mon;
 
@@ -101,7 +100,6 @@ public class Game {
     }
 
     public void battle() {
-        Logger.log("Fighting");
         //first player to attack
         int priority;
 
@@ -174,7 +172,6 @@ public class Game {
         }
 
         if (attacker.isFainted()) {
-            Logger.warn("Attacker is fainted");
             return;
         }
 

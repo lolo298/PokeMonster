@@ -1,7 +1,6 @@
 package com.pokemonSimulator.Game.Items;
 
 import com.pokemonSimulator.Game.Monsters.BattleMon;
-import com.pokemonSimulator.Utils.Logger;
 import com.pokemonSimulator.Utils.Values.Buff;
 import com.pokemonSimulator.Utils.Values.enums.BuffStat;
 import com.pokemonSimulator.Utils.Values.enums.ItemTarget;

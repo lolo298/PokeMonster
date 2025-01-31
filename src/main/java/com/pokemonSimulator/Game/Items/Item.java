@@ -1,6 +1,5 @@
 package com.pokemonSimulator.Game.Items;
 
-import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Utils.SpriteLoader;
 import com.pokemonSimulator.Utils.Values.Integer;
 import com.pokemonSimulator.Utils.Values.Interfaces.IItem;

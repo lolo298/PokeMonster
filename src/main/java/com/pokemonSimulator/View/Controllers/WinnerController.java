@@ -7,7 +7,6 @@ import com.pokemonSimulator.Utils.Values.enums.SpriteOrientation;
 import com.pokemonSimulator.Utils.Values.enums.SpritesType;
 import com.pokemonSimulator.Utils.Values.enums.Screens;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;

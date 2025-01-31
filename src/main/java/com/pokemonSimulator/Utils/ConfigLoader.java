@@ -2,7 +2,6 @@ package com.pokemonSimulator.Utils;
 
 import com.pokemonSimulator.Game.Constants;
 import com.pokemonSimulator.Utils.Errors.CantCreateFile;
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.nio.file.FileAlreadyExistsException;

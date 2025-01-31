@@ -6,6 +6,8 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
+<?import com.pokemonSimulator.View.Controls.*?>
+<?import javafx.scene.control.TextField?>
 <VBox alignment="CENTER" spacing="20.0" xmlns:fx="http://javafx.com/fxml"
       fx:controller="com.pokemonSimulator.View.Controllers.TeamSelectionController">
     <Label fx:id="mainLabel"/>
@@ -13,7 +15,8 @@
     <HBox alignment="CENTER" spacing="20.0">
         <VBox alignment="CENTER">
             <Label>Team 1</Label>
-            <ListView fx:id="team1List" prefHeight="200.0" prefWidth="200.0"/>
+            <SpriteListView fx:id="team1List" prefHeight="200.0" prefWidth="200.0"/>
+            <TextField fx:id="team1Search" promptText="Search"/>
         </VBox>
         <VBox alignment="CENTER" spacing="20.0">
             <Label>VS</Label>
@@ -21,7 +24,8 @@
         </VBox>
         <VBox alignment="CENTER">
             <Label>Team 2</Label>
-            <ListView fx:id="team2List" prefHeight="200.0" prefWidth="200.0"/>
+            <SpriteListView fx:id="team2List" prefHeight="200.0" prefWidth="200.0"/>
+            <TextField fx:id="team2Search" promptText="Search"/>
         </VBox>
     </HBox>
 

@@ -4,7 +4,6 @@ import com.pokemonSimulator.Game.Game;
 import com.pokemonSimulator.Game.Monsters.BattleMon;
 import com.pokemonSimulator.Game.PokemonSimulator;
 import com.pokemonSimulator.Utils.Values.enums.ItemTarget;
-import com.pokemonSimulator.Utils.Values.enums.Status;
 import com.pokemonSimulator.Utils.Values.enums.Terrain;
 
 public class TerrainClear extends Item {
