@@ -63,13 +63,18 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - uses: xom9ikk/dotenv@v2.3.0
-      - name: get installers
+      - name: get linux artifact
         uses: actions/download-artifact@v4
         with:
-          name: |
-            deb-release
-            exe-release
-            dmg-release
+          name: deb-release
+      - name: get windows artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: exe-release
+      - name: get macos artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: dmg-release
           path: installers
       - name: create release
         uses: softprops/action-gh-release@v2
