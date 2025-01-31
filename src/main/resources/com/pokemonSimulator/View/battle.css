@@ -1,0 +1,50 @@
+#actGrid {
+    -fx-hgap: 4;
+    -fx-vgap: 4;
+    -fx-padding: 4;
+}
+
+.actButton {
+    /*-fx-background-color: green;*/
+    -fx-max-height: Infinity;
+    -fx-max-width: Infinity;
+}
+
+#battleBackgroundMon1,
+#battleBackgroundMon2{
+    -fx-border-color: red;
+    -fx-border-width: 2;
+    -fx-background-color: blue;
+}
+
+#activeMonLabel,
+#enemyMonLabel {
+    -fx-font-size: 20;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+
+#activeHpBar,
+#enemyHpBar {
+    -fx-accent: red;
+    -fx-pref-height: 15;
+    -fx-pref-width: 138;
+    -fx-border-width: 0;
+    -fx-padding: 1px;
+    -fx-background-insets: 0;
+
+}
+
+#activeHpBar > .track,
+#enemyHpBar > .track {
+    -fx-background-color: transparent;
+}
+
+.border {
+    -fx-border-color: red;
+    -fx-border-width: 2;
+}
+
+#logList:disabled > * {
+    -fx-opacity: 1;
+}

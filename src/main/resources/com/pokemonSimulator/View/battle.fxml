@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ProgressBar?>
+<?import javafx.scene.control.Tooltip?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+
+<?import com.pokemonSimulator.View.Controls.*?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.control.ListView?>
+<HBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.pokemonSimulator.View.Controllers.BattleController">
+   <children>
+      <GridPane id="actGrid" layoutX="0.09999990463256836" prefHeight="936" prefWidth="1664" stylesheets="@battle.css">
+          <columnConstraints>
+              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
+              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="35.0" />
+              <ColumnConstraints hgrow="ALWAYS" minWidth="10.0" percentWidth="35.0" />
+              <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" percentWidth="15.0" />
+          </columnConstraints>
+          <rowConstraints>
+              <RowConstraints minHeight="10.0" percentHeight="5.0" vgrow="SOMETIMES" />
+              <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
+              <RowConstraints minHeight="10.0" percentHeight="12.0" vgrow="SOMETIMES" />
+              <RowConstraints minHeight="10.0" percentHeight="12.0" vgrow="SOMETIMES" />
+          </rowConstraints>
+          <Label fx:id="infoLabel" GridPane.columnSpan="2147483647" GridPane.halignment="CENTER" GridPane.valignment="CENTER">Player 1
+    </Label>
+          <VBox GridPane.rowIndex="1">
+              <Label text="Switch pokemon" />
+              <SpriteListView fx:id="switchMonList" prefHeight="500.0" prefWidth="100.0" />
+              <Button fx:id="switchButton" onAction="#onSwitch" text="Switch" VBox.vgrow="ALWAYS" />
+          </VBox>
+          <StackPane fx:id="battlePane" alignment="TOP_LEFT" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.rowIndex="1">
+              <ImageView fx:id="battleBackground" fitHeight="${battlePane.height}" fitWidth="${battlePane.width}" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
+        </ImageView>
+              <ImageView fx:id="battleBackgroundMon1" fitWidth="${battleBackground.fitWidth}" fitHeight="${battleBackground.fitHeight}" preserveRatio="true" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
+        </ImageView>
+              <ImageView fx:id="battleBackgroundMon2" fitWidth="${battleBackground.fitWidth}" fitHeight="${battleBackground.fitHeight}" preserveRatio="true" pickOnBounds="true" StackPane.alignment="BOTTOM_LEFT">
+        </ImageView>
+      
+              <AnchorPane fx:id="battleMonPane2">
+                  <ImageView fx:id="enemyMonImg" fitWidth="150.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="190" AnchorPane.rightAnchor="230" />
+              </AnchorPane>
+              <AnchorPane fx:id="battleMonPane1">
+                  <ImageView fx:id="activeMonImg" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="0" AnchorPane.leftAnchor="200" />
+              </AnchorPane>
+              <AnchorPane>
+<!--                  Active hp bar-->
+                  <ImageView fitWidth="350" pickOnBounds="true" preserveRatio="true" AnchorPane.leftAnchor="50" AnchorPane.topAnchor="300">
+                      <Image url="@../Battle/battle_info.png" />
+                  </ImageView>
+                  <ImageView fx:id="statusActiveImg" fitWidth="60" pickOnBounds="true" preserveRatio="true" AnchorPane.bottomAnchor="310" AnchorPane.leftAnchor="315" />
+                  <Label fx:id="activeMonLabel" AnchorPane.leftAnchor="100" AnchorPane.topAnchor="310" />
+                  <ProgressBar fx:id="activeHpBar" AnchorPane.leftAnchor="232" AnchorPane.topAnchor="350" />
+              </AnchorPane>
+              <AnchorPane>
+<!--                  Enemy hp bar-->
+                  <ImageView fitWidth="350" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="80" AnchorPane.topAnchor="150">
+                      <Image url="@../Battle/battle_info.png" />
+                  </ImageView>
+                  <ImageView fx:id="statusEnemyImg" fitWidth="60" pickOnBounds="true" preserveRatio="true" AnchorPane.rightAnchor="100" AnchorPane.topAnchor="160" />
+                  <Label fx:id="enemyMonLabel" AnchorPane.leftAnchor="570" AnchorPane.topAnchor="160" />
+                  <ProgressBar fx:id="enemyHpBar" AnchorPane.rightAnchor="110" AnchorPane.topAnchor="200" />
+              </AnchorPane>
+          </StackPane>
+          <VBox GridPane.columnIndex="3" GridPane.rowIndex="1">
+              <Label text="Use object" />
+              <SpriteListView fx:id="useItemsList" prefHeight="500.0" prefWidth="100.0" />
+              <Button fx:id="useItemButton" onAction="#onUseItem" text="Use item" VBox.vgrow="ALWAYS" />
+          </VBox>
+          <Button fx:id="act1" onAction="#onActSelect" styleClass="actButton" text="Test" GridPane.columnIndex="0" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.valignment="CENTER" GridPane.vgrow="ALWAYS">
+              <tooltip>
+                  <Tooltip fx:id="act1Tooltip" />
+              </tooltip>
+          </Button>
+          <Button fx:id="act2" onAction="#onActSelect" styleClass="actButton" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+              <tooltip>
+                  <Tooltip fx:id="act2Tooltip" />
+              </tooltip>
+          </Button>
+          <Button fx:id="act3" onAction="#onActSelect" styleClass="actButton" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.vgrow="ALWAYS">
+              <tooltip>
+                  <Tooltip fx:id="act3Tooltip" />
+              </tooltip>
+          </Button>
+          <Button fx:id="act4" onAction="#onActSelect" styleClass="actButton" GridPane.columnIndex="2" GridPane.columnSpan="2" GridPane.hgrow="ALWAYS" GridPane.rowIndex="3" GridPane.vgrow="ALWAYS">
+              <tooltip>
+                  <Tooltip fx:id="act4Tooltip" />
+              </tooltip>
+          </Button>
+          <Button fx:id="struggleButton" onAction="#onActSelect" styleClass="actButton" text="Struggle" GridPane.columnIndex="0" GridPane.columnSpan="4" GridPane.hgrow="ALWAYS" GridPane.rowIndex="2" GridPane.rowSpan="2" GridPane.vgrow="ALWAYS" />
+      </GridPane>
+       <AnchorPane fx:id="Sidebar">
+           <ListView fx:id="logList" VBox.vgrow="ALWAYS" prefWidth="300.0" AnchorPane.topAnchor="0" AnchorPane.bottomAnchor="0" />
+       </AnchorPane>
+   </children>
+</HBox>

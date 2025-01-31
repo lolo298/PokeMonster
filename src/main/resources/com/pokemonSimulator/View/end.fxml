@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<VBox xmlns="http://javafx.com/javafx"
+            xmlns:fx="http://javafx.com/fxml"
+            fx:controller="com.pokemonSimulator.View.Controllers.WinnerController"
+            alignment="CENTER"
+>
+
+    <Label fx:id="winnerLabel" />
+    <HBox fx:id="teamBox" alignment="CENTER">
+
+    </HBox>
+    <Button fx:id="exitButton" text="Exit" onAction="#onExit" />
+
+</VBox>

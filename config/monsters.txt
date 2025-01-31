@@ -1,0 +1,1208 @@
+Monster
+    name: Bulbasaur
+    type: GRASS
+    health: 200/294
+    attack: 92/216
+    defense: 92/216
+    speed: 85/207
+EndMonster
+Monster
+    name: Ivysaur
+    type: GRASS
+    health: 230/324
+    attack: 116/245
+    defense: 117/247
+    speed: 112/240
+EndMonster
+Monster
+    name: Venusaur
+    type: GRASS
+    health: 270/364
+    attack: 152/289
+    defense: 153/291
+    speed: 148/284
+EndMonster
+Monster
+    name: Charmander
+    type: FIRE
+    health: 188/282
+    attack: 98/223
+    defense: 81/203
+    speed: 121/251
+EndMonster
+Monster
+    name: Charmeleon
+    type: FIRE
+    health: 226/320
+    attack: 119/249
+    defense: 108/236
+    speed: 148/284
+EndMonster
+Monster
+    name: Charizard
+    type: NORMAL
+    health: 266/360
+    attack: 155/293
+    defense: 144/280
+    speed: 184/328
+EndMonster
+Monster
+    name: Squirtle
+    type: WATER
+    health: 198/292
+    attack: 90/214
+    defense: 121/251
+    speed: 81/203
+EndMonster
+Monster
+    name: Wartortle
+    type: WATER
+    health: 228/322
+    attack: 117/247
+    defense: 148/284
+    speed: 108/236
+EndMonster
+Monster
+    name: Blastoise
+    type: WATER
+    health: 268/362
+    attack: 153/291
+    defense: 184/328
+    speed: 144/280
+EndMonster
+Monster
+    name: Caterpie
+    type: GRASS
+    health: 200/294
+    attack: 58/174
+    defense: 67/185
+    speed: 85/207
+EndMonster
+Monster
+    name: Metapod
+    type: GRASS
+    health: 210/304
+    attack: 40/152
+    defense: 103/229
+    speed: 58/174
+EndMonster
+Monster
+    name: Butterfree
+    type: NORMAL
+    health: 230/324
+    attack: 85/207
+    defense: 94/218
+    speed: 130/262
+EndMonster
+Monster
+    name: Weedle
+    type: GRASS
+    health: 190/284
+    attack: 67/185
+    defense: 58/174
+    speed: 94/218
+EndMonster
+Monster
+    name: Kakuna
+    type: GRASS
+    health: 200/294
+    attack: 49/163
+    defense: 94/218
+    speed: 67/185
+EndMonster
+Monster
+    name: Beedrill
+    type: GRASS
+    health: 240/334
+    attack: 166/306
+    defense: 76/196
+    speed: 139/273
+EndMonster
+Monster
+    name: Pidgey
+    type: NORMAL
+    health: 190/284
+    attack: 85/207
+    defense: 76/196
+    speed: 105/232
+EndMonster
+Monster
+    name: Pidgeotto
+    type: NORMAL
+    health: 236/330
+    attack: 112/240
+    defense: 103/229
+    speed: 132/265
+EndMonster
+Monster
+    name: Pidgeot
+    type: NORMAL
+    health: 276/370
+    attack: 148/284
+    defense: 139/273
+    speed: 186/331
+EndMonster
+Monster
+    name: Rattata
+    type: NORMAL
+    health: 170/264
+    attack: 105/232
+    defense: 67/185
+    speed: 134/267
+EndMonster
+Monster
+    name: Raticate
+    type: NORMAL
+    health: 220/314
+    attack: 150/287
+    defense: 112/240
+    speed: 179/322
+EndMonster
+Monster
+    name: Spearow
+    type: NORMAL
+    health: 190/284
+    attack: 112/240
+    defense: 58/174
+    speed: 130/262
+EndMonster
+Monster
+    name: Fearow
+    type: NORMAL
+    health: 240/334
+    attack: 166/306
+    defense: 121/251
+    speed: 184/328
+EndMonster
+Monster
+    name: Ekans
+    type: GRASS
+    health: 180/274
+    attack: 112/240
+    defense: 83/205
+    speed: 103/229
+EndMonster
+Monster
+    name: Arbok
+    type: GRASS
+    health: 230/324
+    attack: 175/317
+    defense: 128/260
+    speed: 148/284
+EndMonster
+Monster
+    name: Pikachu
+    type: ELECTRIC
+    health: 180/274
+    attack: 103/229
+    defense: 76/196
+    speed: 166/306
+EndMonster
+Monster
+    name: Raichu
+    type: ELECTRIC
+    health: 230/324
+    attack: 166/306
+    defense: 103/229
+    speed: 202/350
+EndMonster
+Monster
+    name: Sandshrew
+    type: GROUND
+    health: 210/304
+    attack: 139/273
+    defense: 157/295
+    speed: 76/196
+EndMonster
+Monster
+    name: Sandslash
+    type: GROUND
+    health: 260/354
+    attack: 184/328
+    defense: 202/350
+    speed: 121/251
+EndMonster
+Monster
+    name: Nidoran-f
+    type: GRASS
+    health: 220/314
+    attack: 89/212
+    defense: 98/223
+    speed: 78/199
+EndMonster
+Monster
+    name: Nidorina
+    type: GRASS
+    health: 250/344
+    attack: 116/245
+    defense: 125/256
+    speed: 105/232
+EndMonster
+Monster
+    name: Nidoqueen
+    type: GROUND
+    health: 290/384
+    attack: 170/311
+    defense: 161/300
+    speed: 141/276
+EndMonster
+Monster
+    name: Nidoran-m
+    type: GRASS
+    health: 202/296
+    attack: 107/234
+    defense: 76/196
+    speed: 94/218
+EndMonster
+Monster
+    name: Nidorino
+    type: GRASS
+    health: 232/326
+    attack: 134/267
+    defense: 107/234
+    speed: 121/251
+EndMonster
+Monster
+    name: Nidoking
+    type: GROUND
+    health: 272/366
+    attack: 188/333
+    defense: 143/278
+    speed: 157/295
+EndMonster
+Monster
+    name: Clefairy
+    type: NORMAL
+    health: 250/344
+    attack: 85/207
+    defense: 90/214
+    speed: 67/185
+EndMonster
+Monster
+    name: Clefable
+    type: NORMAL
+    health: 300/394
+    attack: 130/262
+    defense: 135/269
+    speed: 112/240
+EndMonster
+Monster
+    name: Vulpix
+    type: FIRE
+    health: 186/280
+    attack: 78/199
+    defense: 76/196
+    speed: 121/251
+EndMonster
+Monster
+    name: Ninetales
+    type: FIRE
+    health: 256/350
+    attack: 141/276
+    defense: 139/273
+    speed: 184/328
+EndMonster
+Monster
+    name: Jigglypuff
+    type: NORMAL
+    health: 340/434
+    attack: 85/207
+    defense: 40/152
+    speed: 40/152
+EndMonster
+Monster
+    name: Wigglytuff
+    type: NORMAL
+    health: 390/484
+    attack: 130/262
+    defense: 85/207
+    speed: 85/207
+EndMonster
+Monster
+    name: Zubat
+    type: NORMAL
+    health: 190/284
+    attack: 85/207
+    defense: 67/185
+    speed: 103/229
+EndMonster
+Monster
+    name: Golbat
+    type: NORMAL
+    health: 260/354
+    attack: 148/284
+    defense: 130/262
+    speed: 166/306
+EndMonster
+Monster
+    name: Oddish
+    type: GRASS
+    health: 200/294
+    attack: 94/218
+    defense: 103/229
+    speed: 58/174
+EndMonster
+Monster
+    name: Gloom
+    type: GRASS
+    health: 230/324
+    attack: 121/251
+    defense: 130/262
+    speed: 76/196
+EndMonster
+Monster
+    name: Vileplume
+    type: GRASS
+    health: 260/354
+    attack: 148/284
+    defense: 157/295
+    speed: 94/218
+EndMonster
+Monster
+    name: Paras
+    type: GRASS
+    health: 180/274
+    attack: 130/262
+    defense: 103/229
+    speed: 49/163
+EndMonster
+Monster
+    name: Parasect
+    type: GRASS
+    health: 230/324
+    attack: 175/317
+    defense: 148/284
+    speed: 58/174
+EndMonster
+Monster
+    name: Venonat
+    type: GRASS
+    health: 230/324
+    attack: 103/229
+    defense: 94/218
+    speed: 85/207
+EndMonster
+Monster
+    name: Venomoth
+    type: GRASS
+    health: 250/344
+    attack: 121/251
+    defense: 112/240
+    speed: 166/306
+EndMonster
+Monster
+    name: Diglett
+    type: GROUND
+    health: 130/224
+    attack: 103/229
+    defense: 49/163
+    speed: 175/317
+EndMonster
+Monster
+    name: Dugtrio
+    type: GROUND
+    health: 180/274
+    attack: 184/328
+    defense: 94/218
+    speed: 220/372
+EndMonster
+Monster
+    name: Meowth
+    type: NORMAL
+    health: 190/284
+    attack: 85/207
+    defense: 67/185
+    speed: 166/306
+EndMonster
+Monster
+    name: Persian
+    type: NORMAL
+    health: 240/334
+    attack: 130/262
+    defense: 112/240
+    speed: 211/361
+EndMonster
+Monster
+    name: Psyduck
+    type: WATER
+    health: 210/304
+    attack: 98/223
+    defense: 90/214
+    speed: 103/229
+EndMonster
+Monster
+    name: Golduck
+    type: WATER
+    health: 270/364
+    attack: 152/289
+    defense: 144/280
+    speed: 157/295
+EndMonster
+Monster
+    name: Mankey
+    type: NORMAL
+    health: 190/284
+    attack: 148/284
+    defense: 67/185
+    speed: 130/262
+EndMonster
+Monster
+    name: Primeape
+    type: NORMAL
+    health: 240/334
+    attack: 193/339
+    defense: 112/240
+    speed: 175/317
+EndMonster
+Monster
+    name: Growlithe
+    type: FIRE
+    health: 220/314
+    attack: 130/262
+    defense: 85/207
+    speed: 112/240
+EndMonster
+Monster
+    name: Arcanine
+    type: FIRE
+    health: 290/384
+    attack: 202/350
+    defense: 148/284
+    speed: 175/317
+EndMonster
+Monster
+    name: Poliwag
+    type: WATER
+    health: 190/284
+    attack: 94/218
+    defense: 76/196
+    speed: 166/306
+EndMonster
+Monster
+    name: Poliwhirl
+    type: WATER
+    health: 240/334
+    attack: 121/251
+    defense: 121/251
+    speed: 166/306
+EndMonster
+Monster
+    name: Poliwrath
+    type: NORMAL
+    health: 290/384
+    attack: 175/317
+    defense: 175/317
+    speed: 130/262
+EndMonster
+Monster
+    name: Abra
+    type: NORMAL
+    health: 160/254
+    attack: 40/152
+    defense: 31/141
+    speed: 166/306
+EndMonster
+Monster
+    name: Kadabra
+    type: NORMAL
+    health: 190/284
+    attack: 67/185
+    defense: 58/174
+    speed: 193/339
+EndMonster
+Monster
+    name: Alakazam
+    type: NORMAL
+    health: 220/314
+    attack: 94/218
+    defense: 85/207
+    speed: 220/372
+EndMonster
+Monster
+    name: Machop
+    type: NORMAL
+    health: 250/344
+    attack: 148/284
+    defense: 94/218
+    speed: 67/185
+EndMonster
+Monster
+    name: Machoke
+    type: NORMAL
+    health: 270/364
+    attack: 184/328
+    defense: 130/262
+    speed: 85/207
+EndMonster
+Monster
+    name: Machamp
+    type: NORMAL
+    health: 290/384
+    attack: 238/394
+    defense: 148/284
+    speed: 103/229
+EndMonster
+Monster
+    name: Bellsprout
+    type: GRASS
+    health: 210/304
+    attack: 139/273
+    defense: 67/185
+    speed: 76/196
+EndMonster
+Monster
+    name: Weepinbell
+    type: GRASS
+    health: 240/334
+    attack: 166/306
+    defense: 94/218
+    speed: 103/229
+EndMonster
+Monster
+    name: Victreebel
+    type: GRASS
+    health: 270/364
+    attack: 193/339
+    defense: 121/251
+    speed: 130/262
+EndMonster
+Monster
+    name: Tentacool
+    type: GRASS
+    health: 190/284
+    attack: 76/196
+    defense: 67/185
+    speed: 130/262
+EndMonster
+Monster
+    name: Tentacruel
+    type: GRASS
+    health: 270/364
+    attack: 130/262
+    defense: 121/251
+    speed: 184/328
+EndMonster
+Monster
+    name: Geodude
+    type: GROUND
+    health: 190/284
+    attack: 148/284
+    defense: 184/328
+    speed: 40/152
+EndMonster
+Monster
+    name: Graveler
+    type: GROUND
+    health: 220/314
+    attack: 175/317
+    defense: 211/361
+    speed: 67/185
+EndMonster
+Monster
+    name: Golem
+    type: GROUND
+    health: 270/364
+    attack: 220/372
+    defense: 238/394
+    speed: 85/207
+EndMonster
+Monster
+    name: Ponyta
+    type: FIRE
+    health: 210/304
+    attack: 157/295
+    defense: 103/229
+    speed: 166/306
+EndMonster
+Monster
+    name: Rapidash
+    type: FIRE
+    health: 240/334
+    attack: 184/328
+    defense: 130/262
+    speed: 193/339
+EndMonster
+Monster
+    name: Slowpoke
+    type: NORMAL
+    health: 290/384
+    attack: 121/251
+    defense: 121/251
+    speed: 31/141
+EndMonster
+Monster
+    name: Slowbro
+    type: NORMAL
+    health: 300/394
+    attack: 139/273
+    defense: 202/350
+    speed: 58/174
+EndMonster
+Monster
+    name: Magnemite
+    type: GROUND
+    health: 160/254
+    attack: 67/185
+    defense: 130/262
+    speed: 85/207
+EndMonster
+Monster
+    name: Magneton
+    type: GROUND
+    health: 210/304
+    attack: 112/240
+    defense: 175/317
+    speed: 130/262
+EndMonster
+Monster
+    name: Farfetchd
+    type: NORMAL
+    health: 214/308
+    attack: 166/306
+    defense: 103/229
+    speed: 112/240
+EndMonster
+Monster
+    name: Doduo
+    type: NORMAL
+    health: 180/274
+    attack: 157/295
+    defense: 85/207
+    speed: 139/273
+EndMonster
+Monster
+    name: Dodrio
+    type: NORMAL
+    health: 230/324
+    attack: 202/350
+    defense: 130/262
+    speed: 202/350
+EndMonster
+Monster
+    name: Seel
+    type: WATER
+    health: 240/334
+    attack: 85/207
+    defense: 103/229
+    speed: 85/207
+EndMonster
+Monster
+    name: Dewgong
+    type: WATER
+    health: 290/384
+    attack: 130/262
+    defense: 148/284
+    speed: 130/262
+EndMonster
+Monster
+    name: Grimer
+    type: GRASS
+    health: 270/364
+    attack: 148/284
+    defense: 94/218
+    speed: 49/163
+EndMonster
+Monster
+    name: Muk
+    type: GRASS
+    health: 320/414
+    attack: 193/339
+    defense: 139/273
+    speed: 94/218
+EndMonster
+Monster
+    name: Shellder
+    type: WATER
+    health: 170/264
+    attack: 121/251
+    defense: 184/328
+    speed: 76/196
+EndMonster
+Monster
+    name: Cloyster
+    type: WATER
+    health: 210/304
+    attack: 175/317
+    defense: 328/504
+    speed: 130/262
+EndMonster
+Monster
+    name: Gastly
+    type: GRASS
+    health: 170/264
+    attack: 67/185
+    defense: 58/174
+    speed: 148/284
+EndMonster
+Monster
+    name: Haunter
+    type: GRASS
+    health: 200/294
+    attack: 94/218
+    defense: 85/207
+    speed: 175/317
+EndMonster
+Monster
+    name: Gengar
+    type: GRASS
+    health: 230/324
+    attack: 121/251
+    defense: 112/240
+    speed: 202/350
+EndMonster
+Monster
+    name: Onix
+    type: GROUND
+    health: 180/274
+    attack: 85/207
+    defense: 292/460
+    speed: 130/262
+EndMonster
+Monster
+    name: Drowzee
+    type: NORMAL
+    health: 230/324
+    attack: 90/214
+    defense: 85/207
+    speed: 80/201
+EndMonster
+Monster
+    name: Hypno
+    type: NORMAL
+    health: 280/374
+    attack: 135/269
+    defense: 130/262
+    speed: 125/256
+EndMonster
+Monster
+    name: Krabby
+    type: WATER
+    health: 170/264
+    attack: 193/339
+    defense: 166/306
+    speed: 94/218
+EndMonster
+Monster
+    name: Kingler
+    type: WATER
+    health: 220/314
+    attack: 238/394
+    defense: 211/361
+    speed: 139/273
+EndMonster
+Monster
+    name: Voltorb
+    type: ELECTRIC
+    health: 190/284
+    attack: 58/174
+    defense: 94/218
+    speed: 184/328
+EndMonster
+Monster
+    name: Electrode
+    type: ELECTRIC
+    health: 230/324
+    attack: 94/218
+    defense: 130/262
+    speed: 274/438
+EndMonster
+Monster
+    name: Exeggcute
+    type: NORMAL
+    health: 230/324
+    attack: 76/196
+    defense: 148/284
+    speed: 76/196
+EndMonster
+Monster
+    name: Exeggutor
+    type: NORMAL
+    health: 300/394
+    attack: 175/317
+    defense: 157/295
+    speed: 103/229
+EndMonster
+Monster
+    name: Cubone
+    type: GROUND
+    health: 210/304
+    attack: 94/218
+    defense: 175/317
+    speed: 67/185
+EndMonster
+Monster
+    name: Marowak
+    type: GROUND
+    health: 230/324
+    attack: 148/284
+    defense: 202/350
+    speed: 85/207
+EndMonster
+Monster
+    name: Hitmonlee
+    type: NORMAL
+    health: 210/304
+    attack: 220/372
+    defense: 99/225
+    speed: 161/300
+EndMonster
+Monster
+    name: Hitmonchan
+    type: NORMAL
+    health: 210/304
+    attack: 193/339
+    defense: 146/282
+    speed: 141/276
+EndMonster
+Monster
+    name: Lickitung
+    type: NORMAL
+    health: 290/384
+    attack: 103/229
+    defense: 139/273
+    speed: 58/174
+EndMonster
+Monster
+    name: Koffing
+    type: GRASS
+    health: 190/284
+    attack: 121/251
+    defense: 175/317
+    speed: 67/185
+EndMonster
+Monster
+    name: Weezing
+    type: GRASS
+    health: 240/334
+    attack: 166/306
+    defense: 220/372
+    speed: 112/240
+EndMonster
+Monster
+    name: Rhyhorn
+    type: GROUND
+    health: 270/364
+    attack: 157/295
+    defense: 175/317
+    speed: 49/163
+EndMonster
+Monster
+    name: Rhydon
+    type: GROUND
+    health: 320/414
+    attack: 238/394
+    defense: 220/372
+    speed: 76/196
+EndMonster
+Monster
+    name: Chansey
+    type: NORMAL
+    health: 610/704
+    attack: 13/119
+    defense: 13/119
+    speed: 94/218
+EndMonster
+Monster
+    name: Tangela
+    type: GRASS
+    health: 240/334
+    attack: 103/229
+    defense: 211/361
+    speed: 112/240
+EndMonster
+Monster
+    name: Kangaskhan
+    type: NORMAL
+    health: 320/414
+    attack: 175/317
+    defense: 148/284
+    speed: 166/306
+EndMonster
+Monster
+    name: Horsea
+    type: WATER
+    health: 170/264
+    attack: 76/196
+    defense: 130/262
+    speed: 112/240
+EndMonster
+Monster
+    name: Seadra
+    type: WATER
+    health: 220/314
+    attack: 121/251
+    defense: 175/317
+    speed: 157/295
+EndMonster
+Monster
+    name: Goldeen
+    type: WATER
+    health: 200/294
+    attack: 125/256
+    defense: 112/240
+    speed: 117/247
+EndMonster
+Monster
+    name: Seaking
+    type: WATER
+    health: 270/364
+    attack: 170/311
+    defense: 121/251
+    speed: 126/258
+EndMonster
+Monster
+    name: Staryu
+    type: WATER
+    health: 170/264
+    attack: 85/207
+    defense: 103/229
+    speed: 157/295
+EndMonster
+Monster
+    name: Starmie
+    type: NORMAL
+    health: 230/324
+    attack: 139/273
+    defense: 157/295
+    speed: 211/361
+EndMonster
+Monster
+    name: Mr-mime
+    type: NORMAL
+    health: 190/284
+    attack: 85/207
+    defense: 121/251
+    speed: 166/306
+EndMonster
+Monster
+    name: Scyther
+    type: NORMAL
+    health: 250/344
+    attack: 202/350
+    defense: 148/284
+    speed: 193/339
+EndMonster
+Monster
+    name: Jynx
+    type: NORMAL
+    health: 240/334
+    attack: 94/218
+    defense: 67/185
+    speed: 175/317
+EndMonster
+Monster
+    name: Electabuzz
+    type: ELECTRIC
+    health: 240/334
+    attack: 153/291
+    defense: 107/234
+    speed: 193/339
+EndMonster
+Monster
+    name: Magmar
+    type: FIRE
+    health: 240/334
+    attack: 175/317
+    defense: 107/234
+    speed: 171/313
+EndMonster
+Monster
+    name: Pinsir
+    type: GRASS
+    health: 240/334
+    attack: 229/383
+    defense: 184/328
+    speed: 157/295
+EndMonster
+Monster
+    name: Tauros
+    type: NORMAL
+    health: 260/354
+    attack: 184/328
+    defense: 175/317
+    speed: 202/350
+EndMonster
+Monster
+    name: Magikarp
+    type: WATER
+    health: 150/244
+    attack: 22/130
+    defense: 103/229
+    speed: 148/284
+EndMonster
+Monster
+    name: Gyarados
+    type: NORMAL
+    health: 300/394
+    attack: 229/383
+    defense: 146/282
+    speed: 150/287
+EndMonster
+Monster
+    name: Lapras
+    type: WATER
+    health: 370/464
+    attack: 157/295
+    defense: 148/284
+    speed: 112/240
+EndMonster
+Monster
+    name: Ditto
+    type: NORMAL
+    health: 206/300
+    attack: 90/214
+    defense: 90/214
+    speed: 90/214
+EndMonster
+Monster
+    name: Eevee
+    type: NORMAL
+    health: 220/314
+    attack: 103/229
+    defense: 94/218
+    speed: 103/229
+EndMonster
+Monster
+    name: Vaporeon
+    type: WATER
+    health: 370/464
+    attack: 121/251
+    defense: 112/240
+    speed: 121/251
+EndMonster
+Monster
+    name: Jolteon
+    type: ELECTRIC
+    health: 240/334
+    attack: 121/251
+    defense: 112/240
+    speed: 238/394
+EndMonster
+Monster
+    name: Flareon
+    type: FIRE
+    health: 240/334
+    attack: 238/394
+    defense: 112/240
+    speed: 121/251
+EndMonster
+Monster
+    name: Porygon
+    type: NORMAL
+    health: 240/334
+    attack: 112/240
+    defense: 130/262
+    speed: 76/196
+EndMonster
+Monster
+    name: Omanyte
+    type: WATER
+    health: 180/274
+    attack: 76/196
+    defense: 184/328
+    speed: 67/185
+EndMonster
+Monster
+    name: Omastar
+    type: WATER
+    health: 250/344
+    attack: 112/240
+    defense: 229/383
+    speed: 103/229
+EndMonster
+Monster
+    name: Kabuto
+    type: WATER
+    health: 170/264
+    attack: 148/284
+    defense: 166/306
+    speed: 103/229
+EndMonster
+Monster
+    name: Kabutops
+    type: WATER
+    health: 230/324
+    attack: 211/361
+    defense: 193/339
+    speed: 148/284
+EndMonster
+Monster
+    name: Aerodactyl
+    type: NORMAL
+    health: 270/364
+    attack: 193/339
+    defense: 121/251
+    speed: 238/394
+EndMonster
+Monster
+    name: Snorlax
+    type: NORMAL
+    health: 430/524
+    attack: 202/350
+    defense: 121/251
+    speed: 58/174
+EndMonster
+Monster
+    name: Articuno
+    type: NORMAL
+    health: 290/384
+    attack: 157/295
+    defense: 184/328
+    speed: 157/295
+EndMonster
+Monster
+    name: Zapdos
+    type: NORMAL
+    health: 290/384
+    attack: 166/306
+    defense: 157/295
+    speed: 184/328
+EndMonster
+Monster
+    name: Moltres
+    type: NORMAL
+    health: 290/384
+    attack: 184/328
+    defense: 166/306
+    speed: 166/306
+EndMonster
+Monster
+    name: Dratini
+    type: NORMAL
+    health: 192/286
+    attack: 119/249
+    defense: 85/207
+    speed: 94/218
+EndMonster
+Monster
+    name: Dragonair
+    type: NORMAL
+    health: 232/326
+    attack: 155/293
+    defense: 121/251
+    speed: 130/262
+EndMonster
+Monster
+    name: Dragonite
+    type: NORMAL
+    health: 292/386
+    attack: 245/403
+    defense: 175/317
+    speed: 148/284
+EndMonster
+Monster
+    name: Mewtwo
+    type: NORMAL
+    health: 322/416
+    attack: 202/350
+    defense: 166/306
+    speed: 238/394
+EndMonster
+Monster
+    name: Mew
+    type: NORMAL
+    health: 310/404
+    attack: 184/328
+    defense: 184/328
+    speed: 184/328
+EndMonster
